@@ -5,7 +5,9 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { VueRefTargetElement } from '../../../types/interfaces'
+import { computed, ref, onMounted } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 import { SearchIcon } from '@heroicons/vue/solid'
 import { ChevronRightIcon, UsersIcon } from '@heroicons/vue/outline'
 import { Combobox, ComboboxInput, ComboboxOptions, ComboboxOption } from '@headlessui/vue'
@@ -69,9 +71,11 @@ const people = [
 ]
 
 // const recent = [people[0], people[1], people[2], people[3], people[4]]
-const recent: any = []
-const isFocused = ref(false)
-
+const recent: any = [people[0], people[1]]
+const isSearchFocused = ref(false)
+const searchCombobox = ref<HTMLElement | null>(null)
+const searchInput = ref<VueRefTargetElement | null>(null)
+const searchedItem = ref('')
 const query = ref('')
 const filteredPeople = computed(() =>
   query.value === ''
@@ -81,33 +85,61 @@ const filteredPeople = computed(() =>
       })
 )
 
+onMounted(() => {
+  window.addEventListener('blur', unsetDropdownSearchOnBlur, true)
+})
+
 function onSelect(person: any) {
   window.location = person.url
 }
 
-function setRecentSearch() {
-  isFocused.value = true
+function setDropdownSearch() {
+  isSearchFocused.value = true
 }
 
-function unsetRecentSearch() {
-  isFocused.value = false
+function unsetDropdownSearch() {
+  isSearchFocused.value = false
 }
+
+function unsetDropdownSearchOnBlur(event: Event) {
+  const target = event.target as HTMLElement
+  const searchTarget = searchInput.value ? searchInput.value.$el : null
+  if (target === searchTarget) {
+    searchedItem.value = query.value
+    unsetDropdownSearch()
+  }
+}
+
+function search(event: Event) {
+  const target = event.target as HTMLInputElement
+  target.blur()
+  searchedItem.value = query.value
+  unsetDropdownSearch()
+}
+
+onClickOutside(searchCombobox, event => {
+  searchedItem.value = query.value
+  unsetDropdownSearch()
+})
 </script>
 
 <template>
   <Combobox
     v-slot="{ activeOption }"
+    ref="searchCombobox"
+    v-model="searchedItem"
     as="div"
     class="transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all"
     @update:model-value="onSelect"
   >
     <div class="relative">
-      <SearchIcon class="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400" aria-hidden="true" />
+      <SearchIcon class="pointer-events-none absolute top-3.5 left-4 h-7 w-6 text-gray-400" aria-hidden="true" />
       <ComboboxInput
-        class="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 sm:text-sm"
+        ref="searchInput"
+        class="h-14 w-full border-0 bg-transparent pl-12 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 text-sm sm:text-lg"
         placeholder="Search..."
-        @focus="setRecentSearch"
-        @blur="unsetRecentSearch"
+        @focus="setDropdownSearch"
+        @keyup.enter="search"
         @change="query = $event.target.value"
       />
     </div>
@@ -120,7 +152,7 @@ function unsetRecentSearch() {
       hold
     >
       <div
-        v-if="isFocused && (query !== '' || recent.length)"
+        v-if="isSearchFocused && (query !== '' || recent.length)"
         :class="['max-h-96 min-w-0 flex-auto scroll-py-4 overflow-y-auto px-6 py-4', activeOption && 'sm:h-96']"
       >
         <h2 v-if="query === '' && recent.length" class="mt-2 mb-4 text-xs font-semibold text-gray-500">

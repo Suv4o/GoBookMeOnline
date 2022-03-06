@@ -6,12 +6,6 @@ export default {
 <script setup lang="ts">
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { MenuIcon, XIcon } from '@heroicons/vue/outline'
-
-const navigation = [
-  { name: 'Search', href: '#' },
-  { name: 'Product', href: '#' },
-  { name: 'Support', href: '#' },
-]
 </script>
 
 <template>
@@ -36,15 +30,6 @@ const navigation = [
               </PopoverButton>
             </div>
           </div>
-        </div>
-        <div class="hidden md:flex md:space-x-10">
-          <a
-            v-for="item in navigation"
-            :key="item.name"
-            :href="item.href"
-            class="font-medium text-gray-500 hover:text-gray-900"
-            >{{ item.name }}</a
-          >
         </div>
         <div class="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0">
           <span class="inline-flex rounded-md shadow">
@@ -75,7 +60,7 @@ const navigation = [
     >
       <PopoverPanel focus class="absolute z-10 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
         <div class="rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden">
-          <div class="px-5 pt-4 flex items-center justify-between">
+          <div class="px-5 pt-4 mb-4 flex items-center justify-between">
             <div class="flex items-center">
               <img class="h-8 w-auto" src="../../assets/images/logo.svg" alt="" />
               <p class="ml-2 font-semibold">GoBookMe.Online</p>
@@ -88,15 +73,6 @@ const navigation = [
                 <XIcon class="h-6 w-6" aria-hidden="true" />
               </PopoverButton>
             </div>
-          </div>
-          <div class="px-2 pt-2 pb-3">
-            <a
-              v-for="item in navigation"
-              :key="item.name"
-              :href="item.href"
-              class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-              >{{ item.name }}</a
-            >
           </div>
           <a href="#" class="block w-full px-5 py-3 text-center font-medium text-white bg-teal-600 hover:bg-teal-700">
             Sign up

@@ -12,6 +12,7 @@ import { Combobox, ComboboxInput, ComboboxOptions, ComboboxOption } from '@headl
 const locations = [{ id: 1, suburb: 'Leslie Alexander' }]
 
 const selectedLocation = ref('')
+const isLocationSelected = ref(false)
 const query = ref('')
 const filteredLocations = computed(() =>
   query.value === ''
@@ -21,15 +22,16 @@ const filteredLocations = computed(() =>
       })
 )
 
-watch(
-  () => query.value,
-  () => {
-    selectedLocation.value = ''
+watch(query, queryValue => {
+  if (isLocationSelected.value && queryValue !== selectedLocation.value) {
+    isLocationSelected.value = false
   }
-)
+})
 
 function onSelect(location: any) {
   selectedLocation.value = location.suburb
+  query.value = location.suburb
+  isLocationSelected.value = true
 }
 </script>
 
@@ -42,18 +44,18 @@ function onSelect(location: any) {
   >
     <div class="relative">
       <LocationMarkerIcon
-        class="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400"
+        class="pointer-events-none absolute top-3.5 left-4 h-7 w-6 text-gray-400"
         aria-hidden="true"
       />
       <ComboboxInput
-        class="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 sm:text-sm"
+        class="h-14 w-full border-0 bg-transparent pl-12 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 text-sm sm:text-lg"
         placeholder="Suburb or postcode"
         @change="query = $event.target.value"
       />
     </div>
 
     <ComboboxOptions
-      v-if="filteredLocations.length > 0 && selectedLocation === ''"
+      v-if="filteredLocations.length > 0 && !isLocationSelected"
       static
       class="max-h-72 scroll-py-2 overflow-y-auto py-2 text-sm text-gray-800"
     >
