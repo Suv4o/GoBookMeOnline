@@ -80,14 +80,7 @@ const query = ref('')
 const focusInfo = reactive({
   currentFocusedEl: <HTMLElement | null>null,
   targetInputEl: <HTMLElement | null>null,
-})
-const blurInfo = reactive({
-  previousFocusedEl: <HTMLElement | null>null,
-  targetInputEl: <HTMLElement | null>null,
-})
-const clickInfo = reactive({
-  currentClickedEl: <HTMLElement | null>null,
-  targetClickedEl: <HTMLElement | null>null,
+  targetComboboxEl: <HTMLElement | null>null,
 })
 const filteredPeople = computed(() =>
   query.value === ''
@@ -99,14 +92,10 @@ const filteredPeople = computed(() =>
 
 onMounted(() => {
   window.addEventListener('focus', setFocusInfoOnFocus, true)
-  window.addEventListener('blur', setFocusInfoOnBlur, true)
-  window.addEventListener('click', setFocusInfoOnClick, true)
 })
 
 onUnmounted(() => {
   window.removeEventListener('blur', setFocusInfoOnFocus, true)
-  window.removeEventListener('blur', setFocusInfoOnBlur, true)
-  window.removeEventListener('click', setFocusInfoOnClick, true)
 })
 
 function onSelect(person: any) {
@@ -128,29 +117,16 @@ function setFocusInfoOnFocus(event: Event) {
 
   const currentFocusedEl = event.target as HTMLElement
   const targetInputEl = searchInput.value ? searchInput.value.$el : null
+  const targetComboboxEl = searchCombobox.value ? searchCombobox.value.$el : null
   focusInfo.currentFocusedEl = currentFocusedEl
   focusInfo.targetInputEl = targetInputEl
-}
-function setFocusInfoOnBlur(event: Event) {
-  const previousFocusedEl = event.target as HTMLElement
-  const targetInputEl = searchInput.value ? searchInput.value.$el : null
-  blurInfo.previousFocusedEl = previousFocusedEl
-  blurInfo.targetInputEl = targetInputEl
-}
-
-function setFocusInfoOnClick(event: Event) {
-  const currentClickedEl = event.target as HTMLElement
-  const targetClickedEl = searchCombobox.value ? searchCombobox.value.$el : null
-  clickInfo.currentClickedEl = currentClickedEl
-  clickInfo.targetClickedEl = targetClickedEl
+  focusInfo.targetComboboxEl = targetComboboxEl
 }
 
 function unsetDropdownSearchOnBlur() {
-  const targetClickedEl = searchCombobox.value ? searchCombobox.value.$el : null
-
   if (
     focusInfo.currentFocusedEl !== focusInfo.targetInputEl &&
-    !targetClickedEl?.contains(focusInfo.currentFocusedEl)
+    !focusInfo.targetComboboxEl?.contains(focusInfo.currentFocusedEl)
   ) {
     searchedItem.value = query.value
     unsetDropdownSearch()
