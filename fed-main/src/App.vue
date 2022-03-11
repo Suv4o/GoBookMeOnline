@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import HeroSection from './components/main/HeroSection.vue'
-import SearchBar from './components/main/SearchBar.vue'
+import SearchBar from './components/global/BookSearchBar/BookSearchBar.vue'
 </script>
 
 <template>
