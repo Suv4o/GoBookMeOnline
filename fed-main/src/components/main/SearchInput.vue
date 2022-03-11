@@ -6,7 +6,7 @@ export default {
 
 <script setup lang="ts">
 import { VueRefTargetElement } from '../../../types/interfaces'
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, reactive, onMounted, onUnmounted, watch } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { SearchIcon } from '@heroicons/vue/solid'
 import { ChevronRightIcon, UsersIcon } from '@heroicons/vue/outline'
@@ -73,10 +73,22 @@ const people = [
 // const recent = [people[0], people[1], people[2], people[3], people[4]]
 const recent: any = [people[0], people[1]]
 const isSearchFocused = ref(false)
-const searchCombobox = ref<HTMLElement | null>(null)
+const searchCombobox = ref<VueRefTargetElement | null>(null)
 const searchInput = ref<VueRefTargetElement | null>(null)
 const searchedItem = ref('')
 const query = ref('')
+const focusInfo = reactive({
+  currentFocusedEl: <HTMLElement | null>null,
+  targetInputEl: <HTMLElement | null>null,
+})
+const blurInfo = reactive({
+  previousFocusedEl: <HTMLElement | null>null,
+  targetInputEl: <HTMLElement | null>null,
+})
+const clickInfo = reactive({
+  currentClickedEl: <HTMLElement | null>null,
+  targetClickedEl: <HTMLElement | null>null,
+})
 const filteredPeople = computed(() =>
   query.value === ''
     ? []
@@ -86,7 +98,15 @@ const filteredPeople = computed(() =>
 )
 
 onMounted(() => {
-  window.addEventListener('blur', unsetDropdownSearchOnBlur, true)
+  window.addEventListener('focus', setFocusInfoOnFocus, true)
+  window.addEventListener('blur', setFocusInfoOnBlur, true)
+  window.addEventListener('click', setFocusInfoOnClick, true)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('blur', setFocusInfoOnFocus, true)
+  window.removeEventListener('blur', setFocusInfoOnBlur, true)
+  window.removeEventListener('click', setFocusInfoOnClick, true)
 })
 
 function onSelect(person: any) {
@@ -101,10 +121,37 @@ function unsetDropdownSearch() {
   isSearchFocused.value = false
 }
 
-function unsetDropdownSearchOnBlur(event: Event) {
-  const target = event.target as HTMLElement
-  const searchTarget = searchInput.value ? searchInput.value.$el : null
-  if (target === searchTarget) {
+function setFocusInfoOnFocus(event: Event) {
+  if (event.target == window) {
+    return
+  }
+
+  const currentFocusedEl = event.target as HTMLElement
+  const targetInputEl = searchInput.value ? searchInput.value.$el : null
+  focusInfo.currentFocusedEl = currentFocusedEl
+  focusInfo.targetInputEl = targetInputEl
+}
+function setFocusInfoOnBlur(event: Event) {
+  const previousFocusedEl = event.target as HTMLElement
+  const targetInputEl = searchInput.value ? searchInput.value.$el : null
+  blurInfo.previousFocusedEl = previousFocusedEl
+  blurInfo.targetInputEl = targetInputEl
+}
+
+function setFocusInfoOnClick(event: Event) {
+  const currentClickedEl = event.target as HTMLElement
+  const targetClickedEl = searchCombobox.value ? searchCombobox.value.$el : null
+  clickInfo.currentClickedEl = currentClickedEl
+  clickInfo.targetClickedEl = targetClickedEl
+}
+
+function unsetDropdownSearchOnBlur() {
+  const targetClickedEl = searchCombobox.value ? searchCombobox.value.$el : null
+
+  if (
+    focusInfo.currentFocusedEl !== focusInfo.targetInputEl &&
+    !targetClickedEl?.contains(focusInfo.currentFocusedEl)
+  ) {
     searchedItem.value = query.value
     unsetDropdownSearch()
   }
@@ -121,6 +168,13 @@ onClickOutside(searchCombobox, event => {
   searchedItem.value = query.value
   unsetDropdownSearch()
 })
+
+watch(
+  () => ({ ...focusInfo }),
+  () => {
+    unsetDropdownSearchOnBlur()
+  }
+)
 </script>
 
 <template>

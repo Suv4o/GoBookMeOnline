@@ -1,3 +1,3 @@
-export interface VueRefTargetElement {
+export interface VueRefTargetElement extends HTMLElement {
   $el: HTMLElement
 }
