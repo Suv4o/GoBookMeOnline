@@ -5,7 +5,6 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { defineProps, withDefaults } from 'vue'
 import { CheckCircleIcon, XCircleIcon, ChevronRightIcon } from '@heroicons/vue/solid'
 
 interface Props {
