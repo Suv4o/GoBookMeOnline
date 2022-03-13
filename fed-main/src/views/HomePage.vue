@@ -12,7 +12,13 @@ import BookSearchList from '../components/global/BookSearchList/BookSearchList.v
 
 <template>
   <hero-section />
-  <book-search-bar />
-  <book-search-list title="Locations" type="location" />
-  <book-search-list title="People" type="person" />
+  <div class="relative">
+    <div class="absolute h-full w-full" style="z-index: 2">
+      <book-search-bar />
+    </div>
+    <div class="absolute top-32 sm:top-20 md:top-24 h-full w-full" style="z-index: 1">
+      <book-search-list title="Locations" type="location" />
+      <book-search-list title="People" type="person" />
+    </div>
+  </div>
 </template>
