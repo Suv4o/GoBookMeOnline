@@ -39,7 +39,7 @@ function onSelect(location: any) {
   <Combobox
     v-model="selectedLocation"
     as="div"
-    class="mx-auto max-w-xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all"
+    class="transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all"
     @update:model-value="onSelect"
   >
     <div class="relative">
