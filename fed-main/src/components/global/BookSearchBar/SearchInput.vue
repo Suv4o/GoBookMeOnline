@@ -163,10 +163,13 @@ watch(
     @update:model-value="onSelect"
   >
     <div class="relative">
-      <SearchIcon class="pointer-events-none absolute top-3.5 left-4 h-7 w-6 text-gray-400" aria-hidden="true" />
+      <SearchIcon
+        class="pointer-events-none absolute top-3.5 left-3 md:left-4 h-5 w-5 md:h-7 md:w-6 text-gray-400"
+        aria-hidden="true"
+      />
       <ComboboxInput
         ref="searchInput"
-        class="h-14 w-full border-0 bg-transparent pl-12 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 text-sm sm:text-lg"
+        class="h-12 md:h-14 w-full border-0 bg-transparent pl-10 md:pl-12 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 text-md md:text-lg"
         placeholder="Search..."
         @focus="setDropdownSearch"
         @keyup.enter="search"
