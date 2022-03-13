@@ -33,6 +33,41 @@ function textTimeAvailability(isAvailable: boolean) {
   }
 }
 
+// const result = [
+//   {
+//     name: 'Ricardo Cooper',
+//     isAvailable: true,
+//     status: 'Available',
+//     time: '8:00am',
+//     avatarUrl:
+//       'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//     address: '96 Bass Street, Bungabbee, New South Wales, Australia',
+//     type: 'Hairdresser',
+//     href: '/',
+//   },
+//   {
+//     name: 'Kristen Ramos',
+//     isAvailable: true,
+//     status: 'Available',
+//     time: '9:00am',
+//     avatarUrl:
+//       'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//     address: '56 Larissa Court, Neds Corner, Victoria, Australia',
+//     type: 'Holiday Park',
+//     href: '/',
+//   },
+//   {
+//     name: 'Ted Fox',
+//     isAvailable: false,
+//     status: 'Not Available',
+//     time: '7:00pm',
+//     avatarUrl:
+//       'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//     address: '50 McPherson Road, Tallangatta, Victoria, Australia',
+//     type: 'Accountant',
+//     href: '/',
+//   },
+// ]
 const result = [
   {
     name: 'Ricardo Cooper',
@@ -42,7 +77,7 @@ const result = [
     avatarUrl:
       'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     address: '96 Bass Street, Bungabbee, New South Wales, Australia',
-    businessType: 'Hairdresser',
+    type: 'Hairdresser',
     href: '/',
   },
   {
@@ -53,7 +88,7 @@ const result = [
     avatarUrl:
       'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     address: '56 Larissa Court, Neds Corner, Victoria, Australia',
-    businessType: 'Holiday Park',
+    type: 'Holiday Park',
     href: '/',
   },
   {
@@ -64,50 +99,15 @@ const result = [
     avatarUrl:
       'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     address: '50 McPherson Road, Tallangatta, Victoria, Australia',
-    businessType: 'Accountant',
+    type: 'Accountant',
     href: '/',
   },
 ]
-// const result = [
-//   {
-//     name: 'Ricardo Cooper',
-//     isAvailable: true,
-//     status: 'Open',
-//     time: '8:00am',
-//     avatarUrl:
-//       'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-//     address: '96 Bass Street, Bungabbee, New South Wales, Australia',
-//     businessType: 'Hairdresser',
-//     href: '/',
-//   },
-//   {
-//     name: 'Kristen Ramos',
-//     isAvailable: true,
-//     status: 'Open',
-//     time: '9:00am',
-//     avatarUrl:
-//       'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-//     address: '56 Larissa Court, Neds Corner, Victoria, Australia',
-//     businessType: 'Holiday Park',
-//     href: '/',
-//   },
-//   {
-//     name: 'Ted Fox',
-//     isAvailable: false,
-//     status: 'Closed',
-//     time: '7:00pm',
-//     avatarUrl:
-//       'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-//     address: '50 McPherson Road, Tallangatta, Victoria, Australia',
-//     businessType: 'Accountant',
-//     href: '/',
-//   },
-// ]
 </script>
 
 <template>
   <section class="book-container">
-    <p class="text-lg md:text-xl text-gray-800 my-2">{{ props.title }}</p>
+    <p class="text-lg md:text-xl text-gray-800 my-3">{{ props.title }}</p>
     <div class="bg-white shadow overflow-hidden sm:rounded-md">
       <ul role="list" class="divide-y divide-gray-200">
         <li v-for="searchItem in result" :key="searchItem.status">
@@ -138,7 +138,7 @@ const result = [
                         {{ searchItem.address }}
                       </p>
                       <p class="mt-2 flex items-center text-sm text-gray-500">
-                        {{ searchItem.businessType }}
+                        {{ searchItem.type }}
                       </p>
                     </div>
                   </div>
