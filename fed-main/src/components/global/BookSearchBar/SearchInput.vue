@@ -159,7 +159,7 @@ watch(
     ref="searchCombobox"
     v-model="searchedItem"
     as="div"
-    class="transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all"
+    class="transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white sm:shadow-2xl ring-1 ring-black ring-opacity-5 transition-all"
     @update:model-value="onSelect"
   >
     <div class="relative">

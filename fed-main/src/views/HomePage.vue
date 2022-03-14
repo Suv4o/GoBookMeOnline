@@ -7,7 +7,7 @@ export default {
 <script setup lang="ts">
 import HeroSection from '../components/main/HeroSection.vue'
 import BookSearchBar from '../components/global/BookSearchBar/BookSearchBar.vue'
-import BookSearchList from '../components/global/BookSearchList/BookSearchList.vue'
+import SearchList from '../components/main/SearchList.vue'
 </script>
 
 <template>
@@ -17,8 +17,7 @@ import BookSearchList from '../components/global/BookSearchList/BookSearchList.v
       <book-search-bar />
     </div>
     <div class="absolute top-32 sm:top-20 md:top-24 h-full w-full z-10">
-      <book-search-list title="Locations" type="location" />
-      <book-search-list title="People" type="person" />
+      <search-list />
     </div>
   </div>
 </template>
