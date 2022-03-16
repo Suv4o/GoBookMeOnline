@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+  name: 'BookNewsletter',
+}
+</script>
+
 <template>
   <div class="py-16 sm:py-24">
     <div class="relative sm:py-16">
