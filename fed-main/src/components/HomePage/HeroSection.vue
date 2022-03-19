@@ -5,7 +5,24 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
+import gsap from 'gsap'
+import ScrollToPlugin from 'gsap/ScrollToPlugin'
 import NavBar from './NavBar.vue'
+
+onMounted(() => {
+  gsap.registerPlugin(ScrollToPlugin)
+})
+
+function scrollToSearch() {
+  gsap.to(window, {
+    duration: 1,
+    scrollTo: {
+      y: '#search-bar',
+      offsetY: 50,
+    },
+  })
+}
 </script>
 
 <template>
@@ -72,12 +89,12 @@ import NavBar from './NavBar.vue'
           </p>
           <div class="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
             <div class="rounded-md shadow">
-              <a
-                href="#"
+              <button
                 class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 md:py-4 md:text-lg md:px-10"
+                @click="scrollToSearch"
               >
                 Find your booking
-              </a>
+              </button>
             </div>
             <div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
               <a
