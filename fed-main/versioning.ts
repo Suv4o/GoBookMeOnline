@@ -11,7 +11,7 @@ const version = packageJson.version
 try {
   git.add('./package.json')
   git.commit(`Version bump to ${version}`)
-  git.addAnnotatedTag(version, `Increment version to ${version.substring(1, version.length)}`)
+  git.addAnnotatedTag(version, `Increment version to ${version}`)
 } catch (error) {
   console.error(error)
 }
