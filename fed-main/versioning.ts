@@ -10,8 +10,8 @@ const version = packageJson.version
 
 try {
   git.add('./package.json')
-  git.commit(`Version bump to ${version}`)
-  git.addAnnotatedTag(version, `Increment version to ${version}`)
+  git.commit(`fed-main version bump to ${version}`)
+  git.addAnnotatedTag(`fed-main-${version}`, `Frontend Main app has been increased to version: ${version}`)
 } catch (error) {
   console.error(error)
 }
