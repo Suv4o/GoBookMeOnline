@@ -8,10 +8,10 @@ const rawData = fs.readFileSync('package.json')
 const packageJson: Partial<PackageJson> = JSON.parse(rawData.toString())
 const version = packageJson.version
 
-console.log(`Current version: ${version}`)
-
-// try {
-//   git.addAnnotatedTag(version, `Increment version to ${version.substring(1, version.length)}`)
-// } catch (error) {
-//   console.error(error)
-// }
+try {
+  git.add('./package.json')
+  git.commit(`Version bump to ${version}`)
+  git.addAnnotatedTag(version, `Increment version to ${version.substring(1, version.length)}`)
+} catch (error) {
+  console.error(error)
+}
