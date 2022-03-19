@@ -10,10 +10,16 @@ import LocationInput from './LocationInput.vue'
 </script>
 
 <template>
-  <div class="flex flex-row mx-auto max-w-3xl">
-    <div class="basis-2/3 mr-4">
-      <search-input />
+  <section class="flex flex-col sm:flex-row book-container mb-10 md:mb-12">
+    <div class="basis-2/3 sm:mr-4 relative">
+      <div class="absolute w-full h-full z-20">
+        <search-input />
+      </div>
     </div>
-    <div class="basis-1/3"><location-input /></div>
-  </div>
+    <div class="basis-1/3 relative">
+      <div class="absolute w-full h-full top-14 sm:top-0 z-11">
+        <location-input />
+      </div>
+    </div>
+  </section>
 </template>

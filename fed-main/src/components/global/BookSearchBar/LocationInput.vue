@@ -39,16 +39,16 @@ function onSelect(location: any) {
   <Combobox
     v-model="selectedLocation"
     as="div"
-    class="mx-auto max-w-xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all"
+    class="transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all"
     @update:model-value="onSelect"
   >
     <div class="relative">
       <LocationMarkerIcon
-        class="pointer-events-none absolute top-3.5 left-4 h-7 w-6 text-gray-400"
+        class="pointer-events-none absolute top-3.5 left-3 md:left-4 h-5 w-5 md:h-7 md:w-6 text-gray-400"
         aria-hidden="true"
       />
       <ComboboxInput
-        class="h-14 w-full border-0 bg-transparent pl-12 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 text-sm sm:text-lg"
+        class="h-12 md:h-14 w-full border-0 bg-transparent pl-10 md:pl-12 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 text-md md:text-lg"
         placeholder="Suburb or postcode"
         @change="query = $event.target.value"
       />
