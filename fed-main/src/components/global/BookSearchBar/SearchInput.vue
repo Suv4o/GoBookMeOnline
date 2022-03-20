@@ -11,6 +11,7 @@ import { onClickOutside } from '@vueuse/core'
 import { SearchIcon } from '@heroicons/vue/solid'
 import { ChevronRightIcon, UsersIcon } from '@heroicons/vue/outline'
 import { Combobox, ComboboxInput, ComboboxOptions, ComboboxOption } from '@headlessui/vue'
+import { Assertions } from '../../../../types/guards'
 
 const people = [
   {
@@ -140,6 +141,22 @@ function search(event: Event) {
   unsetDropdownSearch()
 }
 
+function onFocus() {
+  setDropdownSearch()
+  scrollTo()
+}
+
+function scrollTo() {
+  const searchBar = document.getElementById('search-bar')
+
+  Assertions.isHTMLElement(searchBar)
+
+  window.scrollTo({
+    top: searchBar.getBoundingClientRect().top + window.scrollY - 35,
+    behavior: 'smooth',
+  })
+}
+
 onClickOutside(searchCombobox, event => {
   searchedItem.value = query.value
   unsetDropdownSearch()
@@ -171,7 +188,7 @@ watch(
         ref="searchInput"
         class="h-12 md:h-14 w-full border-0 bg-transparent pl-10 md:pl-12 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 text-md md:text-lg"
         placeholder="Search..."
-        @focus="setDropdownSearch"
+        @focus="onFocus"
         @keyup.enter="search"
         @change="query = $event.target.value"
       />

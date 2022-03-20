@@ -8,6 +8,7 @@ export default {
 import { computed, ref, watch } from 'vue'
 import { LocationMarkerIcon } from '@heroicons/vue/solid'
 import { Combobox, ComboboxInput, ComboboxOptions, ComboboxOption } from '@headlessui/vue'
+import { Assertions } from '../../../../types/guards'
 
 const locations = [{ id: 1, suburb: 'Leslie Alexander' }]
 
@@ -33,6 +34,17 @@ function onSelect(location: any) {
   query.value = location.suburb
   isLocationSelected.value = true
 }
+
+function scrollTo() {
+  const searchBar = document.getElementById('search-bar')
+
+  Assertions.isHTMLElement(searchBar)
+
+  window.scrollTo({
+    top: searchBar.getBoundingClientRect().top + window.scrollY - 35,
+    behavior: 'smooth',
+  })
+}
 </script>
 
 <template>
@@ -50,6 +62,7 @@ function onSelect(location: any) {
       <ComboboxInput
         class="h-12 md:h-14 w-full border-0 bg-transparent pl-10 md:pl-12 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 text-md md:text-lg"
         placeholder="Suburb or postcode"
+        @focus="scrollTo"
         @change="query = $event.target.value"
       />
     </div>

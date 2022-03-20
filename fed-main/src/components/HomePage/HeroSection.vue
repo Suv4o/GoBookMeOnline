@@ -5,23 +5,14 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import gsap from 'gsap'
-import ScrollToPlugin from 'gsap/ScrollToPlugin'
+import { Assertions } from '../../../types/guards'
 import NavBar from './NavBar.vue'
 
-onMounted(() => {
-  gsap.registerPlugin(ScrollToPlugin)
-})
+function focusSearchInput() {
+  const searchBar: HTMLElement | null = document.querySelector('#search-bar input')
 
-function scrollToSearch() {
-  gsap.to(window, {
-    duration: 1,
-    scrollTo: {
-      y: '#search-bar',
-      offsetY: 50,
-    },
-  })
+  Assertions.isHTMLElement(searchBar)
+  searchBar.focus()
 }
 </script>
 
@@ -91,7 +82,7 @@ function scrollToSearch() {
             <div class="rounded-md shadow">
               <button
                 class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 md:py-4 md:text-lg md:px-10"
-                @click="scrollToSearch"
+                @click="focusSearchInput"
               >
                 Find your booking
               </button>
