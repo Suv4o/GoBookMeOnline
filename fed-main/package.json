@@ -12,8 +12,8 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "format": "prettier .  --write",
     "version--patch": "npm version patch && tsc versioning.ts && node versioning.js",
-    "version--minor": "npm version minor",
-    "version--major": "npm version major"
+    "version--minor": "npm version minor && tsc versioning.ts && node versioning.js",
+    "version--major": "npm version major && tsc versioning.ts && node versioning.js"
   },
   "dependencies": {
     "@headlessui/vue": "^1.5.0",

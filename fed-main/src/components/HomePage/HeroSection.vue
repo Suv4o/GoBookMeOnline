@@ -5,7 +5,15 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { Assertions } from '../../../types/guards'
 import NavBar from './NavBar.vue'
+
+function focusSearchInput() {
+  const searchBar: HTMLElement | null = document.querySelector('#search-bar input')
+
+  Assertions.isHTMLElement(searchBar)
+  searchBar.focus()
+}
 </script>
 
 <template>
@@ -72,12 +80,12 @@ import NavBar from './NavBar.vue'
           </p>
           <div class="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
             <div class="rounded-md shadow">
-              <a
-                href="#"
+              <button
                 class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 md:py-4 md:text-lg md:px-10"
+                @click="focusSearchInput"
               >
                 Find your booking
-              </a>
+              </button>
             </div>
             <div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
               <a
