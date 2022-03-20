@@ -7,7 +7,9 @@ module.exports = {
     'vue/setup-compiler-macros': true,
   },
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:vue/vue3-recommended', 'prettier'],
-  rules: {},
+  rules: {
+    '@typescript-eslint/no-namespace': 'off',
+  },
   parser: 'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser',

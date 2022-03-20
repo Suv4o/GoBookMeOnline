@@ -15,7 +15,7 @@ import BookFooter from '../components/global/BookFooter/BookFooter.vue'
 <template>
   <hero-section />
   <div class="relative">
-    <div class="relative w-full z-20">
+    <div id="search-bar" class="relative w-full z-20">
       <book-search-bar />
     </div>
     <div class="relative pt-24 sm:pt-12 md:pt-14 w-full z-10">
