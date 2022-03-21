@@ -18,7 +18,7 @@ import { MenuIcon, XIcon } from '@heroicons/vue/outline'
               <span class="sr-only">Go Book Me Online</span>
               <div class="flex items-center">
                 <img class="h-8 w-auto sm:h-10" src="../../assets/images/logo.svg" alt="" />
-                <p class="sm:ml-4 ml-2 sm:text-lg font-semibold">GoBookMe.Online</p>
+                <p class="sm:ml-4 ml-2 sm:text-lg font-semibold">GoBookMe.Today</p>
               </div>
             </a>
             <div class="-mr-2 flex items-center md:hidden">
@@ -63,7 +63,7 @@ import { MenuIcon, XIcon } from '@heroicons/vue/outline'
           <div class="px-5 pt-4 mb-4 flex items-center justify-between">
             <div class="flex items-center">
               <img class="h-8 w-auto" src="../../assets/images/logo.svg" alt="" />
-              <p class="ml-2 font-semibold">GoBookMe.Online</p>
+              <p class="ml-2 font-semibold">GoBookMe.Today</p>
             </div>
             <div class="-mr-2">
               <PopoverButton
