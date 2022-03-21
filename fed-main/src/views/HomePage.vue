@@ -8,8 +8,6 @@ export default {
 import HeroSection from '../components/HomePage/HeroSection.vue'
 import BookSearchBar from '../components/global/BookSearchBar/BookSearchBar.vue'
 import SearchList from '../components/HomePage/SearchList.vue'
-import BookNewsletter from '../components/global/BookNewsletter/BookNewsletter.vue'
-import BookFooter from '../components/global/BookFooter/BookFooter.vue'
 </script>
 
 <template>
@@ -22,6 +20,4 @@ import BookFooter from '../components/global/BookFooter/BookFooter.vue'
       <search-list />
     </div>
   </div>
-  <book-newsletter />
-  <book-footer />
 </template>
