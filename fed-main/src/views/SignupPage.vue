@@ -1,5 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import HeroSection from '../components/SignupPage/HeroSection.vue'
+</script>
 
 <template>
-  <div>Search</div>
+  <hero-section />
 </template>

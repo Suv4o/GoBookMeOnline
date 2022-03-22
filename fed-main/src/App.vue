@@ -5,8 +5,26 @@ import BookFooter from './components/global/BookFooter/BookFooter.vue'
 
 <template>
   <main>
-    <router-view></router-view>
+    <router-view v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <div :key="Date.now()">
+          <component :is="Component" />
+        </div>
+      </transition>
+    </router-view>
     <book-newsletter />
   </main>
   <book-footer />
 </template>
+
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
