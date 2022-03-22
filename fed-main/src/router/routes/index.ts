@@ -1,5 +1,6 @@
-import HomePage from '../../views/HomePage.vue'
-
-const routes = [{ path: '/', component: HomePage }]
+const routes = [
+  { path: '/', component: () => import('../../views/HomePage.vue') },
+  { path: '/signup', component: () => import('../../views/SignupPage.vue') },
+]
 
 export default routes
