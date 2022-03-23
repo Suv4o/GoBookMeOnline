@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import BookNewsletter from './components/global/BookNewsletter/BookNewsletter.vue'
-import BookFooter from './components/global/BookFooter/BookFooter.vue'
-import BookMainNav from './components/global/BookMainNav/BookMainNav.vue'
+import DefaultNewsletter from './components/default/DefaultNewsletter/DefaultNewsletter.vue'
+import DefaultFooter from './components/default/DefaultFooter/DefaultFooter.vue'
+import DefaultMainNav from './components/default/DefaultMainNav/DefaultMainNav.vue'
 import { uniqKey } from './utils/helpers'
 </script>
 
 <template>
   <div class="absolute pt-6 top-0 left-0 w-full z-10">
-    <book-main-nav />
+    <default-main-nav />
   </div>
   <main>
     <router-view v-slot="{ Component }">
@@ -17,9 +17,9 @@ import { uniqKey } from './utils/helpers'
         </div>
       </transition>
     </router-view>
-    <book-newsletter />
+    <default-newsletter />
   </main>
-  <book-footer />
+  <default-footer />
 </template>
 
 <style>

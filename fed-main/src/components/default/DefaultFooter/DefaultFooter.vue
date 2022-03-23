@@ -1,6 +1,6 @@
 <script lang="ts">
 export default {
-  name: 'BookFooter',
+  name: 'DefaultFooter',
 }
 </script>
 
@@ -51,7 +51,7 @@ const navigation = {
 </script>
 
 <template>
-  <div class="book-container">
+  <div class="default-container">
     <footer>
       <div class="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
         <nav class="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">

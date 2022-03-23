@@ -1,6 +1,6 @@
 <script lang="ts">
 export default {
-  name: 'BookMainNav',
+  name: 'DefaultMainNav',
 }
 </script>
 <script setup lang="ts">

@@ -8,7 +8,7 @@ export default {
 
 <template>
   <div class="relative overflow-hidden">
-    <div class="book-container hidden sm:block sm:absolute sm:inset-0" aria-hidden="true">
+    <div class="default-container hidden sm:block sm:absolute sm:inset-0" aria-hidden="true">
       <svg
         class="absolute bottom-0 right-0 transform translate-x-1/2 mb-48 text-gray-700 lg:top-0 lg:mt-28 lg:mb-0 xl:transform-none xl:translate-x-0"
         width="364"
@@ -32,8 +32,8 @@ export default {
       </svg>
     </div>
     <div class="relative pt-16 pb-16 sm:pb-24">
-      <!-- <book-main-nav /> -->
-      <div class="mt-16 book-container sm:mt-24">
+      <!-- <defaultmain-nav /> -->
+      <div class="mt-16 default-container sm:mt-24">
         <div class="lg:grid lg:grid-cols-12 lg:gap-8">
           <div
             class="px-4 sm:px-6 sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left lg:flex lg:items-center"

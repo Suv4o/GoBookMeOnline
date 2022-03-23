@@ -5,14 +5,14 @@ export default {
 </script>
 
 <script setup lang="ts">
-import BookSearchList from '../global/BookSearchList/BookSearchList.vue'
-import BookPagination from '../global/BookPagination/BookPagination.vue'
+import DefaultSearchList from '../default/DefaultSearchList/DefaultSearchList.vue'
+import DefaultPagination from '../default/DefaultPagination/DefaultPagination.vue'
 </script>
 
 <template>
-  <book-search-list title="Locations" type="location" />
-  <book-search-list title="People" type="person" />
+  <default-search-list title="Locations" type="location" />
+  <default-search-list title="People" type="person" />
   <div class="mt-4">
-    <book-pagination />
+    <default-pagination />
   </div>
 </template>
