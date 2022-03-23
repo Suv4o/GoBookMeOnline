@@ -5,13 +5,13 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { VueRefTargetElement } from '../../../../types/interfaces'
+import { VueRefTargetElement } from '../../../types/interfaces'
 import { computed, ref, reactive, onMounted, onUnmounted, watch } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { SearchIcon } from '@heroicons/vue/solid'
 import { ChevronRightIcon, UsersIcon } from '@heroicons/vue/outline'
 import { Combobox, ComboboxInput, ComboboxOptions, ComboboxOption } from '@headlessui/vue'
-import { Assertions } from '../../../../types/guards'
+import { Assertions } from '../../../types/guards'
 
 const people = [
   {

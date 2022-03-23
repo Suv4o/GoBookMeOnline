@@ -32,16 +32,16 @@ import { MenuIcon, XIcon } from '@heroicons/vue/outline'
           </div>
         </div>
         <div class="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0">
-          <span class="inline-flex rounded-md shadow">
+          <span class="inline-flex rounded-md">
             <router-link
               :to="{ name: 'home' }"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-teal-600 bg-white hover:bg-gray-50"
+              class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-teal-600 bg-white hover:bg-gray-50 shadow"
             >
               Sign in
             </router-link>
             <router-link
               :to="{ name: 'signup' }"
-              class="inline-flex items-center px-4 py-2 ml-4 border border-transparent text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700"
+              class="inline-flex items-center px-4 py-2 ml-4 border border-transparent text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 shadow"
             >
               Sign up
             </router-link>
@@ -62,7 +62,7 @@ import { MenuIcon, XIcon } from '@heroicons/vue/outline'
         <div class="rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden">
           <div class="px-5 pt-4 mb-4 flex items-center justify-between">
             <div class="flex items-center">
-              <img class="h-8 w-auto" src="../../assets/images/logo.svg" alt="" />
+              <img class="h-8 w-auto" src="../../../assets/images/logo.svg" alt="" />
               <p class="ml-2 font-semibold">GoBookMe.Today</p>
             </div>
             <div class="-mr-2">

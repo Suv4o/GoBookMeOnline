@@ -8,7 +8,7 @@ export default {
 import { computed, ref, watch } from 'vue'
 import { LocationMarkerIcon } from '@heroicons/vue/solid'
 import { Combobox, ComboboxInput, ComboboxOptions, ComboboxOption } from '@headlessui/vue'
-import { Assertions } from '../../../../types/guards'
+import { Assertions } from '../../../types/guards'
 
 const locations = [{ id: 1, suburb: 'Leslie Alexander' }]
 
