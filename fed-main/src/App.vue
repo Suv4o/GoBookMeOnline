@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import DefaultNewsletter from './components/default/DefaultNewsletter/DefaultNewsletter.vue'
-import DefaultFooter from './components/default/DefaultFooter/DefaultFooter.vue'
-import DefaultMainNav from './components/default/DefaultMainNav/DefaultMainNav.vue'
+import DefaultNewsletter from './components/Default/DefaultNewsletter/DefaultNewsletter.vue'
+import DefaultFooter from './components/Default/DefaultFooter/DefaultFooter.vue'
+import DefaultMainNav from './components/Default/DefaultMainNav/DefaultMainNav.vue'
 import { uniqKey } from './utils/helpers'
 </script>
 

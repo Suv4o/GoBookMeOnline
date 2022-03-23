@@ -6,7 +6,7 @@ export default {
 
 <script setup lang="ts">
 import HeroSection from '../components/HomePage/HeroSection.vue'
-import DefaultSearchBar from '../components/default/DefaultSearchBar/DefaultSearchBar.vue'
+import DefaultSearchBar from '../components/Default/DefaultSearchBar/DefaultSearchBar.vue'
 import SearchList from '../components/HomePage/SearchList.vue'
 </script>
 

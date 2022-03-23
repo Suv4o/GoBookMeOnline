@@ -5,8 +5,8 @@ export default {
 </script>
 
 <script setup lang="ts">
-import DefaultSearchList from '../default/DefaultSearchList/DefaultSearchList.vue'
-import DefaultPagination from '../default/DefaultPagination/DefaultPagination.vue'
+import DefaultSearchList from '../Default/DefaultSearchList/DefaultSearchList.vue'
+import DefaultPagination from '../Default/DefaultPagination/DefaultPagination.vue'
 </script>
 
 <template>
