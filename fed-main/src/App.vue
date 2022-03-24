@@ -1,14 +1,9 @@
 <script setup lang="ts">
-import DefaultNewsletter from './components/Default/DefaultNewsletter/DefaultNewsletter.vue'
-import DefaultFooter from './components/Default/DefaultFooter/DefaultFooter.vue'
-import DefaultMainNav from './components/Default/DefaultMainNav/DefaultMainNav.vue'
 import { uniqKey } from './utils/helpers'
 </script>
 
 <template>
-  <div class="absolute pt-6 top-0 left-0 w-full z-10">
-    <default-main-nav />
-  </div>
+  <router-view class="absolute pt-6 top-0 left-0 w-full z-10" name="DefaultMainNav" />
   <main>
     <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">
@@ -17,9 +12,9 @@ import { uniqKey } from './utils/helpers'
         </div>
       </transition>
     </router-view>
-    <default-newsletter />
+    <router-view name="DefaultNewsletter" />
   </main>
-  <default-footer />
+  <router-view name="DefaultFooter" />
 </template>
 
 <style>
