@@ -6,7 +6,7 @@ export default {
 
 <script setup lang="ts">
 import HeroSection from '../components/HomePage/HeroSection.vue'
-import BookSearchBar from '../components/global/BookSearchBar/BookSearchBar.vue'
+import DefaultSearchBar from '../components/Default/DefaultSearchBar/DefaultSearchBar.vue'
 import SearchList from '../components/HomePage/SearchList.vue'
 </script>
 
@@ -14,7 +14,7 @@ import SearchList from '../components/HomePage/SearchList.vue'
   <hero-section />
   <div class="relative">
     <div id="search-bar" class="relative w-full z-20">
-      <book-search-bar />
+      <default-search-bar />
     </div>
     <div class="relative pt-24 sm:pt-12 md:pt-14 w-full z-10">
       <search-list />

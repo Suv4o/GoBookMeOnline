@@ -10,7 +10,7 @@
 }
 
 @layer components {
-  .book-container {
+  .default-container {
     @apply mx-auto max-w-7xl px-4;
   }
 }

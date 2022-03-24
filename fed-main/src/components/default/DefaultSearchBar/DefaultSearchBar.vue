@@ -1,6 +1,6 @@
 <script lang="ts">
 export default {
-  name: 'BookSearchBar',
+  name: 'DefaultSearchBar',
 }
 </script>
 
@@ -10,7 +10,7 @@ import LocationInput from './LocationInput.vue'
 </script>
 
 <template>
-  <section class="flex flex-col sm:flex-row book-container mb-10 md:mb-12">
+  <section class="flex flex-col sm:flex-row default-container mb-10 md:mb-12">
     <div class="basis-2/3 sm:mr-4 relative">
       <div class="absolute w-full h-full z-20">
         <search-input />
