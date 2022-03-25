@@ -1,11 +1,11 @@
 <script lang="ts">
 export default {
-  name: 'SignupPage',
+  name: 'SigninPage',
 }
 </script>
 
 <script setup lang="ts">
-import HeroSection from '../components/SignupPage/HeroSection.vue'
+import HeroSection from '../components/SigninPage/HeroSection.vue'
 </script>
 
 <template>

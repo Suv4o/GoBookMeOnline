@@ -34,7 +34,7 @@ import { MenuIcon, XIcon } from '@heroicons/vue/outline'
         <div class="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0">
           <span class="inline-flex rounded-md">
             <router-link
-              :to="{ name: 'home' }"
+              :to="{ name: 'signin' }"
               class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-teal-600 bg-white hover:bg-gray-50 shadow"
             >
               Sign in
@@ -74,12 +74,15 @@ import { MenuIcon, XIcon } from '@heroicons/vue/outline'
               </PopoverButton>
             </div>
           </div>
-          <a href="#" class="block w-full px-5 py-3 text-center font-medium text-white bg-teal-600 hover:bg-teal-700">
+          <router-link
+            :to="{ name: 'signup' }"
+            class="block w-full px-5 py-3 text-center font-medium text-white bg-teal-600 hover:bg-teal-700"
+          >
             Sign up
-          </a>
+          </router-link>
           <p class="my-4 text-center text-base font-medium text-gray-500">
             Existing customer?
-            <a href="#" class="text-teal-600 hover:text-teal-500"> Sign in </a>
+            <router-link :to="{ name: 'signin' }" class="text-teal-600 hover:text-teal-500"> Sign in </router-link>
           </p>
         </div>
       </PopoverPanel>
