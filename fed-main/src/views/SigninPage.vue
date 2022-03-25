@@ -4,6 +4,10 @@ export default {
 }
 </script>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import HeroSection from '../components/SigninPage/HeroSection.vue'
+</script>
 
-<template>Sign in</template>
+<template>
+  <hero-section />
+</template>
