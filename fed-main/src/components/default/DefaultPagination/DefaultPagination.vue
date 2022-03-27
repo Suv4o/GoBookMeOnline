@@ -1,6 +1,6 @@
 <script lang="ts">
 export default {
-  name: 'BookPagination',
+  name: 'DefaultPagination',
 }
 </script>
 
@@ -9,7 +9,7 @@ import { ArrowNarrowLeftIcon, ArrowNarrowRightIcon } from '@heroicons/vue/solid'
 </script>
 
 <template>
-  <div class="book-container">
+  <div class="default-container">
     <nav class="border-t border-gray-200 px-4 flex items-center justify-between sm:px-0">
       <div class="-mt-px w-0 flex-1 flex">
         <a

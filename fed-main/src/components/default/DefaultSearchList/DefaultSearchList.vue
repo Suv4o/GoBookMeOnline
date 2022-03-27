@@ -1,6 +1,6 @@
 <script lang="ts">
 export default {
-  name: 'BookSearchList',
+  name: 'DefaultSearchList',
 }
 </script>
 
@@ -149,7 +149,7 @@ const result = [
 </script>
 
 <template>
-  <section class="book-container">
+  <section class="default-container">
     <p class="text-lg md:text-xl text-gray-800 my-3">{{ props.title }}</p>
     <div class="bg-white shadow overflow-hidden sm:rounded-md">
       <ul role="list" class="divide-y divide-gray-200">
