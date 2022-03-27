@@ -12,9 +12,21 @@ import { uniqKey } from './utils/helpers'
         </div>
       </transition>
     </router-view>
-    <router-view name="DefaultNewsletter" />
+    <router-view v-slot="{ Component }" name="DefaultNewsletter">
+      <transition name="fade" mode="out-in">
+        <div :key="uniqKey()">
+          <component :is="Component" />
+        </div>
+      </transition>
+    </router-view>
   </main>
-  <router-view name="DefaultFooter" />
+  <router-view v-slot="{ Component }" name="DefaultFooter">
+    <transition name="fade" mode="out-in">
+      <div :key="uniqKey()">
+        <component :is="Component" />
+      </div>
+    </transition>
+  </router-view>
 </template>
 
 <style>

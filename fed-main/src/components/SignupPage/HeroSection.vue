@@ -45,7 +45,7 @@ import SignupForm from './SignupForm.vue'
               >
                 <span class="md:block">Go and Book Me</span>
                 {{ ' ' }}
-                <span class="text-teal-600 md:block">today</span>
+                <span class="text-teal-600 md:block">Today</span>
               </h1>
               <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                 Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
