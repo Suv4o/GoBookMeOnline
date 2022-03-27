@@ -6,6 +6,8 @@
   html,
   body {
     @apply bg-gray-50;
+    @apply selection:bg-teal-500;
+    @apply selection:text-white;
   }
 }
 

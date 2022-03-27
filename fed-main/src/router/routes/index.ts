@@ -29,6 +29,13 @@ const routes = [
       DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
     },
   },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'notFound',
+    components: {
+      default: () => import('../../views/NotFoundPage.vue'),
+    },
+  },
 ]
 
 export default routes
