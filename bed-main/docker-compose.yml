@@ -1,0 +1,10 @@
+version: '3'
+services:
+  database:
+    image: 'postgres:14.3'
+    ports:
+      - 5432:5432
+    env_file:
+      - ./env/prod.env
+    volumes:
+      - ./db-data/:/var/lib/postgresql/data/
