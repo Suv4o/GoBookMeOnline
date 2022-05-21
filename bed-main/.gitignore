@@ -2,8 +2,12 @@
 /dist
 /node_modules
 
-# Environment variables
+# environment variables
 /env
+
+# database
+/db-data
+
 
 # Logs
 logs
