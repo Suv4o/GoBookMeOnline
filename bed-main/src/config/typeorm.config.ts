@@ -8,8 +8,8 @@ export default class TypeOrmConfig {
   static getOrmConfig(configService: ConfigService): TypeOrmModuleOptions {
     return {
       type: 'postgres',
-      host: String(configService.get('TYPEORM_HOST')),
-      port: Number(configService.get('TYPEORM_PORT')),
+      host: String(configService.get('POSTGRES_HOST')),
+      port: Number(configService.get('POSTGRES_PORT')),
       username: String(configService.get('POSTGRES_USER')),
       password: String(configService.get('POSTGRES_PASSWORD')),
       database: String(configService.get('POSTGRES_DB')),
