@@ -24,8 +24,8 @@
     "version--minor": "npm version minor && tsc versioning.ts && node versioning.js",
     "version--major": "npm version major && tsc versioning.ts && node versioning.js",
     "typeorm": "cross-env NODE_ENV=dev typeorm-ts-node-esm -d ormconfig.ts",
-    "schema:create": "cross-env NODE_ENV=dev tsc fixtures/database.ts && ts-node fixtures/database.ts create",
-    "schema:drop": "cross-env NODE_ENV=dev tsc fixtures/database.ts && ts-node fixtures/database.ts drop"
+    "schema:create": "cross-env NODE_ENV=dev ts-node fixtures/database.ts create",
+    "schema:drop": "cross-env NODE_ENV=dev ts-node fixtures/database.ts drop"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",

@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import * as dotenv from 'dotenv';
 import * as yargs from 'yargs';
-import * as fs from 'fs';
 import { Pool } from 'pg';
 dotenv.config({ path: `../env/${process.env.NODE_ENV}.env` });
 
