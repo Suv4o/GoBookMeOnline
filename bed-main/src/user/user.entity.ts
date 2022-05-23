@@ -1,16 +1,13 @@
-import { Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
+import { Column, PrimaryColumn, Entity } from 'typeorm';
 import { Roles } from '../shared/types';
 
 @Entity('user')
 export class UserEntity {
-  @PrimaryGeneratedColumn('increment', { type: 'bigint' })
-  id: number;
+  @PrimaryColumn('varchar', { length: 36 })
+  id: string;
 
   @Column({ unique: true, nullable: false })
   email: string;
-
-  @Column()
-  password: string;
 
   @Column({ nullable: false })
   firstName: string;
@@ -18,6 +15,6 @@ export class UserEntity {
   @Column({ nullable: false })
   lastName: string;
 
-  @Column({ type: 'enum', enum: Roles })
+  @Column({ type: 'enum', enum: Roles, nullable: false })
   role: string;
 }
