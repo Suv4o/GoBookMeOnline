@@ -3,8 +3,8 @@ import { Repository } from 'typeorm';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { FirebaseAdmin } from '../config/firebase.config';
 import { FirebaseUserRecord } from '../shared/types';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './user.entity';
+import { CreateUserEmailPasswordDto } from './dto/create-user-email-password.dto';
 
 @Injectable()
 export class UserService {
@@ -14,8 +14,8 @@ export class UserService {
     private readonly firebase: FirebaseAdmin,
   ) {}
 
-  async createUser(
-    createUserRequest: CreateUserDto,
+  async createUserEmailAndPassword(
+    createUserRequest: CreateUserEmailPasswordDto,
   ): Promise<FirebaseUserRecord> {
     const { email, password, firstName, lastName, role } = createUserRequest;
     const firebase = this.firebase.setup();

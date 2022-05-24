@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 import { Roles } from '../../shared/types';
 
-export class CreateUserDto {
+export class CreateUserEmailPasswordDto {
   @IsEmail()
   @IsNotEmpty()
   email: string;
