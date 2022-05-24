@@ -4,7 +4,12 @@ export default {
 }
 </script>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { inject } from 'vue'
+const $auth = inject('$auth')
+console.log($auth)
+</script>
+
 <template>
   <div class="bg-white sm:max-w-md sm:w-full sm:mx-auto sm:rounded-lg sm:overflow-hidden">
     <div class="px-4 py-8 sm:px-10">
