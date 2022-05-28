@@ -5,9 +5,30 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { Auth, User } from '@firebase/auth'
+import { Assertions } from '../../types/guards'
 import { inject } from 'vue'
-const $auth = inject('$auth')
-console.log($auth)
+
+const googleProvider = new GoogleAuthProvider()
+const $auth = inject('$auth') as Auth
+
+async function signInWithGoogle() {
+  try {
+    const result = await signInWithPopup($auth, googleProvider)
+    const user = result.user
+    storeUserToDatabase(user)
+  } catch (error) {
+    Assertions.isFirebaseError(error)
+    const code = error.code
+    const message = error.message
+    const credential = GoogleAuthProvider.credentialFromError(error)
+    console.error(`Code: ${code}, Message: ${message}, Credential: ${credential}`)
+  }
+}
+async function storeUserToDatabase(user: User) {
+  console.log('Storing user to database...', user)
+}
 </script>
 
 <template>
@@ -35,8 +56,9 @@ console.log($auth)
 
           <div>
             <a
-              href="#"
+              href="javascript:;"
               class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              @click="signInWithGoogle"
             >
               <span class="sr-only">Sign in with Google</span>
               <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 210 210">

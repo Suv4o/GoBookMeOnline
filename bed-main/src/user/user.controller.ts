@@ -13,4 +13,9 @@ export class UserController {
   ): Promise<FirebaseUserRecord> {
     return this.userService.createUserEmailAndPassword(createUserRequest);
   }
+
+  @Post('signup-with-provider')
+  signUpProvider() {
+    return 'Hello!';
+  }
 }

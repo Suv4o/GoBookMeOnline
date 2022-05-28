@@ -1,5 +1,5 @@
-### Signup User
-POST http://localhost:3001/api/user/signup-email-and-password HTTP/1.1
+### Signup User with Email and Password
+POST {{baseUrl}}/api/user/signup-email-and-password HTTP/1.1
 Content-Type: application/json
 
 {
@@ -9,3 +9,10 @@ Content-Type: application/json
     "lastName": "Bar",
     "role": "USER_DEFAULT"
 }
+
+### Signup User with a Provider
+POST {{baseUrl}}/api/user/signup-with-provider HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{}
