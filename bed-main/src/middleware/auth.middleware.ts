@@ -1,6 +1,7 @@
 import {
   ForbiddenException,
   Injectable,
+  Logger,
   NestMiddleware,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -10,6 +11,7 @@ import { FirebaseAdmin } from '../config/firebase.config';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
+  private readonly logger = new Logger('AuthMiddleware');
   constructor(private readonly firebase: FirebaseAdmin) {}
   async use(req: ExpressRequest, res: Response, next: NextFunction) {
     const firebase = this.firebase.setup();
@@ -28,7 +30,7 @@ export class AuthMiddleware implements NestMiddleware {
       req.user = user;
       next();
     } catch (error) {
-      console.log(error);
+      this.logger.error(error);
       throw new UnauthorizedException('Invalid access token!');
     }
   }

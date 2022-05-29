@@ -1,6 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { FirebaseAdmin } from '../config/firebase.config';
 import { FirebaseUserRecord, Roles } from '../shared/types';
 import { UserEntity } from './user.entity';
@@ -8,6 +8,7 @@ import { CreateUserEmailPasswordDto } from './dto/create-user-email-password.dto
 
 @Injectable()
 export class UserService {
+  private readonly logger = new Logger('UserService');
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
@@ -44,7 +45,7 @@ export class UserService {
 
       return createdUser;
     } catch (error) {
-      console.log(error);
+      this.logger.error(error);
       throw new BadRequestException('Error creating user!');
     }
   }
@@ -77,7 +78,7 @@ export class UserService {
 
       return updatedUser;
     } catch (error) {
-      console.log(error);
+      this.logger.error(error);
       throw new BadRequestException('Error creating user!');
     }
   }
