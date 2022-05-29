@@ -1,9 +1,15 @@
+import { Request } from 'express';
 import * as firebaseAdminTypes from 'firebase-admin';
 
+export interface ExpressRequest extends Request {
+  user: FirebaseUserRecord;
+}
 export interface FirebaseUserRecord extends firebaseAdminTypes.auth.UserRecord {
-  firstName: string;
-  lastName: string;
-  role: string;
+  customClaims: {
+    firstName: string;
+    lastName: string;
+    role: string;
+  };
 }
 
 export enum Roles {

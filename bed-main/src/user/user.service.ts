@@ -2,7 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { FirebaseAdmin } from '../config/firebase.config';
-import { FirebaseUserRecord } from '../shared/types';
+import { FirebaseUserRecord, Roles } from '../shared/types';
 import { UserEntity } from './user.entity';
 import { CreateUserEmailPasswordDto } from './dto/create-user-email-password.dto';
 
@@ -17,10 +17,11 @@ export class UserService {
   async createUserEmailAndPassword(
     createUserRequest: CreateUserEmailPasswordDto,
   ): Promise<FirebaseUserRecord> {
-    const { email, password, firstName, lastName, role } = createUserRequest;
-    const firebase = this.firebase.setup();
-
     try {
+      const { email, password, firstName, lastName } = createUserRequest;
+      const role = Roles.USER_DEFAULT;
+      const firebase = this.firebase.setup();
+
       const createdUser = (await firebase.auth().createUser({
         email,
         password,
@@ -43,7 +44,41 @@ export class UserService {
 
       return createdUser;
     } catch (error) {
-      throw new BadRequestException(error.message);
+      console.log(error);
+      throw new BadRequestException('Error creating user!');
+    }
+  }
+  async createUserWithProvider(
+    currentUser: FirebaseUserRecord,
+  ): Promise<FirebaseUserRecord> {
+    try {
+      const { uid, email, displayName } = currentUser;
+      const [firstName, lastName] = displayName.split(' ');
+      const role = Roles.USER_DEFAULT;
+      const firebase = this.firebase.setup();
+
+      await firebase
+        .auth()
+        .setCustomUserClaims(uid, { firstName, lastName, role });
+
+      const userToSave = this.userRepository.create({
+        id: uid,
+        email,
+        firstName,
+        lastName,
+        role,
+      });
+
+      await this.userRepository.save(userToSave);
+
+      const updatedUser = (await firebase
+        .auth()
+        .getUser(uid)) as FirebaseUserRecord;
+
+      return updatedUser;
+    } catch (error) {
+      console.log(error);
+      throw new BadRequestException('Error creating user!');
     }
   }
 }

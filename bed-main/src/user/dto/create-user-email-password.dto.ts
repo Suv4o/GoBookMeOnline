@@ -4,10 +4,8 @@ import {
   MaxLength,
   MinLength,
   Matches,
-  IsEnum,
   IsAlpha,
 } from 'class-validator';
-import { Roles } from '../../shared/types';
 
 export class CreateUserEmailPasswordDto {
   @IsEmail()
@@ -34,8 +32,4 @@ export class CreateUserEmailPasswordDto {
   @MaxLength(20, { message: 'Last name must be at most 20 characters long' })
   @IsAlpha()
   lastName: string;
-
-  @IsNotEmpty()
-  @IsEnum(Roles)
-  role: Roles;
 }

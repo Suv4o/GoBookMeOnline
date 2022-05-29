@@ -4,13 +4,9 @@ import {
   NestMiddleware,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
-import { FirebaseUserRecord } from '../shared/types';
+import { Response, NextFunction } from 'express';
+import { ExpressRequest, FirebaseUserRecord } from '../shared/types';
 import { FirebaseAdmin } from '../config/firebase.config';
-
-interface ExpressRequest extends Request {
-  user: FirebaseUserRecord;
-}
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
@@ -30,10 +26,10 @@ export class AuthMiddleware implements NestMiddleware {
       const user = (await firebase.auth().getUser(uid)) as FirebaseUserRecord;
 
       req.user = user;
-
       next();
     } catch (error) {
-      throw new UnauthorizedException(error.message);
+      console.log(error);
+      throw new UnauthorizedException('Invalid access token!');
     }
   }
 }

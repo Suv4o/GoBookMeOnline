@@ -1,5 +1,4 @@
 import { FirebaseError } from '@firebase/util'
-import { UserCredential, getRedirectResult } from '@firebase/auth'
 
 // Assertions
 export namespace Assertions {

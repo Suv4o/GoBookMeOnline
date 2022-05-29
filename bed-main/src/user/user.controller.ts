@@ -1,5 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { FirebaseUserRecord } from 'src/shared/types';
+import { CurrentUser } from '../shared/decorators/current-user.decorator';
+import { FirebaseUserRecord } from '../shared/types';
 import { CreateUserEmailPasswordDto } from './dto/create-user-email-password.dto';
 import { UserService } from './user.service';
 
@@ -8,14 +9,16 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('signup-email-and-password')
-  signUpEmailAndPassword(
+  signUpUserEmailAndPassword(
     @Body() createUserRequest: CreateUserEmailPasswordDto,
   ): Promise<FirebaseUserRecord> {
     return this.userService.createUserEmailAndPassword(createUserRequest);
   }
 
   @Post('signup-with-provider')
-  signUpProvider() {
-    return 'Hello!';
+  signUserUpProvider(
+    @CurrentUser() user: FirebaseUserRecord,
+  ): Promise<FirebaseUserRecord> {
+    return this.userService.createUserWithProvider(user);
   }
 }
