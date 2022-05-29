@@ -21,6 +21,7 @@
     "@tailwindcss/forms": "^0.5.1",
     "@vueuse/core": "^8.4.2",
     "firebase": "^9.8.1",
+    "pinia": "^2.0.14",
     "simple-git": "^3.7.1",
     "vue": "^3.2.33",
     "vue-router": "4.0.15"

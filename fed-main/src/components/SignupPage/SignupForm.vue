@@ -6,18 +6,22 @@ export default {
 
 <script setup lang="ts">
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
-import { Auth, User } from '@firebase/auth'
+import { Auth } from '@firebase/auth'
 import { Assertions } from '../../types/guards'
 import { inject } from 'vue'
 import { FirebaseUserResponse } from '../../types/interfaces'
+import { useAuthStore } from '../../store/auth'
+import { useFetch } from '../../utils/composables/fetch'
 
 const googleProvider = new GoogleAuthProvider()
 const $auth = inject('$auth') as Auth
+const useAuthState = useAuthStore()
 
 async function signInWithGoogle() {
   try {
     const result = await signInWithPopup($auth, googleProvider)
     const user = result.user as FirebaseUserResponse
+    storeAccessToken(user.accessToken)
     storeUserToDatabase(user)
   } catch (error) {
     Assertions.isFirebaseError(error)
@@ -27,23 +31,19 @@ async function signInWithGoogle() {
     console.error(`Code: ${code}, Message: ${message}, Credential: ${credential}`)
   }
 }
-async function storeUserToDatabase(user: FirebaseUserResponse) {
-  postData('http://localhost:3001/api/user/signup-with-provider', user.accessToken).then(data => {
-    console.log(data)
-  })
+
+function storeAccessToken(accessToken: string) {
+  useAuthState.accessToken = accessToken
 }
 
-async function postData(url = '', accessToken: string) {
-  // Default options are marked with *
-  const response = await fetch(url, {
+async function storeUserToDatabase(user: FirebaseUserResponse) {
+  const { error, data, isLoading } = await useFetch({
+    url: '/user/signup-with-provider',
     method: 'POST',
-    headers: {
-      // 'Content-Type': 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: 'Bearer ' + accessToken,
-    },
+    body: user,
   })
-  return response.json() // parses JSON response into native JavaScript objects
+  console.log(data.value)
+  console.log(error.value)
 }
 </script>
 
