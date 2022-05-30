@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import { useAuthStore } from '../../store/auth'
+import { auth } from '../../config/firebase.config'
 
 interface ResponseOptions {
   method: string
@@ -14,14 +15,15 @@ interface FetchOptions {
   url: string
   method: 'GET' | 'POST' | 'PUT' | 'DELETE'
   body: object
+  credentials: boolean
 }
 
-export async function useFetch(options: FetchOptions = { url: '', method: 'GET', body: {} }) {
+export async function useFetch(options: FetchOptions = { url: '', method: 'GET', body: {}, credentials: true }) {
   const data = ref(null)
   const error = ref(null)
   const isLoading = ref(false)
 
-  const { url, method, body } = options
+  const { url, method, body, credentials } = options
   const useAuthState = useAuthStore()
 
   const responseOptions: Partial<ResponseOptions> = {
@@ -31,8 +33,18 @@ export async function useFetch(options: FetchOptions = { url: '', method: 'GET',
     },
   }
 
-  if (responseOptions.headers && useAuthState.accessToken) {
-    responseOptions.headers.Authorization = `Bearer ${useAuthState.accessToken}`
+  if (responseOptions.headers && credentials) {
+    const currentTime = new Date().getTime()
+    const expirationTime = useAuthState.accessTokenExpirationTime
+
+    if (!useAuthState.accessToken || currentTime < expirationTime) {
+      const currentUser = auth.currentUser
+      if (currentUser) {
+        useAuthState.accessToken = await currentUser.getIdToken(true)
+        useAuthState.accessTokenExpirationTime = currentTime + 3600 * 1000 // +1 hour
+      }
+      responseOptions.headers.Authorization = `Bearer ${useAuthState.accessToken}`
+    }
   }
 
   if (body) {

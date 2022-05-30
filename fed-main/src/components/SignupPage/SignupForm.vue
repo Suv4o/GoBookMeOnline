@@ -10,18 +10,15 @@ import { Auth } from '@firebase/auth'
 import { Assertions } from '../../types/guards'
 import { inject } from 'vue'
 import { FirebaseUserResponse } from '../../types/interfaces'
-import { useAuthStore } from '../../store/auth'
 import { useFetch } from '../../utils/composables/fetch'
 
 const googleProvider = new GoogleAuthProvider()
 const $auth = inject('$auth') as Auth
-const useAuthState = useAuthStore()
 
 async function signInWithGoogle() {
   try {
     const result = await signInWithPopup($auth, googleProvider)
     const user = result.user as FirebaseUserResponse
-    storeAccessToken(user.accessToken)
     storeUserToDatabase(user)
   } catch (error) {
     Assertions.isFirebaseError(error)
@@ -32,18 +29,13 @@ async function signInWithGoogle() {
   }
 }
 
-function storeAccessToken(accessToken: string) {
-  useAuthState.accessToken = accessToken
-}
-
 async function storeUserToDatabase(user: FirebaseUserResponse) {
   const { error, data, isLoading } = await useFetch({
     url: '/user/signup-with-provider',
     method: 'POST',
     body: user,
+    credentials: true,
   })
-  console.log(data.value)
-  console.log(error.value)
 }
 </script>
 
