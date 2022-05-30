@@ -20,7 +20,7 @@ interface FetchOptions {
 
 export async function useFetch(options: FetchOptions = { url: '', method: 'GET', body: {}, credentials: true }) {
   const data = ref(null)
-  const error = ref(null)
+  const error = ref(null as Error | null)
   const isLoading = ref(false)
 
   const { url, method, body, credentials } = options
@@ -61,9 +61,11 @@ export async function useFetch(options: FetchOptions = { url: '', method: 'GET',
         error.value = await response.json()
       }
       isLoading.value = false
-    } catch (error) {
-      isLoading.value = false
-      data.value = error as any
+    } catch (err) {
+      if (err instanceof Error) {
+        isLoading.value = false
+        error.value = err
+      }
     }
   }
 
