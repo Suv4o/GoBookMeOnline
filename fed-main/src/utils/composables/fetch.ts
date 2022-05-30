@@ -55,7 +55,7 @@ export async function useFetch(options: FetchOptions = { url: '', method: 'GET',
     try {
       isLoading.value = true
       const response = await fetch(import.meta.env.VITE_BACKEND_URL + url, responseOptions)
-      if (response.status === 200) {
+      if ([200, 201, 202, 203, 204, 205, 206, 207, 208, 226].includes(response.status)) {
         data.value = await response.json()
       } else {
         error.value = await response.json()
