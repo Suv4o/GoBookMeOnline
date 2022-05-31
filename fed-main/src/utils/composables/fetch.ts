@@ -42,8 +42,14 @@ export async function useFetch(
     if (!useAuthState.accessToken || currentTime < expirationTime) {
       const currentUser = auth.currentUser
       if (currentUser) {
-        useAuthState.accessToken = await currentUser.getIdToken(true)
-        useAuthState.accessTokenExpirationTime = currentTime + 3600 * 1000 // +1 hour
+        try {
+          useAuthState.accessToken = await currentUser.getIdToken(true)
+          useAuthState.accessTokenExpirationTime = currentTime + 3600 * 1000 // +1 hour
+        } catch (err) {
+          if (err instanceof Error) {
+            error.value = err
+          }
+        }
       }
       responseOptions.headers.Authorization = `Bearer ${useAuthState.accessToken}`
     }

@@ -17,8 +17,6 @@ const $auth = inject('$auth') as Auth
 
 async function signInWithGoogle() {
   try {
-    const result = await signInWithPopup($auth, googleProvider)
-    const user = result.user as FirebaseUserResponse
     storeUserToDatabase()
   } catch (error) {
     Assertions.isFirebaseError(error)
