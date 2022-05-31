@@ -18,7 +18,9 @@ interface FetchOptions {
   credentials: boolean
 }
 
-export async function useFetch(options: FetchOptions = { url: '', method: 'GET', body: {}, credentials: true }) {
+export async function useFetch(
+  options: Partial<FetchOptions> = { url: '', method: 'GET', body: {}, credentials: true }
+) {
   const data = ref(null)
   const error = ref(null as Error | null)
   const isLoading = ref(false)

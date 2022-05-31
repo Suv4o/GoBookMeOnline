@@ -19,7 +19,7 @@ async function signInWithGoogle() {
   try {
     const result = await signInWithPopup($auth, googleProvider)
     const user = result.user as FirebaseUserResponse
-    storeUserToDatabase(user)
+    storeUserToDatabase()
   } catch (error) {
     Assertions.isFirebaseError(error)
     const code = error.code
@@ -29,11 +29,10 @@ async function signInWithGoogle() {
   }
 }
 
-async function storeUserToDatabase(user: FirebaseUserResponse) {
+async function storeUserToDatabase() {
   const { error, data, isLoading } = await useFetch({
     url: '/user/signup-with-provider',
     method: 'POST',
-    body: user,
     credentials: true,
   })
 }
