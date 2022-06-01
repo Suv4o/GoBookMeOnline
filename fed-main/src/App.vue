@@ -24,38 +24,36 @@ interface CurrentUserDetails {
 
 onAuthStateChanged($auth, user => {
   if (user) {
-    setTimeout(() => {
-      getUserClaims()
-        .then(claims => {
-          const {
-            accessToken,
-            accessTokenExpirationTime,
-            uid,
-            firstName,
-            lastName,
-            role,
-            email,
-            displayName,
-            photoURL,
-            emailVerified,
-          } = claims as CurrentUserDetails
-          useAuthState.accessToken = accessToken
-          useAuthState.accessTokenExpirationTime = accessTokenExpirationTime
-          useAuthState.user = {
-            uid,
-            firstName,
-            lastName,
-            role,
-            email,
-            displayName,
-            photoURL,
-            emailVerified,
-          }
-        })
-        .catch(error => {
-          console.error(error)
-        })
-    }, 3000)
+    getUserClaims()
+      .then(claims => {
+        const {
+          accessToken,
+          accessTokenExpirationTime,
+          uid,
+          firstName,
+          lastName,
+          role,
+          email,
+          displayName,
+          photoURL,
+          emailVerified,
+        } = claims as CurrentUserDetails
+        useAuthState.accessToken = accessToken
+        useAuthState.accessTokenExpirationTime = accessTokenExpirationTime
+        useAuthState.user = {
+          uid,
+          firstName,
+          lastName,
+          role,
+          email,
+          displayName,
+          photoURL,
+          emailVerified,
+        }
+      })
+      .catch(error => {
+        console.error(error)
+      })
   } else {
     useAuthState.accessToken = ''
     useAuthState.accessTokenExpirationTime = 0

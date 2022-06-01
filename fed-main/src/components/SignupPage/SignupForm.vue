@@ -9,10 +9,25 @@ import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { Auth } from '@firebase/auth'
 import { Assertions } from '../../types/guards'
 import { inject } from 'vue'
+import { useAuthStore } from '../../store/auth'
 import { useFetch } from '../../utils/composables/fetch'
 
+const useAuthState = useAuthStore()
 const googleProvider = new GoogleAuthProvider()
 const $auth = inject('$auth') as Auth
+
+interface CurrentUserDetails {
+  customClaims: {
+    firstName: string
+    lastName: string
+    role: string
+  }
+  uid: string
+  email: string
+  displayName: string
+  photoURL: string
+  emailVerified: boolean
+}
 
 async function signInWithGoogle() {
   try {
@@ -28,11 +43,37 @@ async function signInWithGoogle() {
 }
 
 async function storeUserToDatabase() {
-  const { error, data, isLoading } = await useFetch({
-    url: '/user/signup-with-provider',
-    method: 'POST',
-    credentials: true,
-  })
+  try {
+    const { error, data } = await useFetch({
+      url: '/user/signup-with-provider',
+      method: 'POST',
+      credentials: true,
+    })
+
+    if (error.value) {
+      console.error(error.value)
+      return
+    }
+    const user = data.value as CurrentUserDetails | null
+
+    if (!user) {
+      console.error('User is null')
+      return
+    }
+
+    useAuthState.user = {
+      uid: user.uid,
+      firstName: user.customClaims.firstName,
+      lastName: user.customClaims.lastName,
+      role: user.customClaims.role,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      emailVerified: user.emailVerified,
+    }
+  } catch (error) {
+    console.error(error)
+  }
 }
 </script>
 
