@@ -1,5 +1,23 @@
 <script setup lang="ts">
+import { inject } from 'vue'
 import { uniqKey } from './utils/helpers'
+import { Auth, onAuthStateChanged } from 'firebase/auth'
+import { useAuthStore } from './store/auth'
+import { FirebaseUserResponse } from './types/interfaces'
+
+const $auth = inject('$auth') as Auth
+const useAuthState = useAuthStore()
+
+onAuthStateChanged($auth, firebaseUserResponse => {
+  const user = firebaseUserResponse as FirebaseUserResponse
+  if (user) {
+    useAuthState.accessToken = user.accessToken
+    useAuthState.accessTokenExpirationTime = user.stsTokenManager.expirationTime
+  } else {
+    useAuthState.accessToken = ''
+    useAuthState.accessTokenExpirationTime = 0
+  }
+})
 </script>
 
 <template>

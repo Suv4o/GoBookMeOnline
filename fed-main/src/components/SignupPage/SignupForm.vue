@@ -9,7 +9,6 @@ import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { Auth } from '@firebase/auth'
 import { Assertions } from '../../types/guards'
 import { inject } from 'vue'
-import { FirebaseUserResponse } from '../../types/interfaces'
 import { useFetch } from '../../utils/composables/fetch'
 
 const googleProvider = new GoogleAuthProvider()
