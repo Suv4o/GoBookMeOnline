@@ -13,3 +13,14 @@ export interface FirebaseUserResponse extends User {
     refreshToken: string
   }
 }
+
+export interface AuthStateUser {
+  uid: string
+  firstName: string
+  lastName: string
+  role: string
+  email: string | null
+  displayName: string | null
+  photoURL: string | null
+  emailVerified: boolean | undefined
+}

@@ -43,8 +43,9 @@ export async function useFetch(
       const currentUser = auth.currentUser
       if (currentUser) {
         try {
-          useAuthState.accessToken = await currentUser.getIdToken(true)
-          useAuthState.accessTokenExpirationTime = currentTime + 3600 * 1000 // +1 hour
+          const currentUserDetails = await currentUser?.getIdTokenResult(true)
+          useAuthState.accessToken = currentUserDetails?.token
+          useAuthState.accessTokenExpirationTime = Number(currentUserDetails?.claims.exp)
         } catch (err) {
           if (err instanceof Error) {
             error.value = err
