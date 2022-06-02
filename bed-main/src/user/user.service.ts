@@ -43,7 +43,11 @@ export class UserService {
 
       await this.userRepository.save(userToSave);
 
-      return createdUser;
+      const savedUser = (await firebase
+        .auth()
+        .getUser(createdUser.uid)) as FirebaseUserRecord;
+
+      return savedUser;
     } catch (error) {
       this.logger.error(error);
       throw new BadRequestException('Error creating user!');
