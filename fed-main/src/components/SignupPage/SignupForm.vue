@@ -50,8 +50,8 @@ async function storeUserToDatabase() {
       credentials: true,
     })
 
-    if (error.value) {
-      console.error(error.value)
+    if (JSON.parse(JSON.stringify(error.value))) {
+      console.error(JSON.parse(JSON.stringify(error.value)))
       return
     }
     const user = data.value as CurrentUserDetails | null
