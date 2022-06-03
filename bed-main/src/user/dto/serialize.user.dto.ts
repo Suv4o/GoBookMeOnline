@@ -5,15 +5,15 @@ export class SerializeUserDto {
   uid: string;
 
   @Expose()
-  @Transform((value: any) => value.obj.customClaims.firstName)
+  @Transform(({ obj }) => obj.customClaims.firstName)
   firstName: string;
 
   @Expose()
-  @Transform((value: any) => value.obj.customClaims.lastName)
+  @Transform(({ obj }) => obj.customClaims.lastName)
   lastName: string;
 
   @Expose()
-  @Transform((value: any) => value.obj.customClaims.role)
+  @Transform(({ obj }) => obj.customClaims.role)
   role: string;
 
   @Expose()

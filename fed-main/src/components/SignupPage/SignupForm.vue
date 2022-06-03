@@ -17,12 +17,10 @@ const googleProvider = new GoogleAuthProvider()
 const $auth = inject('$auth') as Auth
 
 interface CurrentUserDetails {
-  customClaims: {
-    firstName: string
-    lastName: string
-    role: string
-  }
   uid: string
+  firstName: string
+  lastName: string
+  role: string
   email: string
   displayName: string
   photoURL: string
@@ -63,9 +61,9 @@ async function storeUserToDatabase() {
 
     useAuthState.user = {
       uid: user.uid,
-      firstName: user.customClaims.firstName,
-      lastName: user.customClaims.lastName,
-      role: user.customClaims.role,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role,
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
