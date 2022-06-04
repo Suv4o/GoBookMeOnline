@@ -8,13 +8,17 @@ export default {
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { Auth } from '@firebase/auth'
 import { Assertions } from '../../types/guards'
-import { inject } from 'vue'
+import { inject, ref } from 'vue'
 import { useAuthStore } from '../../store/auth'
 import { useFetch } from '../../utils/composables/fetch'
 
 const useAuthState = useAuthStore()
 const googleProvider = new GoogleAuthProvider()
 const $auth = inject('$auth') as Auth
+
+const fullName = ref('')
+// const email = ref('')
+// const password = ref('')
 
 interface CurrentUserDetails {
   uid: string
@@ -71,6 +75,26 @@ async function storeUserToDatabase() {
     }
   } catch (error) {
     console.error(error)
+  }
+}
+
+function createUser(e: Event) {
+  e.preventDefault()
+  console.log('createUser')
+
+  console.log(validateFullName(fullName.value))
+}
+
+function validateFullName(fullName: string) {
+  if (/^([a-zA-Z\\'\- ]){2,20}$/.test(fullName)) {
+    return {
+      valid: true,
+      message: '',
+    }
+  }
+  return {
+    valid: false,
+    message: 'Please enter a valid full name',
   }
 }
 </script>
@@ -157,11 +181,12 @@ async function storeUserToDatabase() {
       </div>
 
       <div class="mt-6">
-        <form action="#" method="POST" class="space-y-6">
+        <form class="space-y-6" @submit="createUser">
           <div>
             <label for="name" class="sr-only">Full name</label>
             <input
               id="name"
+              v-model="fullName"
               type="text"
               name="name"
               autocomplete="name"
@@ -169,6 +194,7 @@ async function storeUserToDatabase() {
               required="true"
               class="block w-full shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm border-gray-300 rounded-md"
             />
+            <p class="text-sm text-red-700 mt-1">Please provide a name</p>
           </div>
 
           <div>
@@ -177,11 +203,12 @@ async function storeUserToDatabase() {
               id="mobile-or-email"
               type="text"
               name="mobile-or-email"
-              autocomplete="email"
+              autocomplete="email|tel"
               placeholder="Mobile number or email"
               required="true"
               class="block w-full shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm border-gray-300 rounded-md"
             />
+            <p class="text-sm text-red-700 mt-1">Please provide a name</p>
           </div>
 
           <div>
@@ -195,6 +222,7 @@ async function storeUserToDatabase() {
               required="true"
               class="block w-full shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm border-gray-300 rounded-md"
             />
+            <p class="text-sm text-red-700 mt-1">Please provide a name</p>
           </div>
 
           <div>
