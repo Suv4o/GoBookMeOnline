@@ -11,6 +11,19 @@ import { Assertions } from '../../types/guards'
 import { inject, reactive, ref } from 'vue'
 import { useAuthStore } from '../../store/auth'
 import { useFetch } from '../../utils/composables/fetch'
+import { ResponseValidator, useValidator } from '../../utils/composables/validator'
+import { deepClone } from '../../utils/helpers'
+
+interface CurrentUserDetails {
+  uid: string
+  firstName: string
+  lastName: string
+  role: string
+  email: string
+  displayName: string
+  photoURL: string
+  emailVerified: boolean
+}
 
 const useAuthState = useAuthStore()
 const googleProvider = new GoogleAuthProvider()
@@ -24,18 +37,7 @@ const isValid = reactive({
   fullName: { valid: true, message: '' },
   phoneOrEmail: { valid: true, message: '' },
   password: { valid: true, message: '' },
-})
-
-interface CurrentUserDetails {
-  uid: string
-  firstName: string
-  lastName: string
-  role: string
-  email: string
-  displayName: string
-  photoURL: string
-  emailVerified: boolean
-}
+} as Pick<ResponseValidator, 'fullName' | 'phoneOrEmail' | 'password'>)
 
 async function signInWithGoogle() {
   try {
@@ -58,8 +60,8 @@ async function storeUserToDatabase() {
       credentials: true,
     })
 
-    if (JSON.parse(JSON.stringify(error.value))) {
-      console.error(JSON.parse(JSON.stringify(error.value)))
+    if (deepClone(error.value)) {
+      console.error(deepClone(error.value))
       return
     }
     const user = data.value as CurrentUserDetails | null
@@ -87,62 +89,26 @@ async function storeUserToDatabase() {
 function createUser(e: Event) {
   e.preventDefault()
 
-  validateFullName(fullName.value)
-  validatePhoneOrEmail(phoneOrEmail.value)
-  validatePassword(password.value)
-}
+  const { validProps } = useValidator({
+    fullName: fullName.value,
+    phoneOrEmail: phoneOrEmail.value,
+    password: password.value,
+  })
 
-function validateFullName(fullName: string) {
-  if (/^([a-zA-Z\\'\- ]){2,20}$/.test(fullName)) {
-    isValid.fullName = {
-      valid: true,
-      message: '',
-    }
-    return
-  }
-  isValid.fullName = {
-    valid: false,
-    message: 'Please enter a valid full name.',
-  }
-}
+  isValid.fullName = validProps.fullName
+  isValid.phoneOrEmail = validProps.phoneOrEmail
+  isValid.password = validProps.password
 
-function validatePhoneOrEmail(phoneOrEmail: string) {
-  if (/^(\+|\d)[0-9]{7,16}$/.test(phoneOrEmail)) {
-    isValid.phoneOrEmail = {
-      valid: true,
-      message: '',
-    }
-    return
+  if (!validProps.fullName.valid) {
+    fullName.value = ''
   }
-  if (
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-      phoneOrEmail
-    )
-  ) {
-    isValid.phoneOrEmail = {
-      valid: true,
-      message: '',
-    }
-    return
-  }
-  isValid.phoneOrEmail = {
-    valid: false,
-    message: 'Please enter a valid Australian Mobile Number or Email.',
-  }
-}
 
-function validatePassword(password: string) {
-  if (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,20}$/.test(password)) {
-    isValid.password = {
-      valid: true,
-      message: '',
-    }
-    return
+  if (!validProps.phoneOrEmail.valid) {
+    phoneOrEmail.value = ''
   }
-  isValid.password = {
-    valid: false,
-    message:
-      'Password must between 8 to 20 letters and include combination of uppercase, lowercase, numbers and a special characters.',
+
+  if (!validProps.password.valid) {
+    password.value = ''
   }
 }
 </script>
@@ -245,7 +211,7 @@ function validatePassword(password: string) {
                 !isValid.fullName.valid ? 'ring-red-700 border-red-700' : 'focus:ring-teal-500 focus:border-teal-500'
               }`"
             />
-            <p v-if="!isValid.fullName.valid" class="text-sm text-red-700 mt-1">{{ isValid.fullName.message }}</p>
+            <p v-if="!isValid?.fullName?.valid" class="text-sm text-red-700 mt-1">{{ isValid.fullName.message }}</p>
           </div>
 
           <div>
@@ -269,7 +235,6 @@ function validatePassword(password: string) {
               {{ isValid.phoneOrEmail.message }}
             </p>
           </div>
-
           <div>
             <label for="password" class="sr-only">Password</label>
             <input
