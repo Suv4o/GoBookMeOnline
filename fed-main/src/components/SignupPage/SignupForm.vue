@@ -142,7 +142,11 @@ function createUser(e: Event) {
   }
 
   if (validProps.fullName.valid && validProps.phoneOrEmail.valid && validProps.password.valid) {
-    signInWithEmailAndPassword()
+    if (!validProps.phoneOrEmail.isMobile) {
+      signInWithEmailAndPassword()
+    } else {
+      console.log('signInWithGoogle()')
+    }
   }
 }
 </script>

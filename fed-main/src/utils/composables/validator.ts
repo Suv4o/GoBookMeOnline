@@ -1,4 +1,5 @@
 import { reactive } from 'vue'
+import { splitFullName } from '../helpers'
 
 export type ResponseValidator = {
   [key in keyof ValidateOptions]: PropertyOptions
@@ -7,6 +8,7 @@ export type ResponseValidator = {
 interface PropertyOptions {
   valid: boolean
   message: string
+  isMobile?: boolean
 }
 
 interface ValidateOptions {
@@ -41,7 +43,8 @@ export function useValidator(validate: Partial<ValidateOptions>) {
   }
 
   function validateFullName(fullName: string) {
-    if (/^([a-zA-Z\\'\- ]){2,32}$/.test(fullName)) {
+    const { firstName, lastName } = splitFullName(fullName)
+    if (/^([a-zA-Z\\'\- ]){2,32}$/.test(fullName) && firstName.length >= 2 && lastName.length >= 2) {
       validProps.fullName = {
         valid: true,
         message: '',
@@ -57,12 +60,12 @@ export function useValidator(validate: Partial<ValidateOptions>) {
   function validatePhoneOrEmail(phoneOrEmail: string) {
     validatePhone(phoneOrEmail)
     if (validProps.mobilePhone.valid) {
-      validProps.phoneOrEmail = validProps.mobilePhone
+      validProps.phoneOrEmail = { ...validProps.mobilePhone, ...{ isMobile: true } }
       return
     }
     validateEmail(phoneOrEmail)
     if (validProps.email.valid) {
-      validProps.phoneOrEmail = validProps.email
+      validProps.phoneOrEmail = { ...validProps.email, ...{ isMobile: false } }
       return
     }
     validProps.phoneOrEmail = {

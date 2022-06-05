@@ -8,8 +8,9 @@ export function deepClone<T>(obj: T): T {
 }
 
 export function splitFullName(fullName: string) {
-  const lastIndex = fullName.lastIndexOf(' ')
-  const firstName = fullName.slice(0, lastIndex)
-  const lastName = fullName.slice(lastIndex + 1)
+  const name = fullName.trim()
+  const lastIndex = name.lastIndexOf(' ')
+  const firstName = name.slice(0, lastIndex)
+  const lastName = name.slice(lastIndex + 1)
   return { firstName, lastName }
 }
