@@ -8,7 +8,7 @@ export default {
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { Auth } from '@firebase/auth'
 import { Assertions } from '../../types/guards'
-import { inject, ref } from 'vue'
+import { inject, reactive, ref } from 'vue'
 import { useAuthStore } from '../../store/auth'
 import { useFetch } from '../../utils/composables/fetch'
 
@@ -17,8 +17,14 @@ const googleProvider = new GoogleAuthProvider()
 const $auth = inject('$auth') as Auth
 
 const fullName = ref('')
-// const email = ref('')
-// const password = ref('')
+const phoneOrEmail = ref('')
+const password = ref('')
+
+const isValid = reactive({
+  fullName: { valid: true, message: '' },
+  phoneOrEmail: { valid: true, message: '' },
+  password: { valid: true, message: '' },
+})
 
 interface CurrentUserDetails {
   uid: string
@@ -80,21 +86,63 @@ async function storeUserToDatabase() {
 
 function createUser(e: Event) {
   e.preventDefault()
-  console.log('createUser')
 
-  console.log(validateFullName(fullName.value))
+  validateFullName(fullName.value)
+  validatePhoneOrEmail(phoneOrEmail.value)
+  validatePassword(password.value)
 }
 
 function validateFullName(fullName: string) {
   if (/^([a-zA-Z\\'\- ]){2,20}$/.test(fullName)) {
-    return {
+    isValid.fullName = {
       valid: true,
       message: '',
     }
+    return
   }
-  return {
+  isValid.fullName = {
     valid: false,
-    message: 'Please enter a valid full name',
+    message: 'Please enter a valid full name.',
+  }
+}
+
+function validatePhoneOrEmail(phoneOrEmail: string) {
+  if (/^(\+|\d)[0-9]{7,16}$/.test(phoneOrEmail)) {
+    isValid.phoneOrEmail = {
+      valid: true,
+      message: '',
+    }
+    return
+  }
+  if (
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      phoneOrEmail
+    )
+  ) {
+    isValid.phoneOrEmail = {
+      valid: true,
+      message: '',
+    }
+    return
+  }
+  isValid.phoneOrEmail = {
+    valid: false,
+    message: 'Please enter a valid Australian Mobile Number or Email.',
+  }
+}
+
+function validatePassword(password: string) {
+  if (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,20}$/.test(password)) {
+    isValid.password = {
+      valid: true,
+      message: '',
+    }
+    return
+  }
+  isValid.password = {
+    valid: false,
+    message:
+      'Password must between 8 to 20 letters and include combination of uppercase, lowercase, numbers and a special characters.',
   }
 }
 </script>
@@ -192,37 +240,52 @@ function validateFullName(fullName: string) {
               autocomplete="name"
               placeholder="Full name"
               required="true"
-              class="block w-full shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm border-gray-300 rounded-md"
+              class="block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              :class="`${
+                !isValid.fullName.valid ? 'ring-red-700 border-red-700' : 'focus:ring-teal-500 focus:border-teal-500'
+              }`"
             />
-            <p class="text-sm text-red-700 mt-1">Please provide a name</p>
+            <p v-if="!isValid.fullName.valid" class="text-sm text-red-700 mt-1">{{ isValid.fullName.message }}</p>
           </div>
 
           <div>
             <label for="mobile-or-email" class="sr-only">Mobile number or email</label>
             <input
               id="mobile-or-email"
+              v-model="phoneOrEmail"
               type="text"
               name="mobile-or-email"
               autocomplete="email|tel"
               placeholder="Mobile number or email"
               required="true"
-              class="block w-full shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm border-gray-300 rounded-md"
+              class="block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              :class="`${
+                !isValid.phoneOrEmail.valid
+                  ? 'ring-red-700 border-red-700'
+                  : 'focus:ring-teal-500 focus:border-teal-500'
+              }`"
             />
-            <p class="text-sm text-red-700 mt-1">Please provide a name</p>
+            <p v-if="!isValid.phoneOrEmail.valid" class="text-sm text-red-700 mt-1">
+              {{ isValid.phoneOrEmail.message }}
+            </p>
           </div>
 
           <div>
             <label for="password" class="sr-only">Password</label>
             <input
               id="password"
+              v-model="password"
               name="password"
               type="password"
               placeholder="Password"
               autocomplete="current-password"
               required="true"
-              class="block w-full shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm border-gray-300 rounded-md"
+              class="block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              :class="`${
+                !isValid.password.valid ? 'ring-red-700 border-red-700' : 'focus:ring-teal-500 focus:border-teal-500'
+              }`"
             />
-            <p class="text-sm text-red-700 mt-1">Please provide a name</p>
+            <p v-if="!isValid.password.valid" class="text-sm text-red-700 mt-1">{{ isValid.password.message }}</p>
           </div>
 
           <div>
