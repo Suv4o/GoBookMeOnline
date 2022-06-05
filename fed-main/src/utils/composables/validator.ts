@@ -41,7 +41,7 @@ export function useValidator(validate: Partial<ValidateOptions>) {
   }
 
   function validateFullName(fullName: string) {
-    if (/^([a-zA-Z\\'\- ]){2,20}$/.test(fullName)) {
+    if (/^([a-zA-Z\\'\- ]){2,32}$/.test(fullName)) {
       validProps.fullName = {
         valid: true,
         message: '',

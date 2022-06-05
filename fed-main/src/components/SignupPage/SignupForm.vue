@@ -12,7 +12,7 @@ import { inject, reactive, ref } from 'vue'
 import { useAuthStore } from '../../store/auth'
 import { useFetch } from '../../utils/composables/fetch'
 import { ResponseValidator, useValidator } from '../../utils/composables/validator'
-import { deepClone } from '../../utils/helpers'
+import { deepClone, splitFullName } from '../../utils/helpers'
 
 interface CurrentUserDetails {
   uid: string
@@ -39,6 +39,37 @@ const isValid = reactive({
   password: { valid: true, message: '' },
 } as Pick<ResponseValidator, 'fullName' | 'phoneOrEmail' | 'password'>)
 
+async function signInWithEmailAndPassword() {
+  try {
+    const { firstName, lastName } = splitFullName(fullName.value)
+    const { error, data } = await useFetch({
+      url: '/user/signup-email-and-password',
+      method: 'POST',
+      body: {
+        email: phoneOrEmail.value,
+        password: password.value,
+        firstName,
+        lastName,
+      },
+      credentials: false,
+    })
+
+    if (deepClone(error.value)) {
+      console.error(deepClone(error.value))
+      return
+    }
+
+    const user = data.value as CurrentUserDetails | null
+
+    if (!user) {
+      console.error('User is null')
+      return
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 async function signInWithGoogle() {
   try {
     await signInWithPopup($auth, googleProvider)
@@ -57,7 +88,6 @@ async function storeUserToDatabase() {
     const { error, data } = await useFetch({
       url: '/user/signup-with-provider',
       method: 'POST',
-      credentials: true,
     })
 
     if (deepClone(error.value)) {
@@ -109,6 +139,10 @@ function createUser(e: Event) {
 
   if (!validProps.password.valid) {
     password.value = ''
+  }
+
+  if (validProps.fullName.valid && validProps.phoneOrEmail.valid && validProps.password.valid) {
+    signInWithEmailAndPassword()
   }
 }
 </script>

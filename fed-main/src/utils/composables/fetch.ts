@@ -2,10 +2,25 @@ import { ref } from 'vue'
 import { useAuthStore } from '../../store/auth'
 import { auth } from '../../config/firebase.config'
 
+type ContentType =
+  | 'application/EDI-X12'
+  | 'application/EDIFACT'
+  | 'application/javascript'
+  | 'application/octet-stream'
+  | 'application/ogg'
+  | 'application/pdf'
+  | 'application/xhtml+xml'
+  | 'application/x-shockwave-flash'
+  | 'application/json'
+  | 'application/ld+json'
+  | 'application/xml'
+  | 'application/zip'
+  | 'application/x-www-form-urlencoded'
+
 interface ResponseOptions {
   method: string
   headers: Partial<{
-    'Content-Type': string
+    'Content-Type': ContentType
     Authorization: string
   }>
   body: string
@@ -16,22 +31,21 @@ interface FetchOptions {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE'
   body: object
   credentials: boolean
+  contentType: ContentType
 }
 
-export async function useFetch(
-  options: Partial<FetchOptions> = { url: '', method: 'GET', body: {}, credentials: true }
-) {
+export async function useFetch(options: Partial<FetchOptions>) {
   const data = ref(null)
   const error = ref(null as Error | null)
   const isLoading = ref(false)
 
-  const { url, method, body, credentials } = options
+  const { url = '', method = 'GET', body = {}, contentType = 'application/json', credentials = true } = options
   const useAuthState = useAuthStore()
 
   const responseOptions: Partial<ResponseOptions> = {
     method,
     headers: {
-      'Content-Type': method === 'GET' ? 'application/json' : 'application/x-www-form-urlencoded',
+      'Content-Type': contentType,
     },
   }
 
