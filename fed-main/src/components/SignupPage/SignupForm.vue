@@ -5,7 +5,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth'
 import { Auth } from '@firebase/auth'
 import { Assertions } from '../../types/guards'
 import { inject, reactive, ref } from 'vue'
@@ -39,7 +39,10 @@ const isValid = reactive({
   password: { valid: true, message: '' },
 } as Pick<ResponseValidator, 'fullName' | 'phoneOrEmail' | 'password'>)
 
-async function signInWithEmailAndPassword() {
+const displayError = ref('')
+const isProcessing = ref(false)
+
+async function signUpWithEmailAndPassword() {
   try {
     const { firstName, lastName } = splitFullName(fullName.value)
     const { error, data } = await useFetch({
@@ -55,33 +58,64 @@ async function signInWithEmailAndPassword() {
     })
 
     if (deepClone(error.value)) {
-      console.error(deepClone(error.value))
+      if (error.value?.message) {
+        displayError.value = deepClone(error.value)?.message
+        return
+      }
+      displayError.value = 'This user cannot be created!'
       return
     }
 
     const user = data.value as CurrentUserDetails | null
 
     if (!user) {
-      console.error('User is null')
+      displayError.value = 'This user cannot be created!'
       return
     }
   } catch (error) {
-    console.error(error)
+    Assertions.isError(error)
+    if (error.message) {
+      displayError.value = error.message
+    }
+    displayError.value = 'This user cannot be created!'
   }
 }
 
-async function signInWithGoogle() {
+async function signInUserWithEmailAndPassword() {
   try {
-    await signInWithPopup($auth, googleProvider)
-    storeUserToDatabase()
+    await signInWithEmailAndPassword($auth, phoneOrEmail.value, password.value)
   } catch (error) {
     Assertions.isFirebaseError(error)
-    const code = error.code
-    const message = error.message
-    const credential = GoogleAuthProvider.credentialFromError(error)
-    console.error(`Code: ${code}, Message: ${message}, Credential: ${credential}`)
+    if (error.message) {
+      displayError.value = error.message
+    }
+    displayError.value = 'Something went wrong!'
   }
 }
+
+function clearInputs() {
+  fullName.value = ''
+  phoneOrEmail.value = ''
+  password.value = ''
+}
+
+async function signUpWithGoogle() {
+  try {
+    isProcessing.value = true
+    await signInWithPopup($auth, googleProvider)
+    storeUserToDatabase()
+    isProcessing.value = false
+  } catch (error) {
+    isProcessing.value = false
+    Assertions.isFirebaseError(error)
+    if (error.message) {
+      displayError.value = error.message
+    }
+    displayError.value = 'Something went wrong!'
+  }
+}
+
+// async function getVerificationEmailLink() {}
 
 async function storeUserToDatabase() {
   try {
@@ -91,13 +125,18 @@ async function storeUserToDatabase() {
     })
 
     if (deepClone(error.value)) {
-      console.error(deepClone(error.value))
+      if (error.value?.message) {
+        displayError.value = deepClone(error.value)?.message
+        return
+      }
+      displayError.value = 'This user cannot be created!'
       return
     }
+
     const user = data.value as CurrentUserDetails | null
 
     if (!user) {
-      console.error('User is null')
+      displayError.value = 'This user cannot be created!'
       return
     }
 
@@ -112,11 +151,15 @@ async function storeUserToDatabase() {
       emailVerified: user.emailVerified,
     }
   } catch (error) {
-    console.error(error)
+    Assertions.isError(error)
+    if (error.message) {
+      displayError.value = error.message
+    }
+    displayError.value = 'This user cannot be created!'
   }
 }
 
-function createUser(e: Event) {
+async function createUser(e: Event) {
   e.preventDefault()
 
   const { validProps } = useValidator({
@@ -143,7 +186,19 @@ function createUser(e: Event) {
 
   if (validProps.fullName.valid && validProps.phoneOrEmail.valid && validProps.password.valid) {
     if (!validProps.phoneOrEmail.isMobile) {
-      signInWithEmailAndPassword()
+      try {
+        isProcessing.value = true
+        await signUpWithEmailAndPassword()
+        await signInUserWithEmailAndPassword()
+        clearInputs()
+        isProcessing.value = false
+      } catch (error) {
+        Assertions.isError(error)
+        if (error.message) {
+          displayError.value = error.message
+        }
+        displayError.value = 'This user cannot be created!'
+      }
     } else {
       console.log('signInWithGoogle()')
     }
@@ -178,7 +233,7 @@ function createUser(e: Event) {
             <a
               href="javascript:;"
               class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-              @click="signInWithGoogle"
+              @click="signUpWithGoogle"
             >
               <span class="sr-only">Sign in with Google</span>
               <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 210 210">
@@ -239,6 +294,7 @@ function createUser(e: Event) {
             <input
               id="name"
               v-model="fullName"
+              :disabled="isProcessing"
               type="text"
               name="name"
               autocomplete="name"
@@ -257,6 +313,7 @@ function createUser(e: Event) {
             <input
               id="mobile-or-email"
               v-model="phoneOrEmail"
+              :disabled="isProcessing"
               type="text"
               name="mobile-or-email"
               autocomplete="email|tel"
@@ -278,6 +335,7 @@ function createUser(e: Event) {
             <input
               id="password"
               v-model="password"
+              :disabled="isProcessing"
               name="password"
               type="password"
               placeholder="Password"
@@ -290,13 +348,28 @@ function createUser(e: Event) {
             />
             <p v-if="!isValid.password.valid" class="text-sm text-red-700 mt-1">{{ isValid.password.message }}</p>
           </div>
-
+          <p v-if="displayError" class="text-sm text-red-700 mt-1">{{ displayError }}</p>
           <div>
             <button
+              :disabled="isProcessing"
               type="submit"
               class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
             >
-              Create your account
+              <svg
+                v-if="isProcessing"
+                class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              {{ isProcessing ? 'Processing...' : 'Create your account' }}
             </button>
           </div>
         </form>

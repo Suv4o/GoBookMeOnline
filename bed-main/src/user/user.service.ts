@@ -50,7 +50,7 @@ export class UserService {
       return savedUser;
     } catch (error) {
       this.logger.error(error);
-      throw new BadRequestException('Error creating user!');
+      throw new BadRequestException(error.message);
     }
   }
   async createUserWithProvider(
@@ -84,6 +84,24 @@ export class UserService {
     } catch (error) {
       this.logger.error(error);
       throw new BadRequestException('Error creating user!');
+    }
+  }
+
+  async getVerificationLink(user: FirebaseUserRecord): Promise<string> {
+    try {
+      const firebase = this.firebase.setup();
+      const { email } = user;
+
+      const verificationLink = await firebase
+        .auth()
+        .generateEmailVerificationLink(email, {
+          url: process.env.FRONTEND_URL,
+        });
+
+      return verificationLink;
+    } catch (error) {
+      this.logger.error(error);
+      throw new BadRequestException('Error sending verification link!');
     }
   }
 }

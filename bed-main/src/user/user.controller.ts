@@ -1,4 +1,5 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Auth } from '../shared/decorators/auth.decorator';
 import { Serialize } from 'src/shared/interceptors/serialize.interceptor';
 import { CurrentUser } from '../shared/decorators/current-user.decorator';
 import { FirebaseUserRecord } from '../shared/types';
@@ -24,5 +25,13 @@ export class UserController {
     @CurrentUser() user: FirebaseUserRecord,
   ): Promise<FirebaseUserRecord> {
     return this.userService.createUserWithProvider(user);
+  }
+
+  @Auth('USER_DEFAULT')
+  @Get('email-verification')
+  getEmailVerificationLink(
+    @CurrentUser() user: FirebaseUserRecord,
+  ): Promise<string> {
+    return this.userService.getVerificationLink(user);
   }
 }

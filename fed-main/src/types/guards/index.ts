@@ -9,6 +9,9 @@ export namespace Assertions {
   export function isFirebaseError(error: unknown): asserts error is FirebaseError {
     if (!(error instanceof FirebaseError)) throw new Error('The element is not a Firebase Error')
   }
+  export function isError(error: unknown): asserts error is Error {
+    if (!(error instanceof Error)) throw new Error('The element is not an Error')
+  }
 }
 
 // Predicates
