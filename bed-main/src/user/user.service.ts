@@ -87,7 +87,7 @@ export class UserService {
     }
   }
 
-  async getVerificationLink(user: FirebaseUserRecord): Promise<string> {
+  async sendVerificationLink(user: FirebaseUserRecord): Promise<string> {
     try {
       const firebase = this.firebase.setup();
       const { email } = user;

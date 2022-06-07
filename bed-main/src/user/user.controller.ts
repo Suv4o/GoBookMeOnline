@@ -29,9 +29,9 @@ export class UserController {
 
   @Auth('USER_DEFAULT')
   @Get('email-verification')
-  getEmailVerificationLink(
+  sendEmailVerificationLink(
     @CurrentUser() user: FirebaseUserRecord,
   ): Promise<string> {
-    return this.userService.getVerificationLink(user);
+    return this.userService.sendVerificationLink(user);
   }
 }
