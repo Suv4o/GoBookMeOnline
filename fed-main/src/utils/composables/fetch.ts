@@ -70,7 +70,7 @@ export async function useFetch(options: Partial<FetchOptions>) {
     }
   }
 
-  if (body) {
+  if (Object.keys(body).length) {
     responseOptions.body = JSON.stringify(body)
   }
 

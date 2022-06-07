@@ -13,6 +13,8 @@ import { AuthMiddleware } from '../middleware/auth.middleware';
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes('user/signup-with-provider');
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes('user/signup-with-provider', 'user/email-verification');
   }
 }

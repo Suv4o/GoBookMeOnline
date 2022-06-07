@@ -115,7 +115,29 @@ async function signUpWithGoogle() {
   }
 }
 
-// async function getVerificationEmailLink() {}
+async function sendVerificationEmailLink() {
+  try {
+    const { error } = await useFetch({
+      url: '/user/email-verification',
+      method: 'GET',
+    })
+
+    if (deepClone(error.value)) {
+      if (error.value?.message) {
+        displayError.value = deepClone(error.value)?.message
+        return
+      }
+      displayError.value = 'The verification email cannot be sent!'
+      return
+    }
+  } catch (error) {
+    Assertions.isError(error)
+    if (error.message) {
+      displayError.value = error.message
+    }
+    displayError.value = 'The verification email cannot be sent!'
+  }
+}
 
 async function storeUserToDatabase() {
   try {
@@ -190,6 +212,7 @@ async function createUser(e: Event) {
         isProcessing.value = true
         await signUpWithEmailAndPassword()
         await signInUserWithEmailAndPassword()
+        await sendVerificationEmailLink()
         clearInputs()
         isProcessing.value = false
       } catch (error) {
