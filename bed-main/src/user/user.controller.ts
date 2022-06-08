@@ -27,11 +27,17 @@ export class UserController {
     return this.userService.createUserWithProvider(user);
   }
 
-  @Auth('USER_DEFAULT')
+  // @Auth('USER_DEFAULT')
+  // @Get('email-verification')
+  // sendEmailVerificationLink(
+  //   @CurrentUser() user: FirebaseUserRecord,
+  // ): Promise<string> {
+  //   return this.userService.sendVerificationLink(user);
+  // }
+
+  // @Auth('USER_DEFAULT')
   @Get('email-verification')
-  sendEmailVerificationLink(
-    @CurrentUser() user: FirebaseUserRecord,
-  ): Promise<string> {
-    return this.userService.sendVerificationLink(user);
+  sendEmailVerificationLink(): Promise<any> {
+    return this.userService.sendVerificationLink();
   }
 }

@@ -5,6 +5,7 @@ import { FirebaseAdmin } from '../config/firebase.config';
 import { FirebaseUserRecord, Roles } from '../shared/types';
 import { UserEntity } from './user.entity';
 import { CreateUserEmailPasswordDto } from './dto/create-user-email-password.dto';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class UserService {
@@ -13,6 +14,7 @@ export class UserService {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
     private readonly firebase: FirebaseAdmin,
+    private mailService: MailService,
   ) {}
 
   async createUserEmailAndPassword(
@@ -87,21 +89,26 @@ export class UserService {
     }
   }
 
-  async sendVerificationLink(user: FirebaseUserRecord): Promise<string> {
-    try {
-      const firebase = this.firebase.setup();
-      const { email } = user;
+  // async sendVerificationLink(user: FirebaseUserRecord): Promise<string> {
+  async sendVerificationLink(): Promise<any> {
+    await this.mailService.sendUserConfirmation(
+      { email: 'aleks.com.au', displayName: 'Aleks' },
+      'http:something.com',
+    );
+    // try {
+    //   const firebase = this.firebase.setup();
+    //   const { email } = user;
 
-      const verificationLink = await firebase
-        .auth()
-        .generateEmailVerificationLink(email, {
-          url: process.env.FRONTEND_URL,
-        });
+    //   const verificationLink = await firebase
+    //     .auth()
+    //     .generateEmailVerificationLink(email, {
+    //       url: process.env.FRONTEND_URL,
+    //     });
 
-      return verificationLink;
-    } catch (error) {
-      this.logger.error(error);
-      throw new BadRequestException('Error sending verification link!');
-    }
+    //   return verificationLink;
+    // } catch (error) {
+    //   this.logger.error(error);
+    //   throw new BadRequestException('Error sending verification link!');
+    // }
   }
 }
