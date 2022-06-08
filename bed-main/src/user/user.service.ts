@@ -89,26 +89,20 @@ export class UserService {
     }
   }
 
-  // async sendVerificationLink(user: FirebaseUserRecord): Promise<string> {
-  async sendVerificationLink(): Promise<any> {
-    await this.mailService.sendUserConfirmation(
-      { email: 'aleks.com.au', displayName: 'Aleks' },
-      'http:something.com',
-    );
-    // try {
-    //   const firebase = this.firebase.setup();
-    //   const { email } = user;
+  async sendVerificationLink(user: FirebaseUserRecord): Promise<void> {
+    try {
+      const firebase = this.firebase.setup();
+      const { email } = user;
 
-    //   const verificationLink = await firebase
-    //     .auth()
-    //     .generateEmailVerificationLink(email, {
-    //       url: process.env.FRONTEND_URL,
-    //     });
-
-    //   return verificationLink;
-    // } catch (error) {
-    //   this.logger.error(error);
-    //   throw new BadRequestException('Error sending verification link!');
-    // }
+      const verificationLink = await firebase
+        .auth()
+        .generateEmailVerificationLink(email, {
+          url: process.env.FRONTEND_URL,
+        });
+      await this.mailService.verificationEmail(user, verificationLink);
+    } catch (error) {
+      this.logger.error(error);
+      throw new BadRequestException('Error sending verification link!');
+    }
   }
 }

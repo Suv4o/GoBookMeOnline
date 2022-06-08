@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { Auth } from '../shared/decorators/auth.decorator';
+import { Auth } from 'src/shared/decorators/auth.decorator';
 import { Serialize } from 'src/shared/interceptors/serialize.interceptor';
 import { CurrentUser } from '../shared/decorators/current-user.decorator';
 import { FirebaseUserRecord } from '../shared/types';
@@ -27,17 +27,11 @@ export class UserController {
     return this.userService.createUserWithProvider(user);
   }
 
-  // @Auth('USER_DEFAULT')
-  // @Get('email-verification')
-  // sendEmailVerificationLink(
-  //   @CurrentUser() user: FirebaseUserRecord,
-  // ): Promise<string> {
-  //   return this.userService.sendVerificationLink(user);
-  // }
-
-  // @Auth('USER_DEFAULT')
+  @Auth('USER_DEFAULT')
   @Get('email-verification')
-  sendEmailVerificationLink(): Promise<any> {
-    return this.userService.sendVerificationLink();
+  sendEmailVerificationLink(
+    @CurrentUser() user: FirebaseUserRecord,
+  ): Promise<void> {
+    return this.userService.sendVerificationLink(user);
   }
 }

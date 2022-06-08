@@ -24,6 +24,8 @@ interface CurrentUserDetails {
 
 onAuthStateChanged($auth, user => {
   if (user) {
+    console.log('User is signed in:', user)
+
     getUserClaims()
       .then(claims => {
         const {

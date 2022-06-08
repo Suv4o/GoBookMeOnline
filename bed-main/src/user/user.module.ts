@@ -16,7 +16,6 @@ export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleware)
-      // .forRoutes('user/signup-with-provider', 'user/email-verification');
-      .forRoutes('user/signup-with-provider');
+      .forRoutes('user/signup-with-provider', 'user/email-verification');
   }
 }
