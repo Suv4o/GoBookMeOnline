@@ -13,6 +13,7 @@ import { useAuthStore } from '../../store/auth'
 import { useFetch } from '../../utils/composables/fetch'
 import { ResponseValidator, useValidator } from '../../utils/composables/validator'
 import { deepClone, splitFullName } from '../../utils/helpers'
+import router from '../../router'
 
 interface CurrentUserDetails {
   uid: string
@@ -101,12 +102,9 @@ function clearInputs() {
 
 async function signUpWithGoogle() {
   try {
-    isProcessing.value = true
     await signInWithPopup($auth, googleProvider)
     storeUserToDatabase()
-    isProcessing.value = false
   } catch (error) {
-    isProcessing.value = false
     Assertions.isFirebaseError(error)
     if (error.message) {
       displayError.value = error.message
@@ -214,6 +212,7 @@ async function createUser(e: Event) {
         await signInUserWithEmailAndPassword()
         await sendVerificationEmailLink()
         clearInputs()
+        router.push({ name: 'email-verification' })
         isProcessing.value = false
       } catch (error) {
         Assertions.isError(error)

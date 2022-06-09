@@ -30,6 +30,16 @@ const routes = [
     },
   },
   {
+    path: '/email-verification',
+    name: 'email-verification',
+    components: {
+      default: () => import('../../views/EmailVerificationPage.vue'),
+      DefaultMainNav: () => import('../../components/Default/DefaultMainNav/DefaultMainNav.vue'),
+      DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
+      DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
+    },
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'notFound',
     components: {
