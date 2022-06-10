@@ -36,7 +36,7 @@ interface FetchOptions {
 
 export async function useFetch(options: Partial<FetchOptions>) {
   const data = ref(null)
-  const error = ref(null as Error | null)
+  const error = ref(<null | Error>null)
   const isLoading = ref(false)
 
   const { url = '', method = 'GET', body = {}, contentType = 'application/json', credentials = true } = options
@@ -62,7 +62,7 @@ export async function useFetch(options: Partial<FetchOptions>) {
           useAuthState.accessTokenExpirationTime = Number(currentUserDetails?.claims.exp)
         } catch (err) {
           if (err instanceof Error) {
-            error.value = err
+            throw new Error(err.message)
           }
         }
       }
@@ -79,14 +79,16 @@ export async function useFetch(options: Partial<FetchOptions>) {
       isLoading.value = true
       const response = await fetch(import.meta.env.VITE_BACKEND_URL + url, responseOptions)
       if ([200, 201, 202, 203, 204, 205, 206, 207, 208, 226].includes(response.status)) {
-        data.value = await response.json()
+        data.value = await response.json().catch(() => {
+          return null
+        })
       } else {
         error.value = await response.json()
       }
       isLoading.value = false
     } catch (err) {
+      isLoading.value = false
       if (err instanceof Error) {
-        isLoading.value = false
         error.value = err
       }
     }

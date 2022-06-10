@@ -12,7 +12,7 @@ import { inject, reactive, ref } from 'vue'
 import { useAuthStore } from '../../store/auth'
 import { useFetch } from '../../utils/composables/fetch'
 import { ResponseValidator, useValidator } from '../../utils/composables/validator'
-import { deepClone, splitFullName } from '../../utils/helpers'
+import { deepClone, parseErrorMessage, splitFullName } from '../../utils/helpers'
 import router from '../../router'
 
 interface CurrentUserDetails {
@@ -58,27 +58,18 @@ async function signUpWithEmailAndPassword() {
       credentials: false,
     })
 
-    if (deepClone(error.value)) {
-      if (error.value?.message) {
-        displayError.value = deepClone(error.value)?.message
-        return
-      }
-      displayError.value = 'This user cannot be created!'
-      return
+    if (error.value) {
+      throw new Error(parseErrorMessage(error.value.message))
     }
 
     const user = data.value as CurrentUserDetails | null
 
     if (!user) {
-      displayError.value = 'This user cannot be created!'
-      return
+      throw new Error('This user cannot be created!')
     }
   } catch (error) {
     Assertions.isError(error)
-    if (error.message) {
-      displayError.value = error.message
-    }
-    displayError.value = 'This user cannot be created!'
+    throw new Error(error.message)
   }
 }
 
@@ -87,10 +78,7 @@ async function signInUserWithEmailAndPassword() {
     await signInWithEmailAndPassword($auth, phoneOrEmail.value, password.value)
   } catch (error) {
     Assertions.isFirebaseError(error)
-    if (error.message) {
-      displayError.value = error.message
-    }
-    displayError.value = 'Something went wrong!'
+    throw new Error(error.message)
   }
 }
 
@@ -106,34 +94,23 @@ async function signUpWithGoogle() {
     storeUserToDatabase()
   } catch (error) {
     Assertions.isFirebaseError(error)
-    if (error.message) {
-      displayError.value = error.message
-    }
-    displayError.value = 'Something went wrong!'
+    throw new Error(error.message)
   }
 }
 
 async function sendVerificationEmailLink() {
   try {
-    const { error } = await useFetch({
+    const { data, error } = await useFetch({
       url: '/user/email-verification',
       method: 'GET',
     })
 
-    if (deepClone(error.value)) {
-      if (error.value?.message) {
-        displayError.value = deepClone(error.value)?.message
-        return
-      }
-      displayError.value = 'The verification email cannot be sent!'
-      return
+    if (error.value) {
+      throw new Error(parseErrorMessage(error.value.message))
     }
   } catch (error) {
     Assertions.isError(error)
-    if (error.message) {
-      displayError.value = error.message
-    }
-    displayError.value = 'The verification email cannot be sent!'
+    throw new Error(error.message)
   }
 }
 
@@ -144,20 +121,14 @@ async function storeUserToDatabase() {
       method: 'POST',
     })
 
-    if (deepClone(error.value)) {
-      if (error.value?.message) {
-        displayError.value = deepClone(error.value)?.message
-        return
-      }
-      displayError.value = 'This user cannot be created!'
-      return
+    if (error.value) {
+      throw new Error(parseErrorMessage(error.value.message))
     }
 
     const user = data.value as CurrentUserDetails | null
 
     if (!user) {
-      displayError.value = 'This user cannot be created!'
-      return
+      throw new Error('This user cannot be created!')
     }
 
     useAuthState.user = {
@@ -172,10 +143,7 @@ async function storeUserToDatabase() {
     }
   } catch (error) {
     Assertions.isError(error)
-    if (error.message) {
-      displayError.value = error.message
-    }
-    displayError.value = 'This user cannot be created!'
+    throw new Error(error.message)
   }
 }
 
@@ -215,11 +183,9 @@ async function createUser(e: Event) {
         router.push({ name: 'email-verification' })
         isProcessing.value = false
       } catch (error) {
+        isProcessing.value = false
         Assertions.isError(error)
-        if (error.message) {
-          displayError.value = error.message
-        }
-        displayError.value = 'This user cannot be created!'
+        displayError.value = error.message
       }
     } else {
       console.log('signInWithGoogle()')

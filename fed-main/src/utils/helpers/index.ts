@@ -14,3 +14,10 @@ export function splitFullName(fullName: string) {
   const lastName = name.slice(lastIndex + 1)
   return { firstName, lastName }
 }
+
+export function parseErrorMessage(message: string | string[]) {
+  if (Array.isArray(message)) {
+    return message.join(', ')
+  }
+  return message
+}

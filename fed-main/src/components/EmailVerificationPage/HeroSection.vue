@@ -7,7 +7,7 @@ export default {
 <template>
   <div class="relative pt-28 pb-16 bg-white z-0">
     <div class="hidden absolute top-0 inset-x-0 h-1/2 bg-gray-50 lg:block" aria-hidden="true" />
-    <div class="max-w-7xl mx-auto bg-teal-700 lg:bg-transparent lg:px-8">
+    <div class="max-w-7xl mx-auto bg-teal-600 lg:bg-transparent lg:px-8">
       <div class="lg:grid lg:grid-cols-12">
         <div class="relative z-10 lg:col-start-1 lg:row-start-1 lg:col-span-4 lg:py-16 lg:bg-transparent">
           <div class="absolute inset-x-0 h-1/2 bg-gray-50 lg:hidden" aria-hidden="true" />
@@ -23,7 +23,7 @@ export default {
         </div>
 
         <div
-          class="relative bg-teal-700 lg:col-start-3 lg:row-start-1 lg:col-span-10 lg:rounded-3xl lg:grid lg:grid-cols-10 lg:items-center"
+          class="relative bg-teal-600 lg:col-start-3 lg:row-start-1 lg:col-span-10 lg:rounded-3xl lg:grid lg:grid-cols-10 lg:items-center"
         >
           <div class="hidden absolute inset-0 overflow-hidden rounded-3xl lg:block" aria-hidden="true">
             <svg
@@ -43,7 +43,7 @@ export default {
                   height="20"
                   patternUnits="userSpaceOnUse"
                 >
-                  <rect x="0" y="0" width="4" height="4" class="text-gray-200" fill="currentColor" />
+                  <rect x="0" y="0" width="4" height="4" class="text-teal-900" fill="currentColor" />
                 </pattern>
               </defs>
               <rect width="404" height="384" fill="url(#64e643ad-2176-4f86-b3d7-f2c5da3b6a6d)" />

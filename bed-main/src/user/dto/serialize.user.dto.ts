@@ -2,29 +2,29 @@ import { Expose, Transform } from 'class-transformer';
 
 export class SerializeUserDto {
   @Expose()
-  uid: string;
+  readonly uid: string;
 
   @Expose()
   @Transform(({ obj }) => obj.customClaims.firstName)
-  firstName: string;
+  readonly firstName: string;
 
   @Expose()
   @Transform(({ obj }) => obj.customClaims.lastName)
-  lastName: string;
+  readonly lastName: string;
 
   @Expose()
   @Transform(({ obj }) => obj.customClaims.role)
-  role: string;
+  readonly role: string;
 
   @Expose()
-  email: string;
+  readonly email: string;
 
   @Expose()
-  displayName: string;
+  readonly displayName: string;
 
   @Expose()
-  photoURL: string;
+  readonly photoURL: string;
 
   @Expose()
-  emailVerified: boolean;
+  readonly emailVerified: boolean;
 }
