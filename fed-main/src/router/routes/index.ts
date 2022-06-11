@@ -1,3 +1,5 @@
+import { AccessLevel } from '../../types/enums'
+
 const routes = [
   {
     path: '/',
@@ -8,6 +10,7 @@ const routes = [
       DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
       DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
     },
+    meta: { accessLevel: AccessLevel.NotAuthenticated },
   },
   {
     path: '/signin',
@@ -18,6 +21,7 @@ const routes = [
       DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
       DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
     },
+    meta: { accessLevel: AccessLevel.NotAuthenticated },
   },
   {
     path: '/signup',
@@ -38,6 +42,7 @@ const routes = [
       DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
       DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
     },
+    meta: { accessLevel: AccessLevel.AuthenticatedWithoutEmailVerified },
   },
   {
     path: '/:pathMatch(.*)*',

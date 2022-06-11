@@ -54,7 +54,7 @@ export async function useFetch(options: Partial<FetchOptions>) {
     const expirationTime = useAuthState.accessTokenExpirationTime
 
     if (!useAuthState.accessToken || currentTime < expirationTime) {
-      const currentUser = auth.currentUser
+      const currentUser = await auth.currentUser
       if (currentUser) {
         try {
           const currentUserDetails = await currentUser?.getIdTokenResult(true)

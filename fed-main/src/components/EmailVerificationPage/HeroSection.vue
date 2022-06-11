@@ -43,7 +43,7 @@ export default {
                   height="20"
                   patternUnits="userSpaceOnUse"
                 >
-                  <rect x="0" y="0" width="4" height="4" class="text-teal-900" fill="currentColor" />
+                  <rect x="0" y="0" width="4" height="4" class="text-teal-800" fill="currentColor" />
                 </pattern>
               </defs>
               <rect width="404" height="384" fill="url(#64e643ad-2176-4f86-b3d7-f2c5da3b6a6d)" />

@@ -12,7 +12,7 @@ import { inject, reactive, ref } from 'vue'
 import { useAuthStore } from '../../store/auth'
 import { useFetch } from '../../utils/composables/fetch'
 import { ResponseValidator, useValidator } from '../../utils/composables/validator'
-import { deepClone, parseErrorMessage, splitFullName } from '../../utils/helpers'
+import { parseErrorMessage, splitFullName } from '../../utils/helpers'
 import router from '../../router'
 
 interface CurrentUserDetails {
