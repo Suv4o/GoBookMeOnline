@@ -20,10 +20,14 @@ interface CurrentUserDetails {
   emailVerified: AuthStateUser['emailVerified']
 }
 
-function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized) {
+function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, router: Router) {
   if (to.meta.accessLevel === AccessLevel.AuthenticatedWithoutEmailVerified) {
-    const useStoreAuth = useAuthStore(pinia)
-    console.log(useStoreAuth.user)
+    const user = useAuthStore(pinia).user
+    if (user?.emailVerified) {
+      router.push(from.path)
+      return false
+    }
+    return true
   }
 }
 
@@ -58,7 +62,7 @@ export default function routerGuards(this: Router) {
               photoURL,
               emailVerified,
             }
-            setGuards(to, from)
+            setGuards(to, from, this)
           })
           .catch(error => {
             console.error(error)

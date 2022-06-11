@@ -74,8 +74,8 @@ export default {
           <div
             class="relative max-w-md mx-auto py-12 px-4 space-y-6 sm:max-w-3xl sm:py-16 sm:px-10 lg:max-w-none lg:p-0 lg:col-start-4 lg:col-span-6"
           >
-            <h2 id="join-heading" class="text-3xl font-extrabold text-white">Email Verification</h2>
-            <p class="text-lg text-white">A verification email has been sent to you. Please check your inbox!</p>
+            <h2 id="join-heading" class="text-4xl font-extrabold text-white">Email Verification</h2>
+            <p class="text-xl text-white">A verification email has been sent to you. Please check your inbox!</p>
             <a
               class="block w-full py-3 px-5 text-center bg-white border border-transparent rounded-md shadow-md text-base font-medium text-teal-700 hover:bg-gray-50 sm:inline-block sm:w-auto"
               href="#"
