@@ -28,7 +28,7 @@ interface ResponseOptions {
 
 interface FetchOptions {
   url: string
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE'
+  method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
   body: object
   credentials: boolean
   contentType: ContentType
