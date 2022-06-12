@@ -1,6 +1,11 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotAcceptableException,
+} from '@nestjs/common';
 import { FirebaseAdmin } from '../config/firebase.config';
 import { FirebaseUserRecord, Roles } from '../shared/types';
 import { UserEntity } from './user.entity';
@@ -92,7 +97,11 @@ export class UserService {
   async sendVerificationLink(user: FirebaseUserRecord): Promise<void> {
     try {
       const firebase = this.firebase.setup();
-      const { email } = user;
+      const { email, emailVerified } = user;
+
+      if (emailVerified) {
+        throw new NotAcceptableException('User already verified!');
+      }
 
       const verificationLink = await firebase
         .auth()
