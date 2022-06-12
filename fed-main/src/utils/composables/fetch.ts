@@ -66,8 +66,8 @@ export async function useFetch(options: Partial<FetchOptions>) {
           }
         }
       }
-      responseOptions.headers.Authorization = `Bearer ${useAuthState.accessToken}`
     }
+    responseOptions.headers.Authorization = `Bearer ${useAuthState.accessToken}`
   }
 
   if (Object.keys(body).length) {

@@ -4,6 +4,27 @@ export default {
 }
 </script>
 
+<script setup lang="ts">
+import { Assertions } from '../../types/guards'
+import { useFetch } from '../../utils/composables/fetch'
+import { parseErrorMessage } from '../../utils/helpers'
+
+async function sendVerificationEmailLink() {
+  try {
+    const { data, error } = await useFetch({
+      url: '/user/email-verification',
+      method: 'GET',
+    })
+
+    if (error.value) {
+      throw new Error(parseErrorMessage(error.value.message))
+    }
+  } catch (error) {
+    Assertions.isError(error)
+    throw new Error(error.message)
+  }
+}
+</script>
 <template>
   <div class="relative pt-28 pb-16 bg-white z-0">
     <div class="hidden absolute top-0 inset-x-0 h-1/2 bg-gray-50 lg:block" aria-hidden="true" />
@@ -78,7 +99,8 @@ export default {
             <p class="text-xl text-white">A verification email has been sent to you. Please check your inbox!</p>
             <a
               class="block w-full py-3 px-5 text-center bg-white border border-transparent rounded-md shadow-md text-base font-medium text-teal-700 hover:bg-gray-50 sm:inline-block sm:w-auto"
-              href="#"
+              href="javascript:;"
+              @click="sendVerificationEmailLink"
               >Resend a Verification Email</a
             >
           </div>
