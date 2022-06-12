@@ -8,6 +8,22 @@ export default {
 import HeroSection from '../components/HomePage/HeroSection.vue'
 import DefaultSearchBar from '../components/Default/DefaultSearchBar/DefaultSearchBar.vue'
 import SearchList from '../components/HomePage/SearchList.vue'
+import router from '../router'
+import { useNotification } from '../utils/composables/notiofication'
+import { NotificationTypes } from '../store/notification'
+
+const params = new URLSearchParams(window.location.search)
+
+if (params.has('email-verified') && params.get('email-verified') === 'true') {
+  router.push({ name: 'home' })
+  useNotification({
+    type: NotificationTypes.Success,
+    title: 'Successfully verified your email!',
+    message: 'Your account has been created. Make your next booking now!',
+  })
+}
+
+console.log()
 </script>
 
 <template>
