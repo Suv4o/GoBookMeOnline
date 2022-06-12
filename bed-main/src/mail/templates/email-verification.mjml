@@ -1,0 +1,43 @@
+<mjml>
+  <mj-head>
+    <mj-attributes>
+      <mj-all font-family="'Poppins', 'Helvetica', 'Arial', sans-serif"></mj-all>
+    </mj-attributes>
+    <mj-font href="https://fonts.googleapis.com/css?family=Poppins:normal,italic,bold&display=swap" name="Poppins"></mj-font>
+    <mj-font href="https://fonts.googleapis.com/css?family=Oswald:normal,italic,bold&display=swap" name="Oswald"></mj-font>
+  </mj-head>
+  <mj-body background-color="#eeeeee">
+    <mj-section background-color="#0d9488" padding-bottom="40px" padding-left="30px" padding-right="30px" padding-top="30px" padding="30px">
+      <mj-column padding="0">
+        <mj-text color="#fff" font-family="'Oswald', 'Helvetica', 'Arial', sans-serif" font-size="24px" line-height="1.375" padding="10px">
+          GoBookMe.Today
+        </mj-text>
+        <mj-spacer height="60px"></mj-spacer>
+        <mj-text color="#ffffff" font-size="58px" line-height="1.25" padding-bottom="30px" padding-left="10px" padding-right="60px" padding-top="10px" padding="10px">
+          <strong>Email Verification</strong>
+        </mj-text>
+        <mj-text color="#ffffff" font-size="24px" line-height="1.5" padding="10px">
+          Hey Aleks Trpkovski <br /><br />Please click below to verify your email address.
+        </mj-text>
+        <mj-spacer height="30px"></mj-spacer>
+        <mj-button href="http://localhost:3000/" background-color="#ffffff" border-radius="100px" color="#0d9488" font-size="24px" line-height="1.75" padding="10px" width="100%">
+          <strong>Confirm</strong>
+        </mj-button>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#fff" padding-bottom="0px" padding-left="20px" padding-right="20px" padding-top="20px" padding="20px">
+
+    </mj-section>
+    <mj-section background-color="#ffffff" padding-bottom="40px" padding-left="30px" padding-right="30px" padding-top="0px" padding="30px">
+      <mj-column padding="0">
+        <mj-text color="#111827" font-size="20px" line-height="1.5" padding="10px">
+            If you didn’t ask to verify this address, you can ignore this email. <br /><br />Thanks, <br /><br />Your GoBookMe.Today team
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+  <mj-section padding="20px">
+    <mj-column padding="0"></mj-column>
+    <mj-column padding="0"></mj-column>
+  </mj-section>
+</mjml>
