@@ -23,7 +23,8 @@ interface CurrentUserDetails {
 function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, router: Router) {
   if (to.meta.accessLevel === AccessLevel.AuthenticatedWithoutEmailVerified) {
     const user = useAuthStore(pinia).user
-    if (user?.emailVerified) {
+
+    if (!user || user?.emailVerified) {
       router.push(from.path)
       return false
     }
@@ -68,6 +69,8 @@ export default function routerGuards(this: Router) {
             console.error(error)
             throw new Error(error)
           })
+      } else {
+        setGuards(to, from, this)
       }
     })
   })
