@@ -14,6 +14,8 @@ import { useFetch } from '../../utils/composables/fetch'
 import { ResponseValidator, useValidator } from '../../utils/composables/validator'
 import { parseErrorMessage, splitFullName } from '../../utils/helpers'
 import router from '../../router'
+import { useNotification } from '../../utils/composables/notiofication'
+import { NotificationTypes } from '../../store/notification'
 
 interface CurrentUserDetails {
   uid: string
@@ -40,7 +42,6 @@ const isValid = reactive({
   password: { valid: true, message: '' },
 } as Pick<ResponseValidator, 'fullName' | 'phoneOrEmail' | 'password'>)
 
-const displayError = ref('')
 const isProcessing = ref(false)
 
 async function signUpWithEmailAndPassword() {
@@ -185,7 +186,7 @@ async function createUser(e: Event) {
       } catch (error) {
         isProcessing.value = false
         Assertions.isError(error)
-        displayError.value = error.message
+        useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
       }
     } else {
       console.log('signInWithGoogle()')
@@ -336,7 +337,6 @@ async function createUser(e: Event) {
             />
             <p v-if="!isValid.password.valid" class="text-sm text-red-700 mt-1">{{ isValid.password.message }}</p>
           </div>
-          <p v-if="displayError" class="text-sm text-red-700 mt-1">{{ displayError }}</p>
           <div>
             <button
               :disabled="isProcessing"
