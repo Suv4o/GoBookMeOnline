@@ -11,19 +11,24 @@ import SearchList from '../components/HomePage/SearchList.vue'
 import router from '../router'
 import { useNotification } from '../utils/composables/notiofication'
 import { NotificationTypes } from '../store/notification'
+import { onBeforeMount } from 'vue'
 
-const params = new URLSearchParams(window.location.search)
+onBeforeMount(() => {
+  showNotificationForCreatedUser()
+})
 
-if (params.has('email-verified') && params.get('email-verified') === 'true') {
-  router.push({ name: 'home' })
-  useNotification({
-    type: NotificationTypes.Success,
-    title: 'Successfully verified your email!',
-    message: 'Your account has been created. Make your next booking now!',
-  })
+function showNotificationForCreatedUser() {
+  const params = new URLSearchParams(window.location.search)
+
+  if (params.has('successfully-created') && params.get('successfully-created') === 'true') {
+    router.push({ name: 'home' })
+    useNotification({
+      type: NotificationTypes.Success,
+      title: 'Successfully verified your email!',
+      message: 'Your account has been created. Make your next booking now!',
+    })
+  }
 }
-
-console.log()
 </script>
 
 <template>

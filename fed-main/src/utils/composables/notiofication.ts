@@ -4,7 +4,7 @@ let notificationTimeout = null as ReturnType<typeof setTimeout> | null
 
 export function useNotification(
   notificationOptions: Pick<NotificationState, 'type' | 'title' | 'message'>,
-  timeout = 6000
+  timeout = 8000
 ) {
   const notificationStore = useNotificationStore()
   const { type, title, message } = notificationOptions

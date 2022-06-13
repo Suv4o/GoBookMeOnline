@@ -106,7 +106,7 @@ export class UserService {
       const verificationLink = await firebase
         .auth()
         .generateEmailVerificationLink(email, {
-          url: process.env.FRONTEND_URL + '/?email-verified=true',
+          url: process.env.FRONTEND_URL + '/?successfully-created=true',
         });
       await this.mailService.verificationEmail(user, verificationLink);
     } catch (error) {
