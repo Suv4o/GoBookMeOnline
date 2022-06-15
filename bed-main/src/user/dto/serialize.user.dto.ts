@@ -27,4 +27,7 @@ export class SerializeUserDto {
 
   @Expose()
   readonly emailVerified: boolean;
+
+  @Expose()
+  readonly customToken: string;
 }

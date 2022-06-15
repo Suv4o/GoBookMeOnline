@@ -9,7 +9,7 @@ import {
 import { FirebaseAdmin } from '../config/firebase.config';
 import { FirebaseUserRecord, Roles } from '../shared/types';
 import { UserEntity } from './user.entity';
-import { CreateUserEmailPasswordDto } from './dto/create-user-email-password.dto';
+import { CreateUserWithEmailDto } from './dto/create-user-with-email.dto';
 import { MailService } from '../mail/mail.service';
 
 @Injectable()
@@ -22,17 +22,16 @@ export class UserService {
     private mailService: MailService,
   ) {}
 
-  async createUserEmailAndPassword(
-    createUserRequest: CreateUserEmailPasswordDto,
-  ): Promise<FirebaseUserRecord> {
+  async createUserWithEmail(
+    createUserRequest: CreateUserWithEmailDto,
+  ): Promise<FirebaseUserRecord & { customToken: string }> {
     try {
-      const { email, password, firstName, lastName } = createUserRequest;
+      const { email, firstName, lastName } = createUserRequest;
       const role = Roles.USER_DEFAULT;
       const firebase = this.firebase.setup();
 
       const createdUser = (await firebase.auth().createUser({
         email,
-        password,
         displayName: `${firstName} ${lastName}`,
       })) as FirebaseUserRecord;
 
@@ -52,7 +51,11 @@ export class UserService {
 
       const savedUser = (await firebase
         .auth()
-        .getUser(createdUser.uid)) as FirebaseUserRecord;
+        .getUser(createdUser.uid)) as FirebaseUserRecord & {
+        customToken: string;
+      };
+
+      savedUser.customToken = await this.generateCustomToken(savedUser);
 
       return savedUser;
     } catch (error) {
@@ -112,6 +115,21 @@ export class UserService {
     } catch (error) {
       this.logger.error(error);
       throw new BadRequestException('Error sending verification link!');
+    }
+  }
+
+  private async generateCustomToken(user: FirebaseUserRecord): Promise<string> {
+    try {
+      const firebase = this.firebase.setup();
+      const { uid } = user;
+      const role = Roles.USER_DEFAULT;
+      const customToken = await firebase
+        .auth()
+        .createCustomToken(uid, { role });
+      return customToken;
+    } catch (error) {
+      this.logger.error(error);
+      throw new BadRequestException(error.message);
     }
   }
 }

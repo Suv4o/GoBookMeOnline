@@ -5,8 +5,8 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth'
-import { Auth } from '@firebase/auth'
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { Auth, signInWithCustomToken } from '@firebase/auth'
 import { Assertions } from '../../types/guards'
 import { inject, reactive, ref } from 'vue'
 import { useAuthStore } from '../../store/auth'
@@ -26,6 +26,7 @@ interface CurrentUserDetails {
   displayName: string
   photoURL: string
   emailVerified: boolean
+  customToken?: string
 }
 
 const useAuthState = useAuthStore()
@@ -34,25 +35,22 @@ const $auth = inject('$auth') as Auth
 
 const fullName = ref('')
 const phoneOrEmail = ref('')
-const password = ref('')
 
 const isValid = reactive({
   fullName: { valid: true, message: '' },
   phoneOrEmail: { valid: true, message: '' },
-  password: { valid: true, message: '' },
-} as Pick<ResponseValidator, 'fullName' | 'phoneOrEmail' | 'password'>)
+} as Pick<ResponseValidator, 'fullName' | 'phoneOrEmail'>)
 
 const isProcessing = ref(false)
 
-async function signUpWithEmailAndPassword() {
+async function signUpWithEmail() {
   try {
     const { firstName, lastName } = splitFullName(fullName.value)
     const { error, data } = await useFetch({
-      url: '/user/signup-email-and-password',
+      url: '/user/signup-email',
       method: 'POST',
       body: {
         email: phoneOrEmail.value,
-        password: password.value,
         firstName,
         lastName,
       },
@@ -68,17 +66,10 @@ async function signUpWithEmailAndPassword() {
     if (!user) {
       throw new Error('This user cannot be created!')
     }
+
+    return user as CurrentUserDetails
   } catch (error) {
     Assertions.isError(error)
-    throw new Error(error.message)
-  }
-}
-
-async function signInUserWithEmailAndPassword() {
-  try {
-    await signInWithEmailAndPassword($auth, phoneOrEmail.value, password.value)
-  } catch (error) {
-    Assertions.isFirebaseError(error)
     throw new Error(error.message)
   }
 }
@@ -86,13 +77,21 @@ async function signInUserWithEmailAndPassword() {
 function clearInputs() {
   fullName.value = ''
   phoneOrEmail.value = ''
-  password.value = ''
 }
 
 async function signUpWithGoogle() {
   try {
     await signInWithPopup($auth, googleProvider)
     storeUserToDatabase()
+  } catch (error) {
+    Assertions.isFirebaseError(error)
+    throw new Error(error.message)
+  }
+}
+
+async function signInWithToken(customToken = '') {
+  try {
+    await signInWithCustomToken($auth, customToken)
   } catch (error) {
     Assertions.isFirebaseError(error)
     throw new Error(error.message)
@@ -154,12 +153,10 @@ async function createUser(e: Event) {
   const { validProps } = useValidator({
     fullName: fullName.value,
     phoneOrEmail: phoneOrEmail.value,
-    password: password.value,
   })
 
   isValid.fullName = validProps.fullName
   isValid.phoneOrEmail = validProps.phoneOrEmail
-  isValid.password = validProps.password
 
   if (!validProps.fullName.valid) {
     fullName.value = ''
@@ -169,16 +166,12 @@ async function createUser(e: Event) {
     phoneOrEmail.value = ''
   }
 
-  if (!validProps.password.valid) {
-    password.value = ''
-  }
-
-  if (validProps.fullName.valid && validProps.phoneOrEmail.valid && validProps.password.valid) {
+  if (validProps.fullName.valid && validProps.phoneOrEmail.valid) {
     if (!validProps.phoneOrEmail.isMobile) {
       try {
         isProcessing.value = true
-        await signUpWithEmailAndPassword()
-        await signInUserWithEmailAndPassword()
+        const { customToken } = await signUpWithEmail()
+        await signInWithToken(customToken)
         await sendVerificationEmailLink()
         clearInputs()
         router.push({ name: 'email-verification' })
@@ -199,7 +192,7 @@ async function createUser(e: Event) {
   <div class="bg-white sm:max-w-md sm:w-full sm:mx-auto sm:rounded-lg sm:overflow-hidden">
     <div class="px-4 py-8 sm:px-10">
       <div>
-        <p class="text-sm font-medium text-gray-700">Sign in with</p>
+        <p class="text-sm font-medium text-gray-700">Sign up with</p>
 
         <div class="mt-1 grid grid-cols-3 gap-3">
           <div>
@@ -318,24 +311,6 @@ async function createUser(e: Event) {
             <p v-if="!isValid.phoneOrEmail.valid" class="text-sm text-red-700 mt-1">
               {{ isValid.phoneOrEmail.message }}
             </p>
-          </div>
-          <div>
-            <label for="password" class="sr-only">Password</label>
-            <input
-              id="password"
-              v-model="password"
-              :disabled="isProcessing"
-              name="password"
-              type="password"
-              placeholder="Password"
-              autocomplete="current-password"
-              required="true"
-              class="block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              :class="`${
-                !isValid.password.valid ? 'ring-red-700 border-red-700' : 'focus:ring-teal-500 focus:border-teal-500'
-              }`"
-            />
-            <p v-if="!isValid.password.valid" class="text-sm text-red-700 mt-1">{{ isValid.password.message }}</p>
           </div>
           <div>
             <button

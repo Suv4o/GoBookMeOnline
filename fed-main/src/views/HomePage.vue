@@ -8,7 +8,6 @@ export default {
 import HeroSection from '../components/HomePage/HeroSection.vue'
 import DefaultSearchBar from '../components/Default/DefaultSearchBar/DefaultSearchBar.vue'
 import SearchList from '../components/HomePage/SearchList.vue'
-import router from '../router'
 import { useNotification } from '../utils/composables/notiofication'
 import { NotificationTypes } from '../store/notification'
 import { onBeforeMount } from 'vue'
@@ -21,7 +20,7 @@ function showNotificationForCreatedUser() {
   const params = new URLSearchParams(window.location.search)
 
   if (params.has('successfully-created') && params.get('successfully-created') === 'true') {
-    router.push({ name: 'home' })
+    window.history.pushState({}, document.title, '/')
     useNotification({
       type: NotificationTypes.Success,
       title: 'Successfully verified your email!',

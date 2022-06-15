@@ -31,6 +31,7 @@ interface FetchOptions {
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
   body: object
   credentials: boolean
+  token: string
   contentType: ContentType
 }
 
@@ -39,7 +40,14 @@ export async function useFetch(options: Partial<FetchOptions>) {
   const error = ref(<null | Error>null)
   const isLoading = ref(false)
 
-  const { url = '', method = 'GET', body = {}, contentType = 'application/json', credentials = true } = options
+  const {
+    url = '',
+    method = 'GET',
+    body = {},
+    contentType = 'application/json',
+    credentials = true,
+    token = '',
+  } = options
   const useAuthState = useAuthStore()
 
   const responseOptions: Partial<ResponseOptions> = {
@@ -49,7 +57,7 @@ export async function useFetch(options: Partial<FetchOptions>) {
     },
   }
 
-  if (responseOptions.headers && credentials) {
+  if (responseOptions.headers && credentials && !token) {
     const currentTime = new Date().getTime()
     const expirationTime = useAuthState.accessTokenExpirationTime
 
@@ -68,6 +76,10 @@ export async function useFetch(options: Partial<FetchOptions>) {
       }
     }
     responseOptions.headers.Authorization = `Bearer ${useAuthState.accessToken}`
+  }
+
+  if (responseOptions.headers && token) {
+    responseOptions.headers.Authorization = `Bearer ${token}`
   }
 
   if (Object.keys(body).length) {

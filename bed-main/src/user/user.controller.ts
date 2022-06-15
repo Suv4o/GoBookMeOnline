@@ -3,7 +3,7 @@ import { Auth } from 'src/shared/decorators/auth.decorator';
 import { Serialize } from 'src/shared/interceptors/serialize.interceptor';
 import { CurrentUser } from '../shared/decorators/current-user.decorator';
 import { FirebaseUserRecord } from '../shared/types';
-import { CreateUserEmailPasswordDto } from './dto/create-user-email-password.dto';
+import { CreateUserWithEmailDto } from './dto/create-user-with-email.dto';
 import { SerializeUserDto } from './dto/serialize.user.dto';
 import { UserService } from './user.service';
 
@@ -12,16 +12,16 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Serialize(SerializeUserDto)
-  @Post('signup-email-and-password')
-  signUpUserEmailAndPassword(
-    @Body() createUserRequest: CreateUserEmailPasswordDto,
+  @Post('signup-email')
+  signUpUserWithEmail(
+    @Body() createUserRequest: CreateUserWithEmailDto,
   ): Promise<FirebaseUserRecord> {
-    return this.userService.createUserEmailAndPassword(createUserRequest);
+    return this.userService.createUserWithEmail(createUserRequest);
   }
 
   @Serialize(SerializeUserDto)
   @Post('signup-with-provider')
-  signUserUpProvider(
+  signUpUserProvider(
     @CurrentUser() user: FirebaseUserRecord,
   ): Promise<FirebaseUserRecord> {
     return this.userService.createUserWithProvider(user);

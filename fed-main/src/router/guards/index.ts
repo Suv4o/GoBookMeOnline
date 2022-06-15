@@ -21,6 +21,10 @@ interface CurrentUserDetails {
 }
 
 function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, router: Router) {
+  if (to.meta.accessLevel === AccessLevel.Authenticated) {
+    console.log('setGuards: Authenticated')
+  }
+
   if (to.meta.accessLevel === AccessLevel.AuthenticatedWithoutEmailVerified) {
     const user = useAuthStore(pinia).user
 
