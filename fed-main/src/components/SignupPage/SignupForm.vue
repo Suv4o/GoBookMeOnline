@@ -16,6 +16,7 @@ import { parseErrorMessage, splitFullName } from '../../utils/helpers'
 import router from '../../router'
 import { useNotification } from '../../utils/composables/notiofication'
 import { NotificationTypes } from '../../store/notification'
+import useState from '../PhoneVerificationPage/useState'
 
 interface CurrentUserDetails {
   uid: string
@@ -147,8 +148,8 @@ async function storeUserToDatabase() {
   }
 }
 
-async function createUser(e: Event) {
-  e.preventDefault()
+async function createUser(event: Event) {
+  event.preventDefault()
 
   const { validProps } = useValidator({
     fullName: fullName.value,
@@ -182,7 +183,19 @@ async function createUser(e: Event) {
         useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
       }
     } else {
-      console.log('signInWithGoogle()')
+      try {
+        isProcessing.value = true
+        const { setFullName, setPhoneNumber } = useState()
+        setFullName(fullName.value)
+        setPhoneNumber(phoneOrEmail.value)
+        clearInputs()
+        router.push({ name: 'phone-verification' })
+        isProcessing.value = false
+      } catch (error) {
+        isProcessing.value = false
+        Assertions.isError(error)
+        useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
+      }
     }
   }
 }
@@ -272,7 +285,7 @@ async function createUser(e: Event) {
       <div class="mt-6">
         <form class="space-y-6" @submit="createUser">
           <div>
-            <label for="name" class="sr-only">Full name</label>
+            <label for="name" class="sr-only">Full Name</label>
             <input
               id="name"
               v-model="fullName"
@@ -280,7 +293,7 @@ async function createUser(e: Event) {
               type="text"
               name="name"
               autocomplete="name"
-              placeholder="Full name"
+              placeholder="Full Name"
               required="true"
               class="block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               :class="`${
@@ -291,7 +304,7 @@ async function createUser(e: Event) {
           </div>
 
           <div>
-            <label for="mobile-or-email" class="sr-only">Mobile number or email</label>
+            <label for="mobile-or-email" class="sr-only">Mobile Number or Email</label>
             <input
               id="mobile-or-email"
               v-model="phoneOrEmail"
@@ -299,7 +312,7 @@ async function createUser(e: Event) {
               type="text"
               name="mobile-or-email"
               autocomplete="email|tel"
-              placeholder="Mobile number or email"
+              placeholder="Mobile Number or Email"
               required="true"
               class="block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               :class="`${
