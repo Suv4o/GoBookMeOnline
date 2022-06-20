@@ -18,12 +18,13 @@ import { useNotification } from '../../utils/composables/notiofication'
 import { NotificationTypes } from '../../store/notification'
 import useState from '../PhoneVerificationPage/useState'
 
-interface CurrentUserDetails {
+export interface CurrentUserDetails {
   uid: string
   firstName: string
   lastName: string
   role: string
   email: string
+  phoneNumber: string
   displayName: string
   photoURL: string
   emailVerified: boolean
@@ -138,6 +139,7 @@ async function storeUserToDatabase() {
       lastName: user.lastName,
       role: user.role,
       email: user.email,
+      phoneNumber: user.phoneNumber,
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,

@@ -11,6 +11,7 @@ import { FirebaseUserRecord, Roles } from '../shared/types';
 import { UserEntity } from './user.entity';
 import { CreateUserWithEmailDto } from './dto/create-user-with-email.dto';
 import { MailService } from '../mail/mail.service';
+import { CreateUserWithPhoneDto } from './dto/create-user-with-phone.dto';
 
 @Injectable()
 export class UserService {
@@ -63,6 +64,47 @@ export class UserService {
       throw new BadRequestException(error.message);
     }
   }
+
+  async createUserWithPhone(
+    createUserRequest: CreateUserWithPhoneDto,
+    currentUser: FirebaseUserRecord,
+  ): Promise<FirebaseUserRecord> {
+    try {
+      const { uid, phoneNumber } = currentUser;
+      const { firstName, lastName } = createUserRequest;
+
+      const role = Roles.USER_DEFAULT;
+      const firebase = this.firebase.setup();
+
+      const updatedUser = (await firebase.auth().updateUser(uid, {
+        displayName: `${firstName} ${lastName}`,
+      })) as FirebaseUserRecord;
+
+      await firebase
+        .auth()
+        .setCustomUserClaims(updatedUser.uid, { firstName, lastName, role });
+
+      const userToSave = this.userRepository.create({
+        id: updatedUser.uid,
+        phoneNumber,
+        firstName,
+        lastName,
+        role,
+      });
+
+      await this.userRepository.save(userToSave);
+
+      const savedUser = (await firebase
+        .auth()
+        .getUser(updatedUser.uid)) as FirebaseUserRecord;
+
+      return savedUser;
+    } catch (error) {
+      this.logger.error(error);
+      throw new BadRequestException(error.message);
+    }
+  }
+
   async createUserWithProvider(
     currentUser: FirebaseUserRecord,
   ): Promise<FirebaseUserRecord> {

@@ -20,6 +20,9 @@ export class SerializeUserDto {
   readonly email: string;
 
   @Expose()
+  readonly phoneNumber: string;
+
+  @Expose()
   readonly displayName: string;
 
   @Expose()

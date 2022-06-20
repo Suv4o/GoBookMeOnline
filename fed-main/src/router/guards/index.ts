@@ -15,6 +15,7 @@ interface CurrentUserDetails {
   lastName: AuthStateUser['lastName']
   role: AuthStateUser['role']
   email: AuthStateUser['email']
+  phoneNumber: AuthStateUser['phoneNumber']
   displayName: AuthStateUser['displayName']
   photoURL: AuthStateUser['photoURL']
   emailVerified: AuthStateUser['emailVerified']
@@ -51,6 +52,7 @@ export default function routerGuards(this: Router) {
               lastName,
               role,
               email,
+              phoneNumber,
               displayName,
               photoURL,
               emailVerified,
@@ -63,6 +65,7 @@ export default function routerGuards(this: Router) {
               lastName,
               role,
               email,
+              phoneNumber,
               displayName,
               photoURL,
               emailVerified,

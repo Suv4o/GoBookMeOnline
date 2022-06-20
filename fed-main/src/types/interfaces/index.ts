@@ -20,6 +20,7 @@ export interface AuthStateUser {
   lastName: string
   role: string
   email: string | null
+  phoneNumber: string | null
   displayName: string | null
   photoURL: string | null
   emailVerified: boolean | undefined

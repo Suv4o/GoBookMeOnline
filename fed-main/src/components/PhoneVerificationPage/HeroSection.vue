@@ -5,13 +5,15 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { Auth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
-import { inject, onMounted, ref } from 'vue'
+import { Auth, ConfirmationResult, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
+import { inject, onMounted, ref, computed, watch } from 'vue'
+import router from '../../router'
 import { NotificationTypes } from '../../store/notification'
 import { Assertions } from '../../types/guards'
+import { useFetch } from '../../utils/composables/fetch'
 import { useNotification } from '../../utils/composables/notiofication'
-// import { useFetch } from '../../utils/composables/fetch'
-// import { parseErrorMessage } from '../../utils/helpers'
+import { parseErrorMessage, splitFullName } from '../../utils/helpers'
+import { CurrentUserDetails } from '../SignupPage/SignupForm.vue'
 import useState from './useState'
 
 const { fullName, phoneNumber } = useState()
@@ -19,16 +21,33 @@ const $auth = inject('$auth') as Auth
 
 const verificationCode = ref('')
 const isProcessing = ref(false)
+const confirmation = {
+  result: null as ConfirmationResult | null,
+}
 
 onMounted(async () => {
   try {
-    const confirmationResult = await sendVerificationCode()
+    confirmation.result = await sendVerificationCode()
   } catch (error) {
     isProcessing.value = false
     Assertions.isError(error)
     useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
   }
 })
+
+const isVerificationCodeEntered = computed(() => {
+  if (verificationCode.value.length === 6) return true
+  return false
+})
+
+watch(
+  () => isVerificationCodeEntered.value,
+  isEntered => {
+    if (isEntered) {
+      submitVerificationCode()
+    }
+  }
+)
 
 async function sendVerificationCode() {
   try {
@@ -44,30 +63,61 @@ async function sendVerificationCode() {
 
     return signInWithPhoneNumber($auth, phoneNumber.value, recaptchaVerifier)
   } catch (error) {
+    isProcessing.value = false
     Assertions.isError(error)
     throw new Error('Error sending SMS', error)
   }
 }
 
 async function submitVerificationCode() {
-  console.log('Submit!')
+  try {
+    if (confirmation.result) {
+      isProcessing.value = true
+      await confirmation.result.confirm(verificationCode.value)
+      await signUpWithPhone()
+      clearInputs()
+      router.push({ name: 'home', query: { 'successfully-created': 'true' } })
+      isProcessing.value = false
+    }
+  } catch (error) {
+    isProcessing.value = false
+    Assertions.isError(error)
+    useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
+  }
 }
 
-// async function sendVerificationEmailLink() {
-//   try {
-//     const { data, error } = await useFetch({
-//       url: '/user/email-verification',
-//       method: 'GET',
-//     })
+async function signUpWithPhone() {
+  try {
+    const { firstName, lastName } = splitFullName(fullName.value)
+    const { error, data } = await useFetch({
+      url: '/user/signup-phone',
+      method: 'POST',
+      body: {
+        firstName,
+        lastName,
+      },
+    })
 
-//     if (error.value) {
-//       throw new Error(parseErrorMessage(error.value.message))
-//     }
-//   } catch (error) {
-//     Assertions.isError(error)
-//     throw new Error(error.message)
-//   }
-// }
+    if (error.value) {
+      throw new Error(parseErrorMessage(error.value.message))
+    }
+
+    const user = data.value as CurrentUserDetails | null
+
+    if (!user) {
+      throw new Error('This user cannot be created!')
+    }
+
+    return user as CurrentUserDetails
+  } catch (error) {
+    Assertions.isError(error)
+    throw new Error(error.message)
+  }
+}
+
+function clearInputs() {
+  verificationCode.value = ''
+}
 </script>
 <template>
   <div class="relative pt-28 pb-16 bg-white z-0">
@@ -143,22 +193,38 @@ async function submitVerificationCode() {
             <p class="text-xl text-white">
               A verification code has been sent to your phone. Please enter your code in the input field.
             </p>
-            <form class="space-y-6" @submit="submitVerificationCode">
-              <div class="sm:w-96">
+            <div class="space-y-6">
+              <div class="sm:w-96 relative">
                 <label for="verificationCode" class="sr-only">Verification Code</label>
                 <input
                   id="verificationCode"
                   v-model="verificationCode"
                   :disabled="isProcessing"
                   type="text"
+                  maxlength="6"
                   name="verificationCode"
                   autocomplete="verificationCode"
                   placeholder="Verification Code"
                   required="true"
                   class="block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
                 />
+                <div v-if="isProcessing" class="absolute top-1 -right-1 z-10">
+                  <svg
+                    class="animate-spin -ml-1 mr-3 h-7 w-7 text-teal-600"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path
+                      class="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                </div>
               </div>
-            </form>
+            </div>
             <a
               class="block w-full py-3 px-5 text-center bg-white border border-transparent rounded-md shadow-md text-base font-medium text-teal-700 hover:bg-gray-50 sm:inline-block sm:w-auto"
               href="javascript:;"

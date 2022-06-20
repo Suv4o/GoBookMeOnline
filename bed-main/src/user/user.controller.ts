@@ -4,6 +4,7 @@ import { Serialize } from 'src/shared/interceptors/serialize.interceptor';
 import { CurrentUser } from '../shared/decorators/current-user.decorator';
 import { FirebaseUserRecord } from '../shared/types';
 import { CreateUserWithEmailDto } from './dto/create-user-with-email.dto';
+import { CreateUserWithPhoneDto } from './dto/create-user-with-phone.dto';
 import { SerializeUserDto } from './dto/serialize.user.dto';
 import { UserService } from './user.service';
 
@@ -17,6 +18,15 @@ export class UserController {
     @Body() createUserRequest: CreateUserWithEmailDto,
   ): Promise<FirebaseUserRecord> {
     return this.userService.createUserWithEmail(createUserRequest);
+  }
+
+  @Serialize(SerializeUserDto)
+  @Post('signup-phone')
+  signUpUserWithPhone(
+    @Body() createUserRequest: CreateUserWithPhoneDto,
+    @CurrentUser() user: FirebaseUserRecord,
+  ): Promise<FirebaseUserRecord> {
+    return this.userService.createUserWithPhone(createUserRequest, user);
   }
 
   @Serialize(SerializeUserDto)

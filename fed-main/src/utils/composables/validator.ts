@@ -93,7 +93,7 @@ export function useValidator(validate: Partial<ValidateOptions>) {
   }
 
   function validatePhone(mobilePhone: string) {
-    if (/^(\+|\d)[0-9]{7,16}$/.test(mobilePhone)) {
+    if (/^\+[1-9]{1}[0-9]{7,16}$/.test(mobilePhone)) {
       validProps.mobilePhone = {
         valid: true,
         message: '',
@@ -102,7 +102,8 @@ export function useValidator(validate: Partial<ValidateOptions>) {
     }
     validProps.mobilePhone = {
       valid: false,
-      message: 'Please enter a valid Mobile Phone.',
+      message:
+        'Please enter a valid Mobile Phone. The phone number must start with a + and must be between 7 and 16 digits.',
     }
   }
 
