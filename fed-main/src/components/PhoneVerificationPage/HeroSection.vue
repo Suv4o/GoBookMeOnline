@@ -12,7 +12,7 @@ import { NotificationTypes } from '../../store/notification'
 import { Assertions } from '../../types/guards'
 import { useFetch } from '../../utils/composables/fetch'
 import { useNotification } from '../../utils/composables/notiofication'
-import { parseErrorMessage, splitFullName } from '../../utils/helpers'
+import { parseErrorMessage, splitFullName, parseFirebaseError } from '../../utils/helpers'
 import { CurrentUserDetails } from '../SignupPage/SignupForm.vue'
 import useState from './useState'
 
@@ -31,7 +31,12 @@ onMounted(async () => {
   } catch (error) {
     isProcessing.value = false
     Assertions.isError(error)
-    useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
+    const readableError = parseFirebaseError(error.message)
+    if (readableError) {
+      useNotification({ type: NotificationTypes.Error, title: 'Error', message: readableError })
+    } else {
+      useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
+    }
   }
 })
 
@@ -82,7 +87,12 @@ async function submitVerificationCode() {
   } catch (error) {
     isProcessing.value = false
     Assertions.isError(error)
-    useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
+    const readableError = parseFirebaseError(error.message)
+    if (readableError) {
+      useNotification({ type: NotificationTypes.Error, title: 'Error', message: readableError })
+    } else {
+      useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
+    }
   }
 }
 

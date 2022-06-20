@@ -12,7 +12,7 @@ import { inject, reactive, ref } from 'vue'
 import { useAuthStore } from '../../store/auth'
 import { useFetch } from '../../utils/composables/fetch'
 import { ResponseValidator, useValidator } from '../../utils/composables/validator'
-import { parseErrorMessage, splitFullName } from '../../utils/helpers'
+import { parseErrorMessage, parseFirebaseError, splitFullName } from '../../utils/helpers'
 import router from '../../router'
 import { useNotification } from '../../utils/composables/notiofication'
 import { NotificationTypes } from '../../store/notification'
@@ -182,7 +182,12 @@ async function createUser(event: Event) {
       } catch (error) {
         isProcessing.value = false
         Assertions.isError(error)
-        useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
+        const readableError = parseFirebaseError(error.message)
+        if (readableError) {
+          useNotification({ type: NotificationTypes.Error, title: 'Error', message: readableError })
+        } else {
+          useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
+        }
       }
     } else {
       try {
@@ -196,7 +201,12 @@ async function createUser(event: Event) {
       } catch (error) {
         isProcessing.value = false
         Assertions.isError(error)
-        useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
+        const readableError = parseFirebaseError(error.message)
+        if (readableError) {
+          useNotification({ type: NotificationTypes.Error, title: 'Error', message: readableError })
+        } else {
+          useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
+        }
       }
     }
   }
