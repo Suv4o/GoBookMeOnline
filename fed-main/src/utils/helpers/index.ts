@@ -330,5 +330,4 @@ export function parseFirebaseError(error: string) {
       return errorMessage
     }
   }
-  // Firebase: Error (auth/invalid-verification-code).
 }

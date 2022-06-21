@@ -16,7 +16,7 @@ import { parseErrorMessage, splitFullName, parseFirebaseError } from '../../util
 import { CurrentUserDetails } from '../SignupPage/SignupForm.vue'
 import useState from './useState'
 
-const { fullName, phoneNumber } = useState()
+const { fullName, phoneNumber, setFullName, setPhoneNumber } = useState()
 const $auth = inject('$auth') as Auth
 
 const verificationCode = ref('')
@@ -127,6 +127,8 @@ async function signUpWithPhone() {
 
 function clearInputs() {
   verificationCode.value = ''
+  setFullName('')
+  setPhoneNumber('')
 }
 </script>
 <template>

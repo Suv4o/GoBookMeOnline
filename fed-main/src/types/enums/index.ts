@@ -3,4 +3,5 @@ export enum AccessLevel {
   NotAuthenticated = 'NotAuthenticated',
   Authenticated = 'Authenticated',
   AuthenticatedWithoutEmailVerified = 'AuthenticatedWithoutEmailVerified',
+  WaitingForPhoneVerification = 'WaitingForPhoneVerification',
 }

@@ -40,7 +40,6 @@ const routes = [
     components: {
       default: () => import('../../views/EmailVerificationPage.vue'),
       DefaultMainNav: () => import('../../components/Default/DefaultMainNav/DefaultMainNav.vue'),
-      DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
       DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
     },
     meta: { accessLevel: AccessLevel.AuthenticatedWithoutEmailVerified },
@@ -51,9 +50,9 @@ const routes = [
     components: {
       default: () => import('../../views/PhoneVerificationPage.vue'),
       DefaultMainNav: () => import('../../components/Default/DefaultMainNav/DefaultMainNav.vue'),
-      DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
       DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
     },
+    meta: { accessLevel: AccessLevel.WaitingForPhoneVerification },
   },
   {
     path: '/:pathMatch(.*)*',

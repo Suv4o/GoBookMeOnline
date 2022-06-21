@@ -6,6 +6,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../../config/firebase.config'
 import { pinia } from '../../main'
 import { useAuthStore } from '../../store/auth'
+import useState from '../../components/PhoneVerificationPage/useState'
 
 interface CurrentUserDetails {
   accessToken: AuthState['accessToken']
@@ -33,6 +34,17 @@ function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, r
       router.push(from.path)
       return false
     }
+    return true
+  }
+
+  if (to.meta.accessLevel === AccessLevel.WaitingForPhoneVerification) {
+    const { fullName, phoneNumber } = useState()
+
+    if (!fullName.value || !phoneNumber.value) {
+      router.push(from.path)
+      return false
+    }
+
     return true
   }
 }
