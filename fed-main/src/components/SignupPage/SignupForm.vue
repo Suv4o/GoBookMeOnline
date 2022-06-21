@@ -5,7 +5,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth'
 import { Auth, signInWithCustomToken } from '@firebase/auth'
 import { Assertions } from '../../types/guards'
 import { inject, reactive, ref } from 'vue'
@@ -33,6 +33,7 @@ export interface CurrentUserDetails {
 
 const useAuthState = useAuthStore()
 const googleProvider = new GoogleAuthProvider()
+const facebookProvider = new FacebookAuthProvider()
 const $auth = inject('$auth') as Auth
 
 const fullName = ref('')
@@ -85,9 +86,20 @@ async function signUpWithGoogle() {
   try {
     await signInWithPopup($auth, googleProvider)
     await storeUserToDatabase()
-    router.push({ name: 'home' })
+    router.push({ name: 'home', query: { 'successfully-created': 'true' } })
   } catch (error) {
     Assertions.isFirebaseError(error)
+    throw new Error(error.message)
+  }
+}
+
+async function signUpWithFacebook() {
+  try {
+    await signInWithPopup($auth, facebookProvider)
+    await storeUserToDatabase()
+    router.push({ name: 'home', query: { 'successfully-created': 'true' } })
+  } catch (error) {
+    Assertions.isError(error)
     throw new Error(error.message)
   }
 }
@@ -223,8 +235,9 @@ async function createUser(event: Event) {
         <div class="mt-1 grid grid-cols-3 gap-3">
           <div>
             <a
-              href="#"
+              href="javascript:;"
               class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              @click="signUpWithFacebook"
             >
               <span class="sr-only">Sign in with Facebook</span>
               <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">

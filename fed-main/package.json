@@ -6,7 +6,7 @@
     "node": ">=v18.0.0"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --https",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",

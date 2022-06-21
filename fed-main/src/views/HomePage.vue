@@ -23,7 +23,7 @@ function showNotificationForCreatedUser() {
     window.history.pushState({}, document.title, '/')
     useNotification({
       type: NotificationTypes.Success,
-      title: 'Successfully verified your email!',
+      title: 'Successfully created!',
       message: 'Your account has been created. Make your next booking now!',
     })
   }
