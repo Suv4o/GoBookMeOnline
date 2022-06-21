@@ -84,7 +84,8 @@ function clearInputs() {
 async function signUpWithGoogle() {
   try {
     await signInWithPopup($auth, googleProvider)
-    storeUserToDatabase()
+    await storeUserToDatabase()
+    router.push({ name: 'home' })
   } catch (error) {
     Assertions.isFirebaseError(error)
     throw new Error(error.message)
