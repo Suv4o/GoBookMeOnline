@@ -21,6 +21,7 @@ const $auth = inject('$auth') as Auth
 
 const verificationCode = ref('')
 const isProcessing = ref(false)
+let recaptchaVerifier: RecaptchaVerifier | null = null
 const confirmation = {
   result: null as ConfirmationResult | null,
 }
@@ -58,14 +59,21 @@ async function sendVerificationCode() {
   try {
     $auth.languageCode = 'en'
 
-    const recaptchaVerifier = new RecaptchaVerifier(
-      'sign-in-button',
-      {
-        size: 'invisible',
-      },
-      $auth
-    )
+    if (!recaptchaVerifier) {
+      recaptchaVerifier = new RecaptchaVerifier(
+        'sign-in-button',
+        {
+          size: 'invisible',
+        },
+        $auth
+      )
+    }
 
+    useNotification({
+      type: NotificationTypes.Success,
+      title: 'Send',
+      message: 'A verification code has been sent to your mobile number.',
+    })
     return signInWithPhoneNumber($auth, phoneNumber.value, recaptchaVerifier)
   } catch (error) {
     isProcessing.value = false
@@ -248,5 +256,5 @@ function clearInputs() {
       </div>
     </div>
   </div>
-  <div id="sign-in-button"></div>
+  <div id="sign-in-button" class="opacity-0"></div>
 </template>
