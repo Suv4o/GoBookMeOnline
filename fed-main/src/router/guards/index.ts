@@ -6,7 +6,8 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../../config/firebase.config'
 import { pinia } from '../../main'
 import { useAuthStore } from '../../store/auth'
-import useState from '../../components/PhoneVerificationPage/useState'
+import { default as useStatePhoneVerification } from '../../components/PhoneVerificationPage/useState'
+import { default as useStateDefaultMainNav } from '../../components/Default/DefaultMainNav/useState'
 
 interface CurrentUserDetails {
   accessToken: AuthState['accessToken']
@@ -23,6 +24,18 @@ interface CurrentUserDetails {
 }
 
 function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, router: Router) {
+  if (to.name === 'email-verification' || to.name === 'phone-verification') {
+    const { setSignInButtonShown, setSignUpButtonShown } = useStateDefaultMainNav()
+    setSignInButtonShown(false)
+    setSignUpButtonShown(false)
+  }
+
+  if (from.name === 'email-verification' || from.name === 'phone-verification') {
+    const { setSignInButtonShown, setSignUpButtonShown } = useStateDefaultMainNav()
+    setSignInButtonShown(true)
+    setSignUpButtonShown(true)
+  }
+
   if (to.meta.accessLevel === AccessLevel.Authenticated) {
     console.log('setGuards: Authenticated')
   }
@@ -38,7 +51,7 @@ function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, r
   }
 
   if (to.meta.accessLevel === AccessLevel.WaitingForPhoneVerification) {
-    const { fullName, phoneNumber } = useState()
+    const { fullName, phoneNumber } = useStatePhoneVerification()
 
     if (!fullName.value || !phoneNumber.value) {
       router.push(from.path)

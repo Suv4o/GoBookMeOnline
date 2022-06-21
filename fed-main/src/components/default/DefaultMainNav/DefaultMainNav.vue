@@ -6,6 +6,9 @@ export default {
 <script setup lang="ts">
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { MenuIcon, XIcon } from '@heroicons/vue/outline'
+import useState from './useState'
+
+const { isSignInButtonShown, isSignUpButtonShown } = useState()
 </script>
 
 <template>
@@ -34,12 +37,14 @@ import { MenuIcon, XIcon } from '@heroicons/vue/outline'
         <div class="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0">
           <span class="inline-flex rounded-md">
             <router-link
+              v-if="isSignInButtonShown"
               :to="{ name: 'signin' }"
               class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-teal-600 bg-white hover:bg-gray-50 shadow"
             >
               Sign in
             </router-link>
             <router-link
+              v-if="isSignUpButtonShown"
               :to="{ name: 'signup' }"
               class="inline-flex items-center px-4 py-2 ml-4 border border-transparent text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 shadow"
             >
