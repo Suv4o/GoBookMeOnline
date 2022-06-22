@@ -11,6 +11,7 @@ import SearchList from '../components/HomePage/SearchList.vue'
 import { useNotification } from '../utils/composables/notiofication'
 import { NotificationTypes } from '../store/notification'
 import { onBeforeMount } from 'vue'
+import { useValidator } from '../utils/composables/validator'
 
 onBeforeMount(() => {
   showNotificationForCreatedUser()
@@ -26,6 +27,18 @@ function showNotificationForCreatedUser() {
       title: 'Successfully created!',
       message: 'Your account has been created. Make your next booking now!',
     })
+  }
+
+  if (params.has('user')) {
+    const email = params.get('user')
+
+    const { validProps } = useValidator({
+      email: email ? email : '',
+    })
+
+    if (validProps.email.valid) {
+      console.log(email)
+    }
   }
 }
 </script>

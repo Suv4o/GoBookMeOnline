@@ -27,11 +27,11 @@ export function useValidator(validate: Partial<ValidateOptions>) {
   }
 
   if (validate.email) {
-    validateFullName(validate.email)
+    validateEmail(validate.email)
   }
 
   if (validate.mobilePhone) {
-    validateFullName(validate.mobilePhone)
+    validatePhone(validate.mobilePhone)
   }
 
   if (validate.phoneOrEmail) {

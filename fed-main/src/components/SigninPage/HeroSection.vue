@@ -111,14 +111,6 @@ export default {
                   </div>
                 </div>
 
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center"></div>
-
-                  <div class="text-sm">
-                    <a href="#" class="font-medium text-teal-600 hover:text-teal-500"> Forgot your password? </a>
-                  </div>
-                </div>
-
                 <div>
                   <button
                     type="submit"

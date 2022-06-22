@@ -161,7 +161,7 @@ export class UserService {
       const signInLink = await firebase
         .auth()
         .generateSignInWithEmailLink(email, {
-          url: process.env.FRONTEND_URL,
+          url: process.env.FRONTEND_URL + '/?user=' + email,
         });
       await this.mailService.signInEmail(userFirebase, signInLink);
     } catch (error) {
