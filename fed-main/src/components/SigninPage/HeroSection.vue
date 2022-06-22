@@ -96,27 +96,15 @@ export default {
             <div class="mt-6">
               <form action="#" method="POST" class="space-y-6">
                 <div>
-                  <label for="email" class="block text-sm font-medium text-gray-700"> Email address </label>
+                  <label for="mobile-or-email" class="block text-sm font-medium text-gray-700">
+                    Mobile Number or Email
+                  </label>
                   <div class="mt-1">
                     <input
-                      id="email"
-                      name="email"
+                      id="mobile-or-email"
+                      name="mobile-or-email"
                       type="email"
-                      autocomplete="email"
-                      required="true"
-                      class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
-                    />
-                  </div>
-                </div>
-
-                <div class="space-y-1">
-                  <label for="password" class="block text-sm font-medium text-gray-700"> Password </label>
-                  <div class="mt-1">
-                    <input
-                      id="password"
-                      name="password"
-                      type="password"
-                      autocomplete="current-password"
+                      autocomplete="email|tel"
                       required="true"
                       class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
                     />
@@ -124,15 +112,7 @@ export default {
                 </div>
 
                 <div class="flex items-center justify-between">
-                  <div class="flex items-center">
-                    <input
-                      id="remember-me"
-                      name="remember-me"
-                      type="checkbox"
-                      class="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded"
-                    />
-                    <label for="remember-me" class="ml-2 block text-sm text-gray-900"> Remember me </label>
-                  </div>
+                  <div class="flex items-center"></div>
 
                   <div class="text-sm">
                     <a href="#" class="font-medium text-teal-600 hover:text-teal-500"> Forgot your password? </a>

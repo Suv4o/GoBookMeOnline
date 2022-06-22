@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
 import { Auth } from 'src/shared/decorators/auth.decorator';
 import { Serialize } from 'src/shared/interceptors/serialize.interceptor';
 import { CurrentUser } from '../shared/decorators/current-user.decorator';
@@ -6,6 +6,7 @@ import { FirebaseUserRecord } from '../shared/types';
 import { CreateUserWithEmailDto } from './dto/create-user-with-email.dto';
 import { CreateUserWithPhoneDto } from './dto/create-user-with-phone.dto';
 import { SerializeUserDto } from './dto/serialize.user.dto';
+import { SignInUserWithEmailDto } from './dto/signin-user-with-email.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -35,6 +36,14 @@ export class UserController {
     @CurrentUser() user: FirebaseUserRecord,
   ): Promise<FirebaseUserRecord> {
     return this.userService.createUserWithProvider(user);
+  }
+
+  @Post('signin-email')
+  @HttpCode(200)
+  signInUserWithEmail(
+    @Body() signInUserRequest: SignInUserWithEmailDto,
+  ): Promise<void> {
+    return this.userService.signInUserWithEmail(signInUserRequest);
   }
 
   @Auth('USER_DEFAULT')

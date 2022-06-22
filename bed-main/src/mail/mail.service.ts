@@ -1,6 +1,6 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
-import { FirebaseUserRecord } from 'src/shared/types';
+import { FirebaseUserRecord } from '../shared/types';
 
 @Injectable()
 export class MailService {
@@ -17,6 +17,24 @@ export class MailService {
         context: {
           name,
           verificationEmail,
+        },
+      });
+    } catch (error) {
+      this.logger.error(error);
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  async signInEmail(user: FirebaseUserRecord, signInLink: string) {
+    try {
+      const { displayName: name, email } = user;
+      await this.mailerService.sendMail({
+        to: `${name} <${email}>`,
+        subject: 'Sign In to GoBookMe.Today',
+        template: 'email-signin',
+        context: {
+          name,
+          signInLink,
         },
       });
     } catch (error) {

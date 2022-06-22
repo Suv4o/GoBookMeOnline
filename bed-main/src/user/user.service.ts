@@ -5,6 +5,7 @@ import {
   Injectable,
   Logger,
   NotAcceptableException,
+  NotFoundException,
 } from '@nestjs/common';
 import { FirebaseAdmin } from '../config/firebase.config';
 import { FirebaseUserRecord, Roles } from '../shared/types';
@@ -12,6 +13,7 @@ import { UserEntity } from './user.entity';
 import { CreateUserWithEmailDto } from './dto/create-user-with-email.dto';
 import { MailService } from '../mail/mail.service';
 import { CreateUserWithPhoneDto } from './dto/create-user-with-phone.dto';
+import { SignInUserWithEmailDto } from './dto/signin-user-with-email.dto';
 
 @Injectable()
 export class UserService {
@@ -136,6 +138,35 @@ export class UserService {
     } catch (error) {
       this.logger.error(error);
       throw new BadRequestException('Error creating user!');
+    }
+  }
+
+  async signInUserWithEmail(signInUserRequest: SignInUserWithEmailDto) {
+    try {
+      const firebase = this.firebase.setup();
+      const { email } = signInUserRequest;
+
+      const userDatabase = await this.userRepository.findOne({
+        where: { email },
+      });
+
+      const userFirebase = (await firebase
+        .auth()
+        .getUserByEmail(email)) as FirebaseUserRecord;
+
+      if (!userDatabase || !userFirebase) {
+        throw new NotFoundException('User not found!');
+      }
+
+      const signInLink = await firebase
+        .auth()
+        .generateSignInWithEmailLink(email, {
+          url: process.env.FRONTEND_URL,
+        });
+      await this.mailService.signInEmail(userFirebase, signInLink);
+    } catch (error) {
+      this.logger.error(error);
+      throw new BadRequestException(error.message);
     }
   }
 
