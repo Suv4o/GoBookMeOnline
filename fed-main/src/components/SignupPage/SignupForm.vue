@@ -38,13 +38,12 @@ const $auth = inject('$auth') as Auth
 
 const fullName = ref('')
 const phoneOrEmail = ref('')
+const isProcessing = ref(false)
 
 const isValid = reactive({
   fullName: { valid: true, message: '' },
   phoneOrEmail: { valid: true, message: '' },
 } as Pick<ResponseValidator, 'fullName' | 'phoneOrEmail'>)
-
-const isProcessing = ref(false)
 
 async function signUpWithEmail() {
   try {

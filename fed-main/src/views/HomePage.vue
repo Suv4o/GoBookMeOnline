@@ -41,24 +41,22 @@ async function showNotifications() {
       email: email ? email : '',
     })
 
-    if (email && validProps.email.valid) {
-      if (isSignInWithEmailLink($auth, window.location.href)) {
-        try {
-          await signInWithEmailLink($auth, email, window.location.href)
-          window.history.pushState({}, document.title, '/')
-          useNotification({
-            type: NotificationTypes.Success,
-            title: 'Successfully Signed In!',
-            message: 'Your have been signed in. Make your next booking now!',
-          })
-        } catch (error) {
-          Assertions.isError(error)
-          const readableError = parseFirebaseError(error.message)
-          if (readableError) {
-            useNotification({ type: NotificationTypes.Error, title: 'Error', message: readableError })
-          } else {
-            useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
-          }
+    if (email && validProps.email.valid && isSignInWithEmailLink($auth, window.location.href)) {
+      try {
+        await signInWithEmailLink($auth, email, window.location.href)
+        window.history.pushState({}, document.title, '/')
+        useNotification({
+          type: NotificationTypes.Success,
+          title: 'Successfully Signed In!',
+          message: 'Your have been signed in. Make your next booking now!',
+        })
+      } catch (error) {
+        Assertions.isError(error)
+        const readableError = parseFirebaseError(error.message)
+        if (readableError) {
+          useNotification({ type: NotificationTypes.Error, title: 'Error', message: readableError })
+        } else {
+          useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
         }
       }
     }

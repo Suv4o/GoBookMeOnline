@@ -66,7 +66,7 @@ export default function routerGuards(this: Router) {
   this.beforeEach(async (to, from) => {
     const useStoreAuth = useAuthStore(pinia)
     onAuthStateChanged(auth, user => {
-      if (user) {
+      if (user && !useStoreAuth.user) {
         getUserClaims()
           .then(claims => {
             const {
@@ -96,6 +96,7 @@ export default function routerGuards(this: Router) {
               emailVerified,
             }
             setGuards(to, from, this)
+            console.log(useStoreAuth.user)
           })
           .catch(error => {
             console.error(error)
