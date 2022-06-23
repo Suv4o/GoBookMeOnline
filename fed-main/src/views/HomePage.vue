@@ -10,14 +10,19 @@ import DefaultSearchBar from '../components/Default/DefaultSearchBar/DefaultSear
 import SearchList from '../components/HomePage/SearchList.vue'
 import { useNotification } from '../utils/composables/notiofication'
 import { NotificationTypes } from '../store/notification'
-import { onBeforeMount } from 'vue'
+import { inject, onBeforeMount } from 'vue'
 import { useValidator } from '../utils/composables/validator'
+import { Auth, isSignInWithEmailLink, signInWithEmailLink } from '@firebase/auth'
+import { Assertions } from '../types/guards'
+import { parseFirebaseError } from '../utils/helpers'
+
+const $auth = inject('$auth') as Auth
 
 onBeforeMount(() => {
-  showNotificationForCreatedUser()
+  showNotifications()
 })
 
-function showNotificationForCreatedUser() {
+async function showNotifications() {
   const params = new URLSearchParams(window.location.search)
 
   if (params.has('successfully-created') && params.get('successfully-created') === 'true') {
@@ -36,8 +41,26 @@ function showNotificationForCreatedUser() {
       email: email ? email : '',
     })
 
-    if (validProps.email.valid) {
-      console.log(email)
+    if (email && validProps.email.valid) {
+      if (isSignInWithEmailLink($auth, window.location.href)) {
+        try {
+          await signInWithEmailLink($auth, email, window.location.href)
+          window.history.pushState({}, document.title, '/')
+          useNotification({
+            type: NotificationTypes.Success,
+            title: 'Successfully Signed In!',
+            message: 'Your have been signed in. Make your next booking now!',
+          })
+        } catch (error) {
+          Assertions.isError(error)
+          const readableError = parseFirebaseError(error.message)
+          if (readableError) {
+            useNotification({ type: NotificationTypes.Error, title: 'Error', message: readableError })
+          } else {
+            useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
+          }
+        }
+      }
     }
   }
 }
