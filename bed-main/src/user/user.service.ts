@@ -27,6 +27,7 @@ export class UserService {
 
   async createUserWithEmail(
     createUserRequest: CreateUserWithEmailDto,
+    existingUser: UserEntity,
   ): Promise<FirebaseUserRecord & { customToken: string }> {
     try {
       const { email, firstName, lastName } = createUserRequest;
@@ -38,19 +39,29 @@ export class UserService {
         displayName: `${firstName} ${lastName}`,
       })) as FirebaseUserRecord;
 
-      await firebase
-        .auth()
-        .setCustomUserClaims(createdUser.uid, { firstName, lastName, role });
-
-      const userToSave = this.userRepository.create({
-        id: createdUser.uid,
+      const dbObj = {
+        firebaseIds: [createdUser.uid],
         email,
+        phoneNumber: '+61411111111',
+        firstName,
+        lastName,
+        role,
+      } as Partial<UserEntity>;
+
+      if (existingUser) {
+        dbObj.id = existingUser.id;
+        dbObj.firebaseIds = [...existingUser.firebaseIds, createdUser.uid];
+      }
+
+      const userToSave = this.userRepository.create(dbObj);
+      const dbUser = await this.userRepository.save(userToSave);
+
+      await firebase.auth().setCustomUserClaims(createdUser.uid, {
+        internalId: dbUser.id,
         firstName,
         lastName,
         role,
       });
-
-      await this.userRepository.save(userToSave);
 
       const savedUser = (await firebase
         .auth()
@@ -70,6 +81,7 @@ export class UserService {
   async createUserWithPhone(
     createUserRequest: CreateUserWithPhoneDto,
     currentUser: FirebaseUserRecord,
+    existingUser: UserEntity,
   ): Promise<FirebaseUserRecord> {
     try {
       const { uid, phoneNumber } = currentUser;
@@ -78,23 +90,41 @@ export class UserService {
       const role = Roles.USER_DEFAULT;
       const firebase = this.firebase.setup();
 
+      if (existingUser && existingUser.firebaseIds.includes(uid)) {
+        const firebaseUser = (await firebase
+          .auth()
+          .getUser(currentUser.uid)) as FirebaseUserRecord;
+
+        return firebaseUser;
+      }
+
       const updatedUser = (await firebase.auth().updateUser(uid, {
         displayName: `${firstName} ${lastName}`,
       })) as FirebaseUserRecord;
 
-      await firebase
-        .auth()
-        .setCustomUserClaims(updatedUser.uid, { firstName, lastName, role });
-
-      const userToSave = this.userRepository.create({
-        id: updatedUser.uid,
+      const dbObj = {
+        firebaseIds: [updatedUser.uid],
         phoneNumber,
+        email: 'aleksandar.trpkovski@gmail.com',
+        firstName,
+        lastName,
+        role,
+      } as Partial<UserEntity>;
+
+      if (existingUser) {
+        dbObj.id = existingUser.id;
+        dbObj.firebaseIds = [...existingUser.firebaseIds, updatedUser.uid];
+      }
+
+      const userToSave = this.userRepository.create(dbObj);
+      const dbUser = await this.userRepository.save(userToSave);
+
+      await firebase.auth().setCustomUserClaims(updatedUser.uid, {
+        internalId: dbUser.id,
         firstName,
         lastName,
         role,
       });
-
-      await this.userRepository.save(userToSave);
 
       const savedUser = (await firebase
         .auth()
@@ -109,6 +139,7 @@ export class UserService {
 
   async createUserWithProvider(
     currentUser: FirebaseUserRecord,
+    existingUser: UserEntity,
   ): Promise<FirebaseUserRecord> {
     try {
       const { uid, email, displayName } = currentUser;
@@ -116,19 +147,36 @@ export class UserService {
       const role = Roles.USER_DEFAULT;
       const firebase = this.firebase.setup();
 
-      await firebase
-        .auth()
-        .setCustomUserClaims(uid, { firstName, lastName, role });
+      if (existingUser && existingUser.firebaseIds.includes(uid)) {
+        const firebaseUser = (await firebase
+          .auth()
+          .getUser(currentUser.uid)) as FirebaseUserRecord;
 
-      const userToSave = this.userRepository.create({
-        id: uid,
+        return firebaseUser;
+      }
+
+      const dbObj = {
+        firebaseIds: [currentUser.uid],
         email,
         firstName,
         lastName,
         role,
-      });
+      } as Partial<UserEntity>;
 
-      await this.userRepository.save(userToSave);
+      if (existingUser) {
+        dbObj.id = existingUser.id;
+        dbObj.firebaseIds = [...existingUser.firebaseIds, currentUser.uid];
+      }
+
+      const userToSave = this.userRepository.create(dbObj);
+      const dbUser = await this.userRepository.save(userToSave);
+
+      await firebase.auth().setCustomUserClaims(uid, {
+        internalId: dbUser.id,
+        firstName,
+        lastName,
+        role,
+      });
 
       const updatedUser = (await firebase
         .auth()
@@ -137,7 +185,7 @@ export class UserService {
       return updatedUser;
     } catch (error) {
       this.logger.error(error);
-      throw new BadRequestException('Error creating user!');
+      throw new BadRequestException(error.message);
     }
   }
 

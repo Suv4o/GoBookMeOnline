@@ -6,6 +6,7 @@ export interface ExpressRequest extends Request {
 }
 export interface FirebaseUserRecord extends firebaseAdminTypes.auth.UserRecord {
   customClaims: {
+    internalId: string;
     firstName: string;
     lastName: string;
     role: string;

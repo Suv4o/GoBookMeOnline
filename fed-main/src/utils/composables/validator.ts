@@ -1,6 +1,14 @@
 import { reactive } from 'vue'
 import { splitFullName } from '../helpers'
 
+enum Messages {
+  FullName = 'Please enter a valid full name.',
+  Email = 'Please enter a valid Email.',
+  PhoneNumber = 'Please enter a valid Mobile Phone. The phone number must start with a + and must be between 7 and 16 digits.',
+  PhoneOrEmail = 'Please enter a valid Mobile Number or Email. The phone number must start with a + and must be between 7 and 16 digits.',
+  Password = 'Password must between 8 to 20 letters and include combination of uppercase, lowercase, numbers and a special characters.',
+}
+
 export type ResponseValidator = {
   [key in keyof ValidateOptions]: PropertyOptions
 }
@@ -53,7 +61,7 @@ export function useValidator(validate: Partial<ValidateOptions>) {
     }
     validProps.fullName = {
       valid: false,
-      message: 'Please enter a valid full name.',
+      message: Messages.FullName,
     }
   }
 
@@ -70,7 +78,7 @@ export function useValidator(validate: Partial<ValidateOptions>) {
     }
     validProps.phoneOrEmail = {
       valid: false,
-      message: 'Please enter a valid Mobile Number or Email.',
+      message: Messages.PhoneOrEmail,
     }
   }
 
@@ -88,7 +96,7 @@ export function useValidator(validate: Partial<ValidateOptions>) {
     }
     validProps.email = {
       valid: false,
-      message: 'Please enter a valid Email.',
+      message: Messages.Email,
     }
   }
 
@@ -102,8 +110,7 @@ export function useValidator(validate: Partial<ValidateOptions>) {
     }
     validProps.mobilePhone = {
       valid: false,
-      message:
-        'Please enter a valid Mobile Phone. The phone number must start with a + and must be between 7 and 16 digits.',
+      message: Messages.PhoneNumber,
     }
   }
 
@@ -117,8 +124,7 @@ export function useValidator(validate: Partial<ValidateOptions>) {
     }
     validProps.password = {
       valid: false,
-      message:
-        'Password must between 8 to 20 letters and include combination of uppercase, lowercase, numbers and a special characters.',
+      message: Messages.Password,
     }
   }
 
