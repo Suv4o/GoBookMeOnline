@@ -7,12 +7,15 @@ export default {
 <script setup lang="ts">
 import { Auth } from '@firebase/auth'
 import { inject, ref, reactive } from 'vue'
+import router from '../../router'
 import { NotificationTypes } from '../../store/notification'
 import { Assertions } from '../../types/guards'
 import { useFetch } from '../../utils/composables/fetch'
 import { useNotification } from '../../utils/composables/notiofication'
 import { ResponseValidator, useValidator } from '../../utils/composables/validator'
 import { parseErrorMessage, parseFirebaseError } from '../../utils/helpers'
+import useState from '../PhoneVerificationPage/useState'
+import { CurrentUserDetails } from '../SignupPage/SignupForm.vue'
 
 const $auth = inject('$auth') as Auth
 
@@ -37,6 +40,34 @@ async function signInWithEmail() {
     if (error.value) {
       throw new Error(parseErrorMessage(error.value.message))
     }
+  } catch (error) {
+    Assertions.isError(error)
+    throw new Error(error.message)
+  }
+}
+
+async function signInWithPhone() {
+  try {
+    const { error, data } = await useFetch({
+      url: '/user/signin-phone',
+      method: 'POST',
+      body: {
+        phoneNumber: phoneOrEmail.value,
+      },
+      credentials: false,
+    })
+
+    if (error.value) {
+      throw new Error(parseErrorMessage(error.value.message))
+    }
+
+    const user = data.value as CurrentUserDetails | null
+
+    if (!user) {
+      throw new Error('This user cannot be created!')
+    }
+
+    return user
   } catch (error) {
     Assertions.isError(error)
     throw new Error(error.message)
@@ -83,7 +114,26 @@ async function signInUser(event: Event) {
         }
       }
     } else {
-      console.log('sign in with phone')
+      try {
+        isProcessing.value = true
+        const { displayName, phoneNumber } = await signInWithPhone()
+        const { setFullName, setPhoneNumber } = useState()
+        setFullName(displayName)
+        setPhoneNumber(phoneNumber)
+        clearInputs()
+        router.push({ name: 'phone-verification' })
+        isProcessing.value = false
+      } catch (error) {
+        isProcessing.value = false
+        Assertions.isError(error)
+        clearInputs()
+        const readableError = parseFirebaseError(error.message)
+        if (readableError) {
+          useNotification({ type: NotificationTypes.Error, title: 'Error', message: readableError })
+        } else {
+          useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
+        }
+      }
     }
   }
 }

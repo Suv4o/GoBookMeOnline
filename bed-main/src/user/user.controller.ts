@@ -11,6 +11,7 @@ import { SignInUserWithEmailDto } from './dto/signin-user-with-email.dto';
 import { UserService } from './user.service';
 import { ExistingUser } from '../shared/decorators/existing-user.decorator';
 import { UserEntity } from './user.entity';
+import { SignInUserWithPhoneDto } from './dto/signin-user-with-phone.dto';
 
 @Controller('user')
 export class UserController {
@@ -60,6 +61,13 @@ export class UserController {
     @Body() signInUserRequest: SignInUserWithEmailDto,
   ): Promise<void> {
     return this.userService.signInUserWithEmail(signInUserRequest);
+  }
+
+  @Post('signin-phone')
+  signInUserWithPhone(
+    @Body() signInUserRequest: SignInUserWithPhoneDto,
+  ): Promise<FirebaseUserRecord> {
+    return this.userService.signInUserWithPhone(signInUserRequest);
   }
 
   @Auth('USER_DEFAULT')

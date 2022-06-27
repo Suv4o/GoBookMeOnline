@@ -14,6 +14,7 @@ import { CreateUserWithEmailDto } from './dto/create-user-with-email.dto';
 import { MailService } from '../mail/mail.service';
 import { CreateUserWithPhoneDto } from './dto/create-user-with-phone.dto';
 import { SignInUserWithEmailDto } from './dto/signin-user-with-email.dto';
+import { SignInUserWithPhoneDto } from './dto/signin-user-with-phone.dto';
 
 @Injectable()
 export class UserService {
@@ -212,6 +213,32 @@ export class UserService {
           url: process.env.FRONTEND_URL + '/?user=' + email,
         });
       await this.mailService.signInEmail(userFirebase, signInLink);
+    } catch (error) {
+      this.logger.error(error);
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  async signInUserWithPhone(
+    signInUserRequest: SignInUserWithPhoneDto,
+  ): Promise<FirebaseUserRecord> {
+    try {
+      const firebase = this.firebase.setup();
+      const { phoneNumber } = signInUserRequest;
+
+      const userDatabase = await this.userRepository.findOne({
+        where: { phoneNumber },
+      });
+
+      const userFirebase = (await firebase
+        .auth()
+        .getUserByPhoneNumber(phoneNumber)) as FirebaseUserRecord;
+
+      if (!userDatabase || !userFirebase) {
+        throw new NotFoundException('User not found!');
+      }
+
+      return userFirebase;
     } catch (error) {
       this.logger.error(error);
       throw new BadRequestException(error.message);
