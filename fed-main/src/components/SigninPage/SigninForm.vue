@@ -6,8 +6,10 @@ export default {
 
 <script setup lang="ts">
 import { Auth } from '@firebase/auth'
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { inject, ref, reactive } from 'vue'
 import router from '../../router'
+import { useAuthStore } from '../../store/auth'
 import { NotificationTypes } from '../../store/notification'
 import { Assertions } from '../../types/guards'
 import { useFetch } from '../../utils/composables/fetch'
@@ -18,6 +20,8 @@ import useState from '../PhoneVerificationPage/useState'
 import { CurrentUserDetails } from '../SignupPage/SignupForm.vue'
 
 const $auth = inject('$auth') as Auth
+const useAuthState = useAuthStore()
+const googleProvider = new GoogleAuthProvider()
 
 const phoneOrEmail = ref('')
 const isProcessing = ref(false)
@@ -68,6 +72,57 @@ async function signInWithPhone() {
     }
 
     return user
+  } catch (error) {
+    Assertions.isError(error)
+    throw new Error(error.message)
+  }
+}
+
+async function signUpWithGoogle() {
+  try {
+    await signInWithPopup($auth, googleProvider)
+    await storeUserToDatabase()
+    router.push({ name: 'home', query: { 'successfully-created': 'true' } })
+  } catch (error) {
+    Assertions.isError(error)
+    clearInputs()
+    const readableError = parseFirebaseError(error.message)
+    if (readableError) {
+      useNotification({ type: NotificationTypes.Error, title: 'Error', message: readableError })
+    } else {
+      useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
+    }
+  }
+}
+
+async function storeUserToDatabase() {
+  try {
+    const { error, data } = await useFetch({
+      url: '/user/signup-with-provider',
+      method: 'POST',
+    })
+
+    if (error.value) {
+      throw new Error(parseErrorMessage(error.value.message))
+    }
+
+    const user = data.value as CurrentUserDetails | null
+
+    if (!user) {
+      throw new Error('This user cannot be created!')
+    }
+
+    useAuthState.user = {
+      uid: user.uid,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      emailVerified: user.emailVerified,
+    }
   } catch (error) {
     Assertions.isError(error)
     throw new Error(error.message)
@@ -151,8 +206,9 @@ async function signInUser(event: Event) {
           <div class="mt-1 grid grid-cols-1 gap-3">
             <div>
               <a
-                href="#"
+                href="javascript:;"
                 class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                @click="signUpWithGoogle"
               >
                 <span class="sr-only">Sign in with Google</span>
                 <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 210 210">

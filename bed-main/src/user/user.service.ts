@@ -43,7 +43,6 @@ export class UserService {
       const dbObj = {
         firebaseIds: [createdUser.uid],
         email,
-        phoneNumber: '+61411111111',
         firstName,
         lastName,
         role,
@@ -106,7 +105,6 @@ export class UserService {
       const dbObj = {
         firebaseIds: [updatedUser.uid],
         phoneNumber,
-        email: 'aleksandar.trpkovski@gmail.com',
         firstName,
         lastName,
         role,
