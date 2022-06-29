@@ -4,12 +4,33 @@ export default {
 }
 </script>
 <script setup lang="ts">
+import { Auth, signOut } from 'firebase/auth'
 import { Popover, PopoverButton, PopoverPanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { MenuIcon, XIcon } from '@heroicons/vue/outline'
 import { useAuthStore } from '../../../store/auth'
 import useState from './useState'
+import { inject } from 'vue'
+import { Assertions } from '../../../types/guards'
+import { useNotification } from '../../../utils/composables/notiofication'
+import { NotificationTypes } from '../../../store/notification'
+import { parseFirebaseError } from '../../../utils/helpers'
 
+const $auth = inject('$auth') as Auth
 const { isSignInButtonShown, isSignUpButtonShown } = useState()
+
+async function signUserOut() {
+  try {
+    await signOut($auth)
+  } catch (error) {
+    Assertions.isError(error)
+    const readableError = parseFirebaseError(error.message)
+    if (readableError) {
+      useNotification({ type: NotificationTypes.Error, title: 'Error', message: readableError })
+    } else {
+      useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
+    }
+  }
+}
 </script>
 
 <template>
@@ -72,8 +93,11 @@ const { isSignInButtonShown, isSignUpButtonShown } = useState()
                   >
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                  <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
-                    >Sign out</a
+                  <a
+                    href="javascript:;"
+                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
+                    @click="signUserOut"
+                    >Sign Out</a
                   >
                 </MenuItem>
               </MenuItems>
