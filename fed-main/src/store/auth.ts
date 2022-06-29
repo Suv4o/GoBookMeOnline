@@ -5,6 +5,7 @@ export interface AuthState {
   accessToken: string
   accessTokenExpirationTime: number
   user: AuthStateUser | null
+  isUserReady: boolean
 }
 
 export const useAuthStore = defineStore('authStore', {
@@ -13,6 +14,7 @@ export const useAuthStore = defineStore('authStore', {
       accessToken: '',
       accessTokenExpirationTime: 0,
       user: null,
+      isUserReady: false,
     }
   },
 })

@@ -4,8 +4,9 @@ export default {
 }
 </script>
 <script setup lang="ts">
-import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
+import { Popover, PopoverButton, PopoverPanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { MenuIcon, XIcon } from '@heroicons/vue/outline'
+import { useAuthStore } from '../../../store/auth'
 import useState from './useState'
 
 const { isSignInButtonShown, isSignUpButtonShown } = useState()
@@ -34,8 +35,51 @@ const { isSignInButtonShown, isSignUpButtonShown } = useState()
             </div>
           </div>
         </div>
-        <div class="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0">
-          <span class="inline-flex rounded-md">
+        <div
+          v-if="useAuthStore().isUserReady"
+          class="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0"
+        >
+          <Menu v-if="useAuthStore().user" as="div" class="ml-3 relative">
+            <div>
+              <MenuButton
+                class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+              >
+                <span class="sr-only">Open user menu</span>
+                <span class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-teal-600">
+                  <span class="text-lg font-medium leading-none text-white">TW</span>
+                </span>
+              </MenuButton>
+            </div>
+            <transition
+              enter-active-class="transition ease-out duration-200"
+              enter-from-class="transform opacity-0 scale-95"
+              enter-to-class="transform opacity-100 scale-100"
+              leave-active-class="transition ease-in duration-75"
+              leave-from-class="transform opacity-100 scale-100"
+              leave-to-class="transform opacity-0 scale-95"
+            >
+              <MenuItems
+                class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+              >
+                <MenuItem v-slot="{ active }">
+                  <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
+                    >Your Profile</a
+                  >
+                </MenuItem>
+                <MenuItem v-slot="{ active }">
+                  <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
+                    >Settings</a
+                  >
+                </MenuItem>
+                <MenuItem v-slot="{ active }">
+                  <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
+                    >Sign out</a
+                  >
+                </MenuItem>
+              </MenuItems>
+            </transition>
+          </Menu>
+          <span v-else class="inline-flex rounded-md">
             <router-link
               v-if="isSignInButtonShown"
               :to="{ name: 'signin' }"

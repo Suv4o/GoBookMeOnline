@@ -96,7 +96,7 @@ export default function routerGuards(this: Router) {
               emailVerified,
             }
             setGuards(to, from, this)
-            console.log(useStoreAuth.user)
+            useStoreAuth.isUserReady = true
           })
           .catch(error => {
             console.error(error)
@@ -104,6 +104,7 @@ export default function routerGuards(this: Router) {
           })
       } else {
         setGuards(to, from, this)
+        useStoreAuth.isUserReady = true
       }
     })
   })
