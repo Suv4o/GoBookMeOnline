@@ -1,3 +1,5 @@
+/** @type {import('tailwindcss').Config} */
+/* eslint-disable */
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
@@ -9,5 +11,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/aspect-ratio')],
 }

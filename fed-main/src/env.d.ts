@@ -6,3 +6,26 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+// // for native html elements
+// declare module '@vue/runtime-dom' {
+//   interface HTMLAttributes {
+//     [key: string]: any
+//   }
+// }
+
+// // for svg elements
+// declare module '@vue/runtime-dom' {
+//   interface SVGAttributes {
+//     [key: string]: any
+//   }
+// }
+
+// // for vue components
+// declare module '@vue/runtime-core' {
+//   interface AllowedComponentProps {
+//     [key: string]: any
+//   }
+// }
+
+// export {}

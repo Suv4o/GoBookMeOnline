@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 import routes from './routes'
+import routerGuards from './guards'
 
 const router = createRouter({
   scrollBehavior(to, from, savedPosition) {
@@ -10,7 +12,9 @@ const router = createRouter({
     }
   },
   history: createWebHistory(),
-  routes,
+  routes: routes as Array<RouteRecordRaw>,
 })
+
+routerGuards.apply(router)
 
 export default router

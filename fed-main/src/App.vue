@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DefaultNotification from './components/Default/DefaultNotification/DefaultNotification.vue'
 import { uniqKey } from './utils/helpers'
 </script>
 
@@ -27,6 +28,7 @@ import { uniqKey } from './utils/helpers'
       </div>
     </transition>
   </router-view>
+  <default-notification />
 </template>
 
 <style>
