@@ -67,7 +67,7 @@ async function signUserOut() {
               >
                 <span class="sr-only">Open user menu</span>
                 <span class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-teal-600">
-                  <span class="text-lg font-medium leading-none text-white">TW</span>
+                  <span class="text-lg font-medium leading-none text-white">{{ useAuthStore().userInitials }}</span>
                 </span>
               </MenuButton>
             </div>
@@ -147,16 +147,45 @@ async function signUserOut() {
               </PopoverButton>
             </div>
           </div>
-          <router-link
-            :to="{ name: 'signup' }"
-            class="block w-full px-5 py-3 text-center font-medium text-white bg-teal-600 hover:bg-teal-700"
-          >
-            Sign up
-          </router-link>
-          <p class="my-4 text-center text-base font-medium text-gray-500">
-            Existing customer?
-            <router-link :to="{ name: 'signin' }" class="text-teal-600 hover:text-teal-500"> Sign in </router-link>
-          </p>
+          <div v-if="useAuthStore().isUserReady" class="px-5">
+            <div v-if="useAuthStore().user" class="pb-4">
+              <span class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-teal-600 ml-3">
+                <span class="text-lg font-medium leading-none text-white">{{ useAuthStore().userInitials }}</span>
+              </span>
+              <div class="space-y-1 mt-4" aria-label="Sidebar">
+                <a
+                  href="#"
+                  class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 flex items-center px-3 py-2 text-md font-medium rounded-md"
+                >
+                  <span class="truncate">Your Profile</span>
+                </a>
+                <a
+                  href="#"
+                  class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 flex items-center px-3 py-2 text-md font-medium rounded-md"
+                >
+                  <span class="truncate">Settings</span>
+                </a>
+                <a
+                  href="#"
+                  class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 flex items-center px-3 py-2 text-md font-medium rounded-md"
+                >
+                  <span class="truncate">Sign Out</span>
+                </a>
+              </div>
+            </div>
+            <template v-else>
+              <router-link
+                :to="{ name: 'signup' }"
+                class="block w-full px-5 py-3 text-center font-medium text-white bg-teal-600 hover:bg-teal-700"
+              >
+                Sign up
+              </router-link>
+              <p class="my-4 text-center text-base font-medium text-gray-500">
+                Existing customer?
+                <router-link :to="{ name: 'signin' }" class="text-teal-600 hover:text-teal-500"> Sign in </router-link>
+              </p>
+            </template>
+          </div>
         </div>
       </PopoverPanel>
     </transition>

@@ -17,4 +17,12 @@ export const useAuthStore = defineStore('authStore', {
       isUserReady: false,
     }
   },
+  getters: {
+    userInitials(state) {
+      if (state.user) {
+        return state.user.firstName[0].toUpperCase() + state.user.lastName[0].toUpperCase()
+      }
+      return ''
+    },
+  },
 })
