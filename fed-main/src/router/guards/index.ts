@@ -37,7 +37,13 @@ function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, r
   }
 
   if (to.meta.accessLevel === AccessLevel.Authenticated) {
-    console.log('setGuards: Authenticated')
+    const user = useAuthStore(pinia).user
+
+    if (user) {
+      router.push(from.path)
+      return true
+    }
+    return false
   }
 
   if (to.meta.accessLevel === AccessLevel.AuthenticatedWithoutEmailVerified) {

@@ -166,8 +166,9 @@ async function signUserOut() {
                   <span class="truncate">Settings</span>
                 </a>
                 <a
-                  href="#"
+                  href="javascript:;"
                   class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 flex items-center px-3 py-2 text-md font-medium rounded-md"
+                  @click="signUserOut"
                 >
                   <span class="truncate">Sign Out</span>
                 </a>
