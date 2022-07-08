@@ -7,7 +7,6 @@ export default {
 <script setup lang="ts">
 import { Auth, ConfirmationResult, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 import { inject, onMounted, ref, computed, watch } from 'vue'
-import router from '../../router'
 import { NotificationTypes } from '../../store/notification'
 import { Assertions } from '../../types/guards'
 import { useFetch } from '../../utils/composables/fetch'
@@ -88,8 +87,8 @@ async function submitVerificationCode() {
       isProcessing.value = true
       await confirmation.result.confirm(verificationCode.value)
       await signUpWithPhone()
+      window.location.href = 'https://localhost:3000/?successfully-signed=true'
       clearInputs()
-      router.push({ name: 'home', query: { 'successfully-created': 'true' } })
       isProcessing.value = false
     }
   } catch (error) {

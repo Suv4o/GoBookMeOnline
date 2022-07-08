@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { AuthMiddleware } from '../middleware/auth.middleware';
 import { MailModule } from '../mail/mail.module';
+import { GetExistingUserMiddleware } from '../middleware/get-existing-user.middleware';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity]), MailModule],
@@ -21,5 +22,6 @@ export class UserModule implements NestModule {
         'user/signup-with-provider',
         'user/email-verification',
       );
+    consumer.apply(GetExistingUserMiddleware).forRoutes(UserController);
   }
 }

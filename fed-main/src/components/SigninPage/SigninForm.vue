@@ -82,7 +82,7 @@ async function signUpWithGoogle() {
   try {
     await signInWithPopup($auth, googleProvider)
     await storeUserToDatabase()
-    router.push({ name: 'home', query: { 'successfully-created': 'true' } })
+    router.push({ name: 'home', query: { 'successfully-signed': 'true' } })
   } catch (error) {
     Assertions.isError(error)
     clearInputs()

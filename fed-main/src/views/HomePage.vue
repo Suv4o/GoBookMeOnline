@@ -25,12 +25,12 @@ onBeforeMount(() => {
 async function showNotifications() {
   const params = new URLSearchParams(window.location.search)
 
-  if (params.has('successfully-created') && params.get('successfully-created') === 'true') {
+  if (params.has('successfully-signed') && params.get('successfully-signed') === 'true') {
     window.history.pushState({}, document.title, '/')
     useNotification({
       type: NotificationTypes.Success,
-      title: 'Successfully created!',
-      message: 'Your account has been created. Make your next booking now!',
+      title: 'Successfully Signed In!',
+      message: 'Your have been signed in. Make your next booking now!',
     })
   }
 

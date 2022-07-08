@@ -6,15 +6,57 @@ import { CreateUserWithEmailDto } from './dto/create-user-with-email.dto';
 
 describe('UserService', () => {
   let service: UserService;
-  let fakeUserService: Partial<UserService>;
+  let mockUserService: Partial<UserService>;
+  const mockedDatabase: UserEntity[] = [
+    {
+      id: 1,
+      firebaseIds: ['Nmg1FMM1ccdpbZLOQPqpBdMsuOg1'],
+      email: 'user1@gobookmetoday.com',
+      phoneNumber: '+11234567891',
+      firstName: 'UserOne',
+      lastName: 'TestOne',
+      role: Roles.USER_DEFAULT,
+    },
+    {
+      id: 2,
+      firebaseIds: ['Nmg1FMM1ccdpbZLOQPqpBdMsuOg2'],
+      email: 'user2@gobookmetoday.com',
+      phoneNumber: '+11234567892',
+      firstName: 'UserTwo',
+      lastName: 'TestTwo',
+      role: Roles.USER_DEFAULT,
+    },
+    {
+      id: 3,
+      firebaseIds: ['Nmg1FMM1ccdpbZLOQPqpBdMsuOg3'],
+      email: 'user3@gobookmetoday.com',
+      phoneNumber: '+11234567893',
+      firstName: 'UserThree',
+      lastName: 'TestThree',
+      role: Roles.USER_DEFAULT,
+    },
+  ];
 
   beforeEach(async () => {
-    fakeUserService = {
+    mockUserService = {
       createUserWithEmail: (
         createUserRequest: CreateUserWithEmailDto,
         existingUser: UserEntity,
       ) => {
         const { email, firstName, lastName } = createUserRequest;
+
+        const isUserInDatabase = mockedDatabase.filter((user) => {
+          return user.email === email;
+        });
+
+        // Thrown an error if the user is already in the database
+        if (isUserInDatabase.length) {
+          return Promise.resolve({
+            statusCode: 400,
+            message: 'The email address is already in use by another account.',
+            error: 'Bad Request',
+          }) as any;
+        }
 
         return Promise.resolve({
           uid: 'f4EZDKBkcxf7d3nrR4geOZhxESu1',
@@ -36,7 +78,7 @@ describe('UserService', () => {
             internalId: existingUser ? String(existingUser.id) : '22',
             firstName: 'Test',
             lastName: 'User',
-            role: 'USER_DEFAULT',
+            role: Roles.USER_DEFAULT,
           },
           tokensValidAfterTime: 'Tue, 05 Jul 2022 14:19:59 GMT',
           tenantId: undefined,
@@ -51,7 +93,7 @@ describe('UserService', () => {
         UserService,
         {
           provide: UserService,
-          useValue: fakeUserService,
+          useValue: mockUserService,
         },
       ],
     }).compile();
@@ -59,11 +101,11 @@ describe('UserService', () => {
     service = module.get(UserService);
   });
 
-  it('Can create an instance of user service', async () => {
+  it('create an instance of user service', async () => {
     expect(service).toBeDefined();
   });
 
-  it('Can a new user with email', async () => {
+  it('create a new user with email', async () => {
     const createUserRequest = {
       email: 'test@gobookme.com',
       firstName: 'Test',
@@ -86,7 +128,7 @@ describe('UserService', () => {
     expect(user.customClaims.role).toEqual(Roles.USER_DEFAULT);
   });
 
-  it('Link a user to an exiisting user with email', async () => {
+  it('link a user to an exiisting user with email', async () => {
     const createUserRequest = {
       email: 'test@gobookme.com',
       firstName: 'Test',
@@ -108,6 +150,22 @@ describe('UserService', () => {
     );
     expect(user).toBeDefined();
     expect(user.customClaims.internalId).toEqual(String(existingUser.id));
+  });
+
+  it('throws an error if user signs up with email that is in use', async () => {
+    const createUserRequest = {
+      email: 'user1@gobookmetoday.com',
+      firstName: 'User1',
+      lastName: 'Test1',
+    } as CreateUserWithEmailDto;
+    const existingUser = null;
+
+    const user = await service.createUserWithEmail(
+      createUserRequest,
+      existingUser,
+    );
+
+    expect(user['statusCode']).toEqual(400);
   });
 
   //   it('creates a new user with a salted and hashed password', async () => {

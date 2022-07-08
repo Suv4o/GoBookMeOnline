@@ -1,6 +1,5 @@
 import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
 import { Auth } from '../shared/decorators/auth.decorator';
-import { GetExistingUser } from '../shared/interceptors/get-existing-user.interceptor';
 import { Serialize } from '../shared/interceptors/serialize.interceptor';
 import { CurrentUser } from '../shared/decorators/current-user.decorator';
 import { FirebaseUserRecord } from '../shared/types';
@@ -19,7 +18,6 @@ export class UserController {
 
   @Serialize(SerializeUserDto)
   @Post('signup-email')
-  @GetExistingUser('email')
   signUpUserWithEmail(
     @Body() createUserRequest: CreateUserWithEmailDto,
     @ExistingUser() existingUser: UserEntity,
@@ -32,7 +30,6 @@ export class UserController {
 
   @Serialize(SerializeUserDto)
   @Post('signup-phone')
-  @GetExistingUser('phoneNumber')
   signUpUserWithPhone(
     @Body() createUserRequest: CreateUserWithPhoneDto,
     @CurrentUser() currentUser: FirebaseUserRecord,
@@ -47,7 +44,6 @@ export class UserController {
 
   @Serialize(SerializeUserDto)
   @Post('signup-with-provider')
-  @GetExistingUser('email')
   signUpUserProvider(
     @CurrentUser() currentUser: FirebaseUserRecord,
     @ExistingUser() existingUser: UserEntity,
