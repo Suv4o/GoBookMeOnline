@@ -5,39 +5,12 @@ import { FirebaseUserRecord, Roles } from '../../shared/types';
 import { CreateUserWithEmailDto } from '../dto/create-user-with-email.dto';
 import { CreateUserWithPhoneDto } from '../dto/create-user-with-phone.dto';
 import { firebaseUserMock } from './firebase.user.mock';
+import { databaseMock } from './database.mock';
 
 describe('UserService', () => {
   let service: UserService;
   let mockUserService: Partial<UserService>;
-  const mockedDatabase: UserEntity[] = [
-    {
-      id: 1,
-      firebaseIds: ['Nmg1FMM1ccdpbZLOQPqpBdMsuOg1'],
-      email: 'user1@gobookmetoday.com',
-      phoneNumber: '+61411111111',
-      firstName: 'UserOne',
-      lastName: 'TestOne',
-      role: Roles.USER_DEFAULT,
-    },
-    {
-      id: 2,
-      firebaseIds: ['Nmg1FMM1ccdpbZLOQPqpBdMsuOg2'],
-      email: 'user2@gobookmetoday.com',
-      phoneNumber: '+61411111112',
-      firstName: 'UserTwo',
-      lastName: 'TestTwo',
-      role: Roles.USER_DEFAULT,
-    },
-    {
-      id: 3,
-      firebaseIds: ['Nmg1FMM1ccdpbZLOQPqpBdMsuOg3'],
-      email: 'user3@gobookmetoday.com',
-      phoneNumber: '+61411111113',
-      firstName: 'UserThree',
-      lastName: 'TestThree',
-      role: Roles.USER_DEFAULT,
-    },
-  ];
+  const mockedDatabase = databaseMock();
 
   beforeEach(async () => {
     mockUserService = {
@@ -90,6 +63,28 @@ describe('UserService', () => {
             email: undefined,
             emailVerified: false,
             phoneNumber,
+            displayName: `${firstName} ${lastName}`,
+            customClaims: {
+              internalId: existingUser ? String(existingUser.id) : '4',
+              firstName,
+              lastName,
+            },
+          }),
+        ) as Promise<FirebaseUserRecord>;
+      },
+      createUserWithProvider: (
+        currentUser: FirebaseUserRecord,
+        existingUser: UserEntity,
+      ) => {
+        const { uid, email, displayName } = currentUser;
+        const [firstName, lastName] = displayName.split(' ');
+
+        return Promise.resolve(
+          firebaseUserMock({
+            uid,
+            email,
+            emailVerified: true,
+            phoneNumber: undefined,
             displayName: `${firstName} ${lastName}`,
             customClaims: {
               internalId: existingUser ? String(existingUser.id) : '4',
@@ -241,6 +236,56 @@ describe('UserService', () => {
       currentUser,
       existingUser,
     );
+    expect(user).toBeDefined();
+    expect(user.customClaims.internalId).toEqual(String(existingUser.id));
+  });
+
+  it('create a new user with provider', async () => {
+    const currentUser = firebaseUserMock({
+      emailVerified: true,
+    });
+    const existingUser = null;
+
+    const user = await service.createUserWithProvider(
+      currentUser,
+      existingUser,
+    );
+
+    expect(user).toBeDefined();
+    expect(user.email).toEqual(currentUser.email);
+    expect(user.emailVerified).toEqual(true);
+    expect(user.displayName).toEqual(
+      `${currentUser.customClaims.firstName} ${currentUser.customClaims.lastName}`,
+    );
+    expect(user.customClaims.firstName).toEqual(
+      currentUser.customClaims.firstName,
+    );
+    expect(user.customClaims.lastName).toEqual(
+      currentUser.customClaims.lastName,
+    );
+    expect(user.customClaims.role).toEqual(Roles.USER_DEFAULT);
+  });
+
+  it('link a user to an exiisting user with provider', async () => {
+    const currentUser = firebaseUserMock({
+      emailVerified: true,
+    });
+
+    const existingUser = {
+      id: 23,
+      firebaseIds: ['lE5zYr9B54SwCiDXsQLrYljzgeo2'],
+      email: 'user@gobookmetoday.com',
+      phoneNumber: null,
+      firstName: 'User',
+      lastName: 'Test',
+      role: Roles.USER_DEFAULT,
+    } as UserEntity;
+
+    const user = await service.createUserWithProvider(
+      currentUser,
+      existingUser,
+    );
+
     expect(user).toBeDefined();
     expect(user.customClaims.internalId).toEqual(String(existingUser.id));
   });
