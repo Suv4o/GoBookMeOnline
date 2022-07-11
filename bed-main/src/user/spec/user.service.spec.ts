@@ -130,6 +130,18 @@ describe('UserService', () => {
         }
         return Promise.resolve();
       },
+      sendVerificationLink(user: FirebaseUserRecord) {
+        const { emailVerified } = user;
+
+        if (emailVerified) {
+          return Promise.resolve({
+            statusCode: 400,
+            message: 'Error sending verification link!',
+            error: 'Bad Request',
+          }) as any;
+        }
+        return Promise.resolve();
+      },
     };
 
     const module = await Test.createTestingModule({
@@ -366,5 +378,26 @@ describe('UserService', () => {
 
     expect(user).toBeDefined();
     expect(user['statusCode']).toEqual(400);
+  });
+
+  it('send verification email link', async () => {
+    const user = firebaseUserMock({
+      emailVerified: false,
+    });
+
+    const link = await service.sendVerificationLink(user);
+
+    expect(link).toBeUndefined();
+  });
+
+  it('send verification email link', async () => {
+    const user = firebaseUserMock({
+      emailVerified: true,
+    });
+
+    const link = await service.sendVerificationLink(user);
+
+    expect(link).toBeDefined();
+    expect(link['statusCode']).toEqual(400);
   });
 });
