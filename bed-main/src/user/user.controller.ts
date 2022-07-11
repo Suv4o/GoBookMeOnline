@@ -21,7 +21,7 @@ export class UserController {
   signUpUserWithEmail(
     @Body() createUserRequest: CreateUserWithEmailDto,
     @ExistingUser() existingUser: UserEntity,
-  ): Promise<FirebaseUserRecord> {
+  ): Promise<FirebaseUserRecord & { customToken: string }> {
     return this.userService.createUserWithEmail(
       createUserRequest,
       existingUser,
