@@ -6,6 +6,8 @@ import { CreateUserWithEmailDto } from '../dto/create-user-with-email.dto';
 import { CreateUserWithPhoneDto } from '../dto/create-user-with-phone.dto';
 import { firebaseUserMock } from './firebase.user.mock';
 import { databaseMock } from './database.mock';
+import { SignInUserWithEmailDto } from '../dto/signin-user-with-email.dto';
+import { SignInUserWithPhoneDto } from '../dto/signin-user-with-phone.dto';
 
 describe('UserService', () => {
   let service: UserService;
@@ -93,6 +95,40 @@ describe('UserService', () => {
             },
           }),
         ) as Promise<FirebaseUserRecord>;
+      },
+      signInUserWithEmail: (signInUserRequest: SignInUserWithEmailDto) => {
+        const { email } = signInUserRequest;
+        const isUserInDatabase = mockedDatabase.filter((user) => {
+          return user.email === email;
+        });
+
+        // Thrown an error if the user is not in the database
+        if (!isUserInDatabase.length) {
+          return Promise.resolve({
+            statusCode: 400,
+            message:
+              'There is no user record corresponding to the provided identifier.',
+            error: 'Bad Request',
+          }) as any;
+        }
+        return Promise.resolve();
+      },
+      signInUserWithPhone: (signInUserRequest: SignInUserWithPhoneDto) => {
+        const { phoneNumber } = signInUserRequest;
+        const isUserInDatabase = mockedDatabase.filter((user) => {
+          return user.phoneNumber === phoneNumber;
+        });
+
+        // Thrown an error if the user is not in the database
+        if (!isUserInDatabase.length) {
+          return Promise.resolve({
+            statusCode: 400,
+            message:
+              'There is no user record corresponding to the provided identifier.',
+            error: 'Bad Request',
+          }) as any;
+        }
+        return Promise.resolve();
       },
     };
 
@@ -288,5 +324,47 @@ describe('UserService', () => {
 
     expect(user).toBeDefined();
     expect(user.customClaims.internalId).toEqual(String(existingUser.id));
+  });
+
+  it('successfully sign in user with email', async () => {
+    const signInUserRequest: SignInUserWithEmailDto = {
+      email: 'user2@gobookmetoday.com',
+    };
+
+    const user = await service.signInUserWithEmail(signInUserRequest);
+
+    expect(user).toBeUndefined();
+  });
+
+  it('throws an error when user has not been created with email', async () => {
+    const signInUserRequest: SignInUserWithEmailDto = {
+      email: 'test@test.com',
+    };
+
+    const user = await service.signInUserWithEmail(signInUserRequest);
+
+    expect(user).toBeDefined();
+    expect(user['statusCode']).toEqual(400);
+  });
+
+  it('successfully sign in user with phone number', async () => {
+    const signInUserRequest: SignInUserWithPhoneDto = {
+      phoneNumber: '+61411111111',
+    };
+
+    const user = await service.signInUserWithPhone(signInUserRequest);
+
+    expect(user).toBeUndefined();
+  });
+
+  it('throws an error when user has not been created with phone number', async () => {
+    const signInUserRequest: SignInUserWithPhoneDto = {
+      phoneNumber: '+61411111114',
+    };
+
+    const user = await service.signInUserWithPhone(signInUserRequest);
+
+    expect(user).toBeDefined();
+    expect(user['statusCode']).toEqual(400);
   });
 });
