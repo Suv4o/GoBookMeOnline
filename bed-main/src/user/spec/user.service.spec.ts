@@ -9,139 +9,147 @@ import { databaseMock } from './database.mock';
 import { SignInUserWithEmailDto } from '../dto/signin-user-with-email.dto';
 import { SignInUserWithPhoneDto } from '../dto/signin-user-with-phone.dto';
 
-describe('UserService', () => {
-  let service: UserService;
-  let mockUserService: Partial<UserService>;
-  const mockedDatabase = databaseMock();
+let service: UserService;
+const mockedDatabase = databaseMock();
+let mockUserService: Partial<UserService> = {
+  createUserWithEmail: (
+    createUserRequest: CreateUserWithEmailDto,
+    existingUser: UserEntity,
+  ) => {
+    const { email, firstName, lastName } = createUserRequest;
 
+    const isUserInDatabase = mockedDatabase.filter((user) => {
+      return user.email === email;
+    });
+
+    // Thrown an error if the user is already in the database
+    if (isUserInDatabase.length) {
+      return Promise.resolve({
+        statusCode: 400,
+        message: 'The email address is already in use by another account.',
+        error: 'Bad Request',
+      }) as any;
+    }
+
+    return Promise.resolve(
+      firebaseUserMock({
+        email,
+        emailVerified: false,
+        phoneNumber: undefined,
+        displayName: `${firstName} ${lastName}`,
+        customClaims: {
+          internalId: existingUser ? String(existingUser.id) : '4',
+          firstName,
+          lastName,
+        },
+        customToken:
+          'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNvbS9nb29nbGUuaWRlbnRpdHkuaWRlbnRpdHl0b29sa2l0LnYxLklkZW50aXR5VG9vbGtpdCIsImlhdCI6MTY1NzAzMDgwMCwiZXhwIjoxNjU3MDM0NDAwLCJpc3MiOiJmaXJlYmFzZS1hZG1pbnNkay1rOG94bEBnby1ib29rLW1lLXRvZGF5LWRldi5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6ImZpcmViYXNlLWFkbWluc2RrLWs4b3hsQGdvLWJvb2stbWUtdG9kYXktZGV2LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwidWlkIjoiZjRFWkRLQmtjeGY3ZDNuclI0Z2VPWmh4RVN1MSIsImNsYWltcyI6eyJyb2xlIjoiVVNFUl9ERUZBVUxUIn19.Xtv1muHGfjC29voBJXcVWzHgJcG5t55kkSJV1ko4vBP9nswVFYtE84XOZcUrsPxVi_phP9VfsgDkEzbcFunw5OZlcARjhfp5z2-R1jMdN-79BJ50PiwUP5pO1GqE1vMxXJhIOuDgwsA4E8moUAAd4IIPOWf7Jrkfj5-EmUU9mNXc2FFSMBdOYIirceS01Din9P35-8utdsGlMrnPbzxWHN3PgbyzuHea2QEFFqw2NI27QmKtaKMvT5I_uc_LSPD7qwvVxbRamkc1g5jhdwh_hjEImfVlkE6UaGxqnd3MJXCR5kYJzHo-R22U1E7KwBmdMl-wdhkPDnYIKOUy5d4rzQ',
+      }),
+    ) as Promise<FirebaseUserRecord & { customToken: string }>;
+  },
+  createUserWithPhone: (
+    createUserRequest: CreateUserWithPhoneDto,
+    currentUser: FirebaseUserRecord,
+    existingUser: UserEntity,
+  ) => {
+    const { uid, phoneNumber } = currentUser;
+    const { firstName, lastName } = createUserRequest;
+
+    return Promise.resolve(
+      firebaseUserMock({
+        uid,
+        email: undefined,
+        emailVerified: false,
+        phoneNumber,
+        displayName: `${firstName} ${lastName}`,
+        customClaims: {
+          internalId: existingUser ? String(existingUser.id) : '4',
+          firstName,
+          lastName,
+        },
+      }),
+    ) as Promise<FirebaseUserRecord>;
+  },
+  createUserWithProvider: (
+    currentUser: FirebaseUserRecord,
+    existingUser: UserEntity,
+  ) => {
+    const { uid, email, displayName } = currentUser;
+    const [firstName, lastName] = displayName.split(' ');
+
+    return Promise.resolve(
+      firebaseUserMock({
+        uid,
+        email,
+        emailVerified: true,
+        phoneNumber: undefined,
+        displayName: `${firstName} ${lastName}`,
+        customClaims: {
+          internalId: existingUser ? String(existingUser.id) : '4',
+          firstName,
+          lastName,
+        },
+      }),
+    ) as Promise<FirebaseUserRecord>;
+  },
+  signInUserWithEmail: (signInUserRequest: SignInUserWithEmailDto) => {
+    const { email } = signInUserRequest;
+    const isUserInDatabase = mockedDatabase.filter((user) => {
+      return user.email === email;
+    });
+
+    // Thrown an error if the user is not in the database
+    if (!isUserInDatabase.length) {
+      return Promise.resolve({
+        statusCode: 400,
+        message:
+          'There is no user record corresponding to the provided identifier.',
+        error: 'Bad Request',
+      }) as any;
+    }
+    return Promise.resolve();
+  },
+  signInUserWithPhone: (signInUserRequest: SignInUserWithPhoneDto) => {
+    const { phoneNumber } = signInUserRequest;
+    const isUserInDatabase = mockedDatabase.filter((user) => {
+      return user.phoneNumber === phoneNumber;
+    });
+
+    // Thrown an error if the user is not in the database
+    if (!isUserInDatabase.length) {
+      return Promise.resolve({
+        statusCode: 400,
+        message:
+          'There is no user record corresponding to the provided identifier.',
+        error: 'Bad Request',
+      }) as any;
+    }
+    return Promise.resolve(
+      firebaseUserMock({
+        email: undefined,
+        emailVerified: false,
+        phoneNumber,
+      }),
+    ) as Promise<FirebaseUserRecord>;
+  },
+  sendVerificationLink(user: FirebaseUserRecord) {
+    const { emailVerified } = user;
+
+    if (emailVerified) {
+      return Promise.resolve({
+        statusCode: 400,
+        message: 'Error sending verification link!',
+        error: 'Bad Request',
+      }) as any;
+    }
+    return Promise.resolve();
+  },
+};
+
+describe('UserService', () => {
   beforeEach(async () => {
     mockUserService = {
-      createUserWithEmail: (
-        createUserRequest: CreateUserWithEmailDto,
-        existingUser: UserEntity,
-      ) => {
-        const { email, firstName, lastName } = createUserRequest;
-
-        const isUserInDatabase = mockedDatabase.filter((user) => {
-          return user.email === email;
-        });
-
-        // Thrown an error if the user is already in the database
-        if (isUserInDatabase.length) {
-          return Promise.resolve({
-            statusCode: 400,
-            message: 'The email address is already in use by another account.',
-            error: 'Bad Request',
-          }) as any;
-        }
-
-        return Promise.resolve(
-          firebaseUserMock({
-            email,
-            emailVerified: false,
-            phoneNumber: undefined,
-            displayName: `${firstName} ${lastName}`,
-            customClaims: {
-              internalId: existingUser ? String(existingUser.id) : '4',
-              firstName,
-              lastName,
-            },
-            customToken:
-              'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNvbS9nb29nbGUuaWRlbnRpdHkuaWRlbnRpdHl0b29sa2l0LnYxLklkZW50aXR5VG9vbGtpdCIsImlhdCI6MTY1NzAzMDgwMCwiZXhwIjoxNjU3MDM0NDAwLCJpc3MiOiJmaXJlYmFzZS1hZG1pbnNkay1rOG94bEBnby1ib29rLW1lLXRvZGF5LWRldi5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6ImZpcmViYXNlLWFkbWluc2RrLWs4b3hsQGdvLWJvb2stbWUtdG9kYXktZGV2LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwidWlkIjoiZjRFWkRLQmtjeGY3ZDNuclI0Z2VPWmh4RVN1MSIsImNsYWltcyI6eyJyb2xlIjoiVVNFUl9ERUZBVUxUIn19.Xtv1muHGfjC29voBJXcVWzHgJcG5t55kkSJV1ko4vBP9nswVFYtE84XOZcUrsPxVi_phP9VfsgDkEzbcFunw5OZlcARjhfp5z2-R1jMdN-79BJ50PiwUP5pO1GqE1vMxXJhIOuDgwsA4E8moUAAd4IIPOWf7Jrkfj5-EmUU9mNXc2FFSMBdOYIirceS01Din9P35-8utdsGlMrnPbzxWHN3PgbyzuHea2QEFFqw2NI27QmKtaKMvT5I_uc_LSPD7qwvVxbRamkc1g5jhdwh_hjEImfVlkE6UaGxqnd3MJXCR5kYJzHo-R22U1E7KwBmdMl-wdhkPDnYIKOUy5d4rzQ',
-          }),
-        ) as Promise<FirebaseUserRecord & { customToken: string }>;
-      },
-      createUserWithPhone: (
-        createUserRequest: CreateUserWithPhoneDto,
-        currentUser: FirebaseUserRecord,
-        existingUser: UserEntity,
-      ) => {
-        const { uid, phoneNumber } = currentUser;
-        const { firstName, lastName } = createUserRequest;
-
-        return Promise.resolve(
-          firebaseUserMock({
-            uid,
-            email: undefined,
-            emailVerified: false,
-            phoneNumber,
-            displayName: `${firstName} ${lastName}`,
-            customClaims: {
-              internalId: existingUser ? String(existingUser.id) : '4',
-              firstName,
-              lastName,
-            },
-          }),
-        ) as Promise<FirebaseUserRecord>;
-      },
-      createUserWithProvider: (
-        currentUser: FirebaseUserRecord,
-        existingUser: UserEntity,
-      ) => {
-        const { uid, email, displayName } = currentUser;
-        const [firstName, lastName] = displayName.split(' ');
-
-        return Promise.resolve(
-          firebaseUserMock({
-            uid,
-            email,
-            emailVerified: true,
-            phoneNumber: undefined,
-            displayName: `${firstName} ${lastName}`,
-            customClaims: {
-              internalId: existingUser ? String(existingUser.id) : '4',
-              firstName,
-              lastName,
-            },
-          }),
-        ) as Promise<FirebaseUserRecord>;
-      },
-      signInUserWithEmail: (signInUserRequest: SignInUserWithEmailDto) => {
-        const { email } = signInUserRequest;
-        const isUserInDatabase = mockedDatabase.filter((user) => {
-          return user.email === email;
-        });
-
-        // Thrown an error if the user is not in the database
-        if (!isUserInDatabase.length) {
-          return Promise.resolve({
-            statusCode: 400,
-            message:
-              'There is no user record corresponding to the provided identifier.',
-            error: 'Bad Request',
-          }) as any;
-        }
-        return Promise.resolve();
-      },
-      signInUserWithPhone: (signInUserRequest: SignInUserWithPhoneDto) => {
-        const { phoneNumber } = signInUserRequest;
-        const isUserInDatabase = mockedDatabase.filter((user) => {
-          return user.phoneNumber === phoneNumber;
-        });
-
-        // Thrown an error if the user is not in the database
-        if (!isUserInDatabase.length) {
-          return Promise.resolve({
-            statusCode: 400,
-            message:
-              'There is no user record corresponding to the provided identifier.',
-            error: 'Bad Request',
-          }) as any;
-        }
-        return Promise.resolve();
-      },
-      sendVerificationLink(user: FirebaseUserRecord) {
-        const { emailVerified } = user;
-
-        if (emailVerified) {
-          return Promise.resolve({
-            statusCode: 400,
-            message: 'Error sending verification link!',
-            error: 'Bad Request',
-          }) as any;
-        }
-        return Promise.resolve();
-      },
+      ...mockUserService,
     };
 
     const module = await Test.createTestingModule({
@@ -366,7 +374,8 @@ describe('UserService', () => {
 
     const user = await service.signInUserWithPhone(signInUserRequest);
 
-    expect(user).toBeUndefined();
+    expect(user).toBeDefined();
+    expect(user.phoneNumber).toEqual(signInUserRequest.phoneNumber);
   });
 
   it('throws an error when user has not been created with phone number', async () => {
@@ -390,7 +399,7 @@ describe('UserService', () => {
     expect(link).toBeUndefined();
   });
 
-  it('send verification email link', async () => {
+  it('fail senging verification email link', async () => {
     const user = firebaseUserMock({
       emailVerified: true,
     });
@@ -401,3 +410,5 @@ describe('UserService', () => {
     expect(link['statusCode']).toEqual(400);
   });
 });
+
+export { mockUserService };

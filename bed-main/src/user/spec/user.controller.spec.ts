@@ -1,40 +1,20 @@
 import { Test } from '@nestjs/testing';
 import { UserService } from '../user.service';
-import { databaseMock } from './database.mock';
 import { UserController } from '../user.controller';
 import { CreateUserWithEmailDto } from '../dto/create-user-with-email.dto';
-import { UserEntity } from '../user.entity';
 import { serializeUserMock } from './serialize.user.mock';
 import { firebaseUserMock } from './firebase.user.mock';
+import { CreateUserWithPhoneDto } from '../dto/create-user-with-phone.dto';
+import { mockUserService as mockUserServiceExported } from './user.service.spec';
+import { SignInUserWithEmailDto } from '../dto/signin-user-with-email.dto';
+import { SignInUserWithPhoneDto } from '../dto/signin-user-with-phone.dto';
 
 describe('UserController', () => {
   let controller: UserController;
   let mockUserService: Partial<UserService>;
-  const mockedDatabase = databaseMock();
 
   beforeEach(async () => {
-    mockUserService = {
-      createUserWithEmail: (
-        createUserRequest: CreateUserWithEmailDto,
-        existingUser: UserEntity,
-      ) => {
-        return Promise.resolve(
-          firebaseUserMock({
-            email: createUserRequest.email,
-            emailVerified: false,
-            phoneNumber: undefined,
-            displayName: `${createUserRequest.firstName} ${createUserRequest.lastName}`,
-            customClaims: {
-              internalId: existingUser ? String(existingUser.id) : '4',
-              firstName: createUserRequest.firstName,
-              lastName: createUserRequest.lastName,
-            },
-            customToken:
-              'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNvbS9nb29nbGUuaWRlbnRpdHkuaWRlbnRpdHl0b29sa2l0LnYxLklkZW50aXR5VG9vbGtpdCIsImlhdCI6MTY1NzAzMDgwMCwiZXhwIjoxNjU3MDM0NDAwLCJpc3MiOiJmaXJlYmFzZS1hZG1pbnNkay1rOG94bEBnby1ib29rLW1lLXRvZGF5LWRldi5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInN1YiI6ImZpcmViYXNlLWFkbWluc2RrLWs4b3hsQGdvLWJvb2stbWUtdG9kYXktZGV2LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwidWlkIjoiZjRFWkRLQmtjeGY3ZDNuclI0Z2VPWmh4RVN1MSIsImNsYWltcyI6eyJyb2xlIjoiVVNFUl9ERUZBVUxUIn19.Xtv1muHGfjC29voBJXcVWzHgJcG5t55kkSJV1ko4vBP9nswVFYtE84XOZcUrsPxVi_phP9VfsgDkEzbcFunw5OZlcARjhfp5z2-R1jMdN-79BJ50PiwUP5pO1GqE1vMxXJhIOuDgwsA4E8moUAAd4IIPOWf7Jrkfj5-EmUU9mNXc2FFSMBdOYIirceS01Din9P35-8utdsGlMrnPbzxWHN3PgbyzuHea2QEFFqw2NI27QmKtaKMvT5I_uc_LSPD7qwvVxbRamkc1g5jhdwh_hjEImfVlkE6UaGxqnd3MJXCR5kYJzHo-R22U1E7KwBmdMl-wdhkPDnYIKOUy5d4rzQ',
-          }),
-        ) as any;
-      },
-    };
+    mockUserService = { ...mockUserServiceExported };
 
     const module = await Test.createTestingModule({
       controllers: [UserController],
@@ -79,5 +59,93 @@ describe('UserController', () => {
     expect(serializeUser.email).toBeDefined();
     expect(serializeUser.displayName).toBeDefined();
     expect(serializeUser.emailVerified).toEqual(false);
+  });
+
+  it('created user with phone', async () => {
+    const createUserRequest = {
+      firstName: 'User',
+      lastName: 'Test',
+    } as CreateUserWithPhoneDto;
+
+    const currentUser = firebaseUserMock({
+      email: undefined,
+      emailVerified: false,
+      displayName: undefined,
+      customClaims: {
+        internalId: '4',
+      },
+    });
+    const existingUser = null;
+
+    const user = await controller.signUpUserWithPhone(
+      createUserRequest,
+      currentUser,
+      existingUser,
+    );
+
+    // A mock serialized user DTO
+    const serializeUser = serializeUserMock(user);
+
+    expect(user).toBeDefined();
+    expect(serializeUser).toBeDefined();
+    expect(serializeUser.uid).toBeDefined();
+    expect(serializeUser.firstName).toBeDefined();
+    expect(serializeUser.lastName).toBeDefined();
+    expect(serializeUser.role).toBeDefined();
+    expect(serializeUser.phoneNumber).toBeDefined();
+    expect(serializeUser.displayName).toBeDefined();
+  });
+
+  it('created user with provider', async () => {
+    const currentUser = firebaseUserMock({
+      emailVerified: true,
+    });
+    const existingUser = null;
+
+    const user = await controller.signUpUserProvider(currentUser, existingUser);
+
+    // A mock serialized user DTO
+    const serializeUser = serializeUserMock(user);
+
+    expect(user).toBeDefined();
+    expect(serializeUser).toBeDefined();
+    expect(serializeUser.uid).toBeDefined();
+    expect(serializeUser.firstName).toBeDefined();
+    expect(serializeUser.lastName).toBeDefined();
+    expect(serializeUser.role).toBeDefined();
+    expect(serializeUser.email).toBeDefined();
+    expect(serializeUser.displayName).toBeDefined();
+    expect(serializeUser.emailVerified).toEqual(true);
+  });
+
+  it('sign in user with email', async () => {
+    const signInUserRequest: SignInUserWithEmailDto = {
+      email: 'user2@gobookmetoday.com',
+    };
+
+    const user = await controller.signInUserWithEmail(signInUserRequest);
+
+    expect(user).toBeUndefined();
+  });
+
+  it('sign in user with phone', async () => {
+    const signInUserRequest: SignInUserWithPhoneDto = {
+      phoneNumber: '+61411111111',
+    };
+
+    const user = await controller.signInUserWithPhone(signInUserRequest);
+
+    expect(user).toBeDefined();
+    expect(user.phoneNumber).toEqual(signInUserRequest.phoneNumber);
+  });
+
+  it('send email verification link', async () => {
+    const user = firebaseUserMock({
+      emailVerified: false,
+    });
+
+    const link = await controller.sendEmailVerificationLink(user);
+
+    expect(link).toBeUndefined();
   });
 });
