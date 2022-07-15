@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { setupApp } from '../src/setup-app';
-import { CreateUserWithEmailDto } from 'src/user/dto/create-user-with-email.dto';
+import { CreateUserWithEmailDto } from '../src/user/dto/create-user-with-email.dto';
 import { Roles } from '../src/shared/types';
 import { promisify } from 'util';
 import { exec } from 'child_process';
