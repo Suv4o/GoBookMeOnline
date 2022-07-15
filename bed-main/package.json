@@ -19,13 +19,18 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:e2e": "cross-env NODE_ENV=test jest --config ./test/jest-e2e.json",
     "version--patch": "npm version patch && tsc versioning.ts && node versioning.js",
     "version--minor": "npm version minor && tsc versioning.ts && node versioning.js",
     "version--major": "npm version major && tsc versioning.ts && node versioning.js",
     "typeorm": "cross-env NODE_ENV=dev typeorm-ts-node-esm -d ormconfig.ts",
+    "typeorm:test": "cross-env NODE_ENV=test typeorm-ts-node-esm -d ormconfig.ts",
     "schema:create": "cross-env NODE_ENV=dev ts-node fixtures/database.ts create",
-    "schema:drop": "cross-env NODE_ENV=dev ts-node fixtures/database.ts drop"
+    "schema:create:test": "cross-env NODE_ENV=test ts-node fixtures/database.ts create",
+    "schema:drop": "cross-env NODE_ENV=dev ts-node fixtures/database.ts drop",
+    "schema:drop:test": "cross-env NODE_ENV=test ts-node fixtures/database.ts drop",
+    "firebase:drop": "cross-env NODE_ENV=dev ts-node fixtures/firebase.ts drop",
+    "firebase:drop:test": "cross-env NODE_ENV=test ts-node fixtures/firebase.ts drop"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.7.1",
