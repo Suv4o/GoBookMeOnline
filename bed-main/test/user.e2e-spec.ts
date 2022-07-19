@@ -182,4 +182,17 @@ describe('User Module (e2e)', () => {
       console.log('Error creating new user:', error);
     }
   });
+
+  it('sign in user with email', async () => {
+    try {
+      return request(app.getHttpServer())
+        .post('/api/user/signin-email')
+        .send({
+          email: 'test@test.com',
+        })
+        .expect(200);
+    } catch (error) {
+      console.log('Error signin user with email:', error);
+    }
+  });
 });
