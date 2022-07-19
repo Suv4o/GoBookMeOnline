@@ -41,7 +41,7 @@ describe('User Module (e2e)', () => {
     await execute('npm run typeorm:test migration:run');
   });
 
-  afterAll((done) => {
+  afterEach((done) => {
     app.close();
     done();
   });
@@ -85,6 +85,7 @@ describe('User Module (e2e)', () => {
         expect(emailVerified).toEqual(false);
       });
   });
+
   it('create user with phone', async () => {
     try {
       const userRecord = await firebase.auth().createUser({
