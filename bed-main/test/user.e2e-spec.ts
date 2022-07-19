@@ -192,7 +192,35 @@ describe('User Module (e2e)', () => {
         })
         .expect(200);
     } catch (error) {
-      console.log('Error signin user with email:', error);
+      console.log('Error sign in user with email:', error);
+    }
+  });
+
+  it('sign in user with phone', async () => {
+    try {
+      return request(app.getHttpServer())
+        .post('/api/user/signin-phone')
+        .send({
+          phoneNumber: '+61411111111',
+        })
+        .expect(201);
+    } catch (error) {
+      console.log('Error sign in user with phone:', error);
+    }
+  });
+
+  it('send email verification link', async () => {
+    const userRecord = await firebase.auth().getUserByEmail('test@test.com');
+
+    const accessToken = await getIdToken(userRecord.uid, firebase);
+
+    try {
+      return request(app.getHttpServer())
+        .get('/api/user/email-verification')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .expect(200);
+    } catch (error) {
+      console.log('Error send verification email:', error);
     }
   });
 });
