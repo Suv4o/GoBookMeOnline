@@ -15,6 +15,22 @@ import { CreateUserWithPhoneDto } from '../src/user/dto/create-user-with-phone.d
 const env = dotenv.config({ path: `./env/${process.env.NODE_ENV}.env` });
 const execute = promisify(exec);
 
+async function getIdToken(uid: string, firebase: admin.app.App) {
+  const customToken = await firebase.auth().createCustomToken(uid);
+
+  // Here we're using the custom token to convert it to a Firebase ID token.
+  const token = await axios({
+    method: 'post',
+    url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=${env.parsed.FIREBASE_API_KEY}`,
+    data: {
+      token: customToken,
+      returnSecureToken: true,
+    },
+  });
+
+  return token.data.idToken;
+}
+
 describe('User Module (e2e)', () => {
   let app: INestApplication;
   let firebase: admin.app.App = null;
@@ -94,21 +110,8 @@ describe('User Module (e2e)', () => {
         firstName: 'Foo',
         lastName: 'Bar',
       };
-      const customToken = await firebase
-        .auth()
-        .createCustomToken(userRecord.uid);
 
-      // Here we're using the custom token to convert it to a Firebase ID token.
-      const token = await axios({
-        method: 'post',
-        url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=${env.parsed.FIREBASE_API_KEY}`,
-        data: {
-          token: customToken,
-          returnSecureToken: true,
-        },
-      });
-
-      const accessToken = token.data.idToken;
+      const accessToken = await getIdToken(userRecord.uid, firebase);
 
       return request(app.getHttpServer())
         .post('/api/user/signup-phone')
@@ -136,6 +139,44 @@ describe('User Module (e2e)', () => {
           expect(lastName).toEqual(createUserRequest.lastName);
           expect(role).toEqual(Roles.USER_DEFAULT);
           expect(emailVerified).toEqual(false);
+        });
+    } catch (error) {
+      console.log('Error creating new user:', error);
+    }
+  });
+
+  it('create user with provider', async () => {
+    try {
+      const userRecord = await firebase.auth().createUser({
+        email: 'test@provider.com',
+        emailVerified: true,
+        displayName: 'Foo Bar',
+      });
+
+      const [firstName, lastName] = userRecord.displayName.split(' ');
+
+      const accessToken = await getIdToken(userRecord.uid, firebase);
+
+      return request(app.getHttpServer())
+        .post('/api/user/signup-with-provider')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .expect(201)
+        .then((res) => {
+          const { uid, role, email, displayName, emailVerified } = res.body;
+
+          expect(uid).toBeDefined();
+          expect(firstName).toBeDefined();
+          expect(lastName).toBeDefined();
+          expect(role).toBeDefined();
+          expect(email).toBeDefined();
+          expect(displayName).toBeDefined();
+          expect(emailVerified).toBeDefined();
+
+          expect(firstName).toEqual(firstName);
+          expect(lastName).toEqual(lastName);
+          expect(role).toEqual(Roles.USER_DEFAULT);
+          expect(email).toEqual(userRecord.email);
+          expect(emailVerified).toEqual(true);
         });
     } catch (error) {
       console.log('Error creating new user:', error);
