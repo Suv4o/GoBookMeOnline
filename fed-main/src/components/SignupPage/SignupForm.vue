@@ -179,14 +179,17 @@ async function createUser(event: Event) {
     if (!validProps.phoneOrEmail.isMobile) {
       try {
         isProcessing.value = true
+        useAuthState.isUserAuthCompleted = false
         const { customToken } = await signUpWithEmail()
         await signInWithToken(customToken)
         await sendVerificationEmailLink()
         clearInputs()
         router.push({ name: 'email-verification' })
         isProcessing.value = false
+        useAuthState.isUserAuthCompleted = true
       } catch (error) {
         isProcessing.value = false
+        useAuthState.isUserAuthCompleted = true
         Assertions.isError(error)
         clearInputs()
         const readableError = parseFirebaseError(error.message)
@@ -199,14 +202,17 @@ async function createUser(event: Event) {
     } else {
       try {
         isProcessing.value = true
+        useAuthState.isUserAuthCompleted = false
         const { setFullName, setPhoneNumber } = useState()
         setFullName(fullName.value)
         setPhoneNumber(phoneOrEmail.value)
         clearInputs()
         router.push({ name: 'phone-verification' })
         isProcessing.value = false
+        useAuthState.isUserAuthCompleted = true
       } catch (error) {
         isProcessing.value = false
+        useAuthState.isUserAuthCompleted = true
         Assertions.isError(error)
         clearInputs()
         const readableError = parseFirebaseError(error.message)

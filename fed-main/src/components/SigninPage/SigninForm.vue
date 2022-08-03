@@ -150,6 +150,7 @@ async function signInUser(event: Event) {
     if (!validProps.phoneOrEmail.isMobile) {
       try {
         isProcessing.value = true
+        useAuthState.isUserAuthCompleted = false
         await signInWithEmail()
         clearInputs()
         useNotification({
@@ -158,8 +159,10 @@ async function signInUser(event: Event) {
           message: 'Please check your email and click the link to sign in.',
         })
         isProcessing.value = false
+        useAuthState.isUserAuthCompleted = true
       } catch (error) {
         isProcessing.value = false
+        useAuthState.isUserAuthCompleted = true
         Assertions.isError(error)
         const readableError = parseFirebaseError(error.message)
         if (readableError) {
@@ -171,6 +174,7 @@ async function signInUser(event: Event) {
     } else {
       try {
         isProcessing.value = true
+        useAuthState.isUserAuthCompleted = false
         const { displayName, phoneNumber } = await signInWithPhone()
         const { setFullName, setPhoneNumber } = useState()
         setFullName(displayName)
@@ -178,8 +182,10 @@ async function signInUser(event: Event) {
         clearInputs()
         router.push({ name: 'phone-verification' })
         isProcessing.value = false
+        useAuthState.isUserAuthCompleted = true
       } catch (error) {
         isProcessing.value = false
+        useAuthState.isUserAuthCompleted = true
         Assertions.isError(error)
         clearInputs()
         const readableError = parseFirebaseError(error.message)

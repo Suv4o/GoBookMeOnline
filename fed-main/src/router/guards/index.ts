@@ -37,9 +37,9 @@ function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, r
   }
 
   if (to.meta.accessLevel === AccessLevel.NotAuthenticated) {
-    const user = useAuthStore(pinia).user
+    const { user, isUserAuthCompleted } = useAuthStore(pinia)
 
-    if (user) {
+    if (user && isUserAuthCompleted) {
       router.push(from.path)
       return false
     }

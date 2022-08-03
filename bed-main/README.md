@@ -35,19 +35,19 @@ $ npm run test:cov
 Create a new migration:
 
 ```bash
-yarn typeorm:dev -- migration:generate src/migrations/CreteUserTable2
+yarn typeorm -- migration:generate src/migrations/CreteUserTable2
 ```
 
 Run migrations:
 
 ```bash
-yarn typeorm:dev migration:run
+yarn typeorm migration:run
 ```
 
 Revert migrations:
 
 ```bash
-yarn typeorm:dev migration:revert
+yarn typeorm migration:revert
 ```
 
 Create schema:

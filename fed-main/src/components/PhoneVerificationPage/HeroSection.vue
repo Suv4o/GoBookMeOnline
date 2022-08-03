@@ -14,10 +14,13 @@ import { useFetch } from '../../utils/composables/fetch'
 import { useNotification } from '../../utils/composables/notiofication'
 import { parseErrorMessage, splitFullName, parseFirebaseError } from '../../utils/helpers'
 import { CurrentUserDetails } from '../SignupPage/SignupForm.vue'
+import { useAuthStore } from '../../store/auth'
 import useState from './useState'
+import { AuthStateUser } from '../../types/interfaces'
 
 const { fullName, phoneNumber, setFullName, setPhoneNumber } = useState()
 const $auth = inject('$auth') as Auth
+const useAuthState = useAuthStore()
 
 const verificationCode = ref('')
 const isProcessing = ref(false)
@@ -31,6 +34,7 @@ onMounted(async () => {
     confirmation.result = await sendVerificationCode()
   } catch (error) {
     isProcessing.value = false
+    useAuthState.isUserAuthCompleted = true
     Assertions.isError(error)
     const readableError = parseFirebaseError(error.message)
     if (readableError) {
@@ -77,6 +81,7 @@ async function sendVerificationCode() {
     return signInWithPhoneNumber($auth, phoneNumber.value, recaptchaVerifier)
   } catch (error) {
     isProcessing.value = false
+    useAuthState.isUserAuthCompleted = true
     Assertions.isError(error)
     throw new Error('Error sending SMS', error)
   }
@@ -86,14 +91,31 @@ async function submitVerificationCode() {
   try {
     if (confirmation.result) {
       isProcessing.value = true
+      useAuthState.isUserAuthCompleted = false
       await confirmation.result.confirm(verificationCode.value)
-      await signUpWithPhone()
-      router.push({ name: 'home', query: { 'successfully-created': 'true' } })
+      const result = await signUpWithPhone()
+
+      const user: AuthStateUser = {
+        displayName: result.displayName,
+        email: null,
+        emailVerified: result.emailVerified,
+        firstName: result.firstName,
+        lastName: result.lastName,
+        phoneNumber: result.phoneNumber,
+        photoURL: null,
+        role: result.role,
+        uid: result.uid,
+      }
+      useAuthState.user = user
+
+      router.push({ name: 'home', query: { 'successfully-signed': 'true' } })
       clearInputs()
       isProcessing.value = false
+      useAuthState.isUserAuthCompleted = true
     }
   } catch (error) {
     isProcessing.value = false
+    useAuthState.isUserAuthCompleted = true
     Assertions.isError(error)
     const readableError = parseFirebaseError(error.message)
     if (readableError) {
