@@ -48,6 +48,7 @@ async function signUserOut() {
             </router-link>
             <div class="-mr-2 flex items-center md:hidden">
               <PopoverButton
+                data-testid="Open menu"
                 class="bg-gray-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500"
               >
                 <span class="sr-only">Open main menu</span>
@@ -67,7 +68,9 @@ async function signUserOut() {
               >
                 <span class="sr-only">Open user menu</span>
                 <span class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-teal-600">
-                  <span class="text-lg font-medium leading-none text-white">{{ useAuthStore().userInitials }}</span>
+                  <span data-testid="User Initials Desktop" class="text-lg font-medium leading-none text-white">{{
+                    useAuthStore().userInitials
+                  }}</span>
                 </span>
               </MenuButton>
             </div>
@@ -106,6 +109,7 @@ async function signUserOut() {
           <span v-else class="inline-flex rounded-md">
             <router-link
               v-if="isSignInButtonShown"
+              data-testid="Sign in"
               :to="{ name: 'signin' }"
               class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-teal-600 bg-white hover:bg-gray-50 shadow"
             >
@@ -113,6 +117,7 @@ async function signUserOut() {
             </router-link>
             <router-link
               v-if="isSignUpButtonShown"
+              data-testid="Sign up"
               :to="{ name: 'signup' }"
               class="inline-flex items-center px-4 py-2 ml-4 border border-transparent text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 shadow"
             >
@@ -140,6 +145,7 @@ async function signUserOut() {
             </div>
             <div class="-mr-2">
               <PopoverButton
+                data-testid="Close menu"
                 class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500"
               >
                 <span class="sr-only">Close menu</span>
@@ -150,7 +156,9 @@ async function signUserOut() {
           <div v-if="useAuthStore().isUserReady" class="px-5">
             <div v-if="isSignInButtonShown && useAuthStore().user" class="pb-4">
               <span class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-teal-600 ml-3">
-                <span class="text-lg font-medium leading-none text-white">{{ useAuthStore().userInitials }}</span>
+                <span data-testid="User Initials Mobile" class="text-lg font-medium leading-none text-white">{{
+                  useAuthStore().userInitials
+                }}</span>
               </span>
               <div class="space-y-1 mt-4" aria-label="Sidebar">
                 <a
@@ -176,6 +184,7 @@ async function signUserOut() {
             </div>
             <template v-else>
               <router-link
+                data-testid="Sign up"
                 :to="{ name: 'signup' }"
                 class="block w-full px-5 py-3 text-center font-medium text-white bg-teal-600 hover:bg-teal-700"
               >
@@ -183,7 +192,9 @@ async function signUserOut() {
               </router-link>
               <p class="my-4 text-center text-base font-medium text-gray-500">
                 Existing customer?
-                <router-link :to="{ name: 'signin' }" class="text-teal-600 hover:text-teal-500"> Sign in </router-link>
+                <router-link data-testid="Sign in" :to="{ name: 'signin' }" class="text-teal-600 hover:text-teal-500">
+                  Sign in
+                </router-link>
               </p>
             </template>
           </div>

@@ -1,10 +1,11 @@
-import { render } from '@testing-library/vue'
+import { render, cleanup } from '@testing-library/vue'
 import { describe, it, expect } from 'vitest'
 import DefaultFooter from './DefaultFooter.vue'
 
 describe('DefaultFooter', () => {
-  it('render DefaultFooter component correctly', async () => {
+  it('render component correctly', async () => {
     render(DefaultFooter)
+    cleanup()
   })
 
   it('snap shot matches', async () => {
