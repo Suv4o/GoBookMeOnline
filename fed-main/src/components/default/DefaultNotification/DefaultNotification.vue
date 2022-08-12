@@ -37,7 +37,7 @@ function close() {
         >
           <div class="p-4">
             <div class="flex items-start">
-              <div class="flex-shrink-0">
+              <div data-testid="Notification icon" class="flex-shrink-0">
                 <CheckCircleIcon
                   v-if="notificationStore.type === NotificationTypes.Success"
                   class="h-6 w-6 text-green-400"
@@ -60,8 +60,12 @@ function close() {
                 />
               </div>
               <div class="ml-3 w-0 flex-1 pt-0.5">
-                <p class="text-sm font-medium text-gray-900">{{ notificationStore.title }}</p>
-                <p class="mt-1 text-sm text-gray-500">{{ notificationStore.message }}</p>
+                <p data-testid="Notification title" class="text-sm font-medium text-gray-900">
+                  {{ notificationStore.title }}
+                </p>
+                <p data-testid="Notification message" class="mt-1 text-sm text-gray-500">
+                  {{ notificationStore.message }}
+                </p>
               </div>
               <div class="ml-4 flex-shrink-0 flex">
                 <button
