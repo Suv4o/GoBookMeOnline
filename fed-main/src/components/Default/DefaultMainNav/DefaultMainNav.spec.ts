@@ -1,5 +1,5 @@
 import { render, fireEvent, cleanup } from '@testing-library/vue'
-import { describe, it, expect, vi, beforeAll } from 'vitest'
+import { describe, it, expect, beforeAll } from 'vitest'
 import { createRouter, createWebHistory, Router } from 'vue-router'
 import DefaultMainNav from './DefaultMainNav.vue'
 import { Auth, getAuth } from 'firebase/auth'
