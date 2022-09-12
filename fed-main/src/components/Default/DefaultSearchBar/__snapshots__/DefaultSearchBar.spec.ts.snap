@@ -1,0 +1,255 @@
+// Vitest Snapshot v1
+
+exports[`DefaultSearchBar > snap shot matches 1`] = `
+{
+  "baseElement": <body>
+    <div>
+      <section
+        class="flex flex-col sm:flex-row default-container mb-10 md:mb-12"
+      >
+        <div
+          class="basis-2/3 sm:mr-4 relative"
+        >
+          <div
+            class="absolute w-full h-full z-20"
+          >
+            
+            <div
+              class="transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white sm:shadow-2xl ring-1 ring-black ring-opacity-5 transition-all"
+            >
+              <div
+                class="relative"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="pointer-events-none absolute top-3.5 left-3 md:left-4 h-5 w-5 md:h-7 md:w-6 text-gray-400"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    clip-rule="evenodd"
+                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+                <input
+                  aria-expanded="false"
+                  class="h-12 md:h-14 w-full border-0 bg-transparent pl-10 md:pl-12 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 text-md md:text-lg"
+                  id="headlessui-combobox-input-4"
+                  placeholder="Search..."
+                  role="combobox"
+                  tabindex="0"
+                  type="text"
+                />
+              </div>
+              <div
+                class="flex divide-x divide-gray-100"
+                id="headlessui-combobox-options-5"
+                role="listbox"
+              >
+                <!--v-if-->
+                <!--v-if-->
+              </div>
+              <!--v-if-->
+            </div>
+            
+          </div>
+        </div>
+        <div
+          class="basis-1/3 relative"
+        >
+          <div
+            class="absolute w-full h-full top-14 sm:top-0 z-11"
+          >
+            
+            <div
+              class="transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all"
+            >
+              <div
+                class="relative"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="pointer-events-none absolute top-3.5 left-3 md:left-4 h-5 w-5 md:h-7 md:w-6 text-gray-400"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    clip-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+                <input
+                  aria-expanded="false"
+                  class="h-12 md:h-14 w-full border-0 bg-transparent pl-10 md:pl-12 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 text-md md:text-lg"
+                  id="headlessui-combobox-input-6"
+                  placeholder="Suburb or postcode"
+                  role="combobox"
+                  tabindex="0"
+                  type="text"
+                />
+              </div>
+              <!--v-if-->
+              <!--v-if-->
+            </div>
+            
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>,
+  "container": <div>
+    <section
+      class="flex flex-col sm:flex-row default-container mb-10 md:mb-12"
+    >
+      <div
+        class="basis-2/3 sm:mr-4 relative"
+      >
+        <div
+          class="absolute w-full h-full z-20"
+        >
+          
+          <div
+            class="transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white sm:shadow-2xl ring-1 ring-black ring-opacity-5 transition-all"
+          >
+            <div
+              class="relative"
+            >
+              <svg
+                aria-hidden="true"
+                class="pointer-events-none absolute top-3.5 left-3 md:left-4 h-5 w-5 md:h-7 md:w-6 text-gray-400"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+              <input
+                aria-expanded="false"
+                class="h-12 md:h-14 w-full border-0 bg-transparent pl-10 md:pl-12 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 text-md md:text-lg"
+                id="headlessui-combobox-input-4"
+                placeholder="Search..."
+                role="combobox"
+                tabindex="0"
+                type="text"
+              />
+            </div>
+            <div
+              class="flex divide-x divide-gray-100"
+              id="headlessui-combobox-options-5"
+              role="listbox"
+            >
+              <!--v-if-->
+              <!--v-if-->
+            </div>
+            <!--v-if-->
+          </div>
+          
+        </div>
+      </div>
+      <div
+        class="basis-1/3 relative"
+      >
+        <div
+          class="absolute w-full h-full top-14 sm:top-0 z-11"
+        >
+          
+          <div
+            class="transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all"
+          >
+            <div
+              class="relative"
+            >
+              <svg
+                aria-hidden="true"
+                class="pointer-events-none absolute top-3.5 left-3 md:left-4 h-5 w-5 md:h-7 md:w-6 text-gray-400"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+              <input
+                aria-expanded="false"
+                class="h-12 md:h-14 w-full border-0 bg-transparent pl-10 md:pl-12 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 text-md md:text-lg"
+                id="headlessui-combobox-input-6"
+                placeholder="Suburb or postcode"
+                role="combobox"
+                tabindex="0"
+                type="text"
+              />
+            </div>
+            <!--v-if-->
+            <!--v-if-->
+          </div>
+          
+        </div>
+      </div>
+    </section>
+  </div>,
+  "debug": [Function],
+  "emitted": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "html": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
