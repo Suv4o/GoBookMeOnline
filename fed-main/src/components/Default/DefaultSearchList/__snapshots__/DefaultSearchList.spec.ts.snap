@@ -1,0 +1,1085 @@
+// Vitest Snapshot v1
+
+exports[`DefaultSearchList > snap shot matches 1`] = `
+{
+  "baseElement": <body>
+    <div>
+      <section
+        class="default-container"
+      >
+        <p
+          class="text-lg md:text-xl text-gray-800 my-3"
+        >
+          Locations
+        </p>
+        <div
+          class="bg-white shadow overflow-hidden sm:rounded-md"
+        >
+          <ul
+            class="divide-y divide-gray-200"
+            role="list"
+          >
+            
+            <li>
+              <a
+                class="block hover:bg-gray-50"
+                href="/"
+              >
+                <div
+                  class="flex items-center px-4 py-4 sm:px-6"
+                >
+                  <div
+                    class="min-w-0 flex-1 flex items-center"
+                  >
+                    <div
+                      class="flex-shrink-0"
+                    >
+                      <img
+                        alt=""
+                        class="h-12 w-12 rounded-full"
+                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      />
+                    </div>
+                    <div
+                      class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4"
+                    >
+                      <div>
+                        <p
+                          class="text-sm font-medium text-teal-600 truncate"
+                        >
+                          Ricardo Cooper
+                        </p>
+                        <p
+                          class="mt-2 flex items-center text-sm text-gray-500"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="flex-shrink-0 mr-1.5 h-5 w-5 text-teal-400"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              clip-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                              fill-rule="evenodd"
+                            />
+                          </svg>
+                          <span
+                            class="truncate font-semibold"
+                          >
+                            Open
+                          </span>
+                          <span
+                            class="mx-2"
+                          >
+                            -
+                          </span>
+                          <span
+                            class="mr-1"
+                          >
+                            Opens at 8:00am
+                          </span>
+                        </p>
+                      </div>
+                      <div
+                        class="hidden md:block"
+                      >
+                        <div>
+                          <p
+                            class="text-sm text-gray-900"
+                          >
+                            96 Bass Street, Bungabbee, New South Wales, Australia
+                          </p>
+                          <p
+                            class="mt-2 flex items-center text-sm text-gray-500"
+                          >
+                            Hairdresser
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <svg
+                      aria-hidden="true"
+                      class="h-5 w-5 text-gray-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a
+                class="block hover:bg-gray-50"
+                href="/"
+              >
+                <div
+                  class="flex items-center px-4 py-4 sm:px-6"
+                >
+                  <div
+                    class="min-w-0 flex-1 flex items-center"
+                  >
+                    <div
+                      class="flex-shrink-0"
+                    >
+                      <img
+                        alt=""
+                        class="h-12 w-12 rounded-full"
+                        src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      />
+                    </div>
+                    <div
+                      class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4"
+                    >
+                      <div>
+                        <p
+                          class="text-sm font-medium text-teal-600 truncate"
+                        >
+                          Kristen Ramos
+                        </p>
+                        <p
+                          class="mt-2 flex items-center text-sm text-gray-500"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="flex-shrink-0 mr-1.5 h-5 w-5 text-teal-400"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              clip-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                              fill-rule="evenodd"
+                            />
+                          </svg>
+                          <span
+                            class="truncate font-semibold"
+                          >
+                            Open
+                          </span>
+                          <span
+                            class="mx-2"
+                          >
+                            -
+                          </span>
+                          <span
+                            class="mr-1"
+                          >
+                            Opens at 9:00am
+                          </span>
+                        </p>
+                      </div>
+                      <div
+                        class="hidden md:block"
+                      >
+                        <div>
+                          <p
+                            class="text-sm text-gray-900"
+                          >
+                            56 Larissa Court, Neds Corner, Victoria, Australia
+                          </p>
+                          <p
+                            class="mt-2 flex items-center text-sm text-gray-500"
+                          >
+                            Holiday Park
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <svg
+                      aria-hidden="true"
+                      class="h-5 w-5 text-gray-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a
+                class="block hover:bg-gray-50"
+                href="/"
+              >
+                <div
+                  class="flex items-center px-4 py-4 sm:px-6"
+                >
+                  <div
+                    class="min-w-0 flex-1 flex items-center"
+                  >
+                    <div
+                      class="flex-shrink-0"
+                    >
+                      <img
+                        alt=""
+                        class="h-12 w-12 rounded-full"
+                        src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      />
+                    </div>
+                    <div
+                      class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4"
+                    >
+                      <div>
+                        <p
+                          class="text-sm font-medium text-teal-600 truncate"
+                        >
+                          Ted Fox
+                        </p>
+                        <p
+                          class="mt-2 flex items-center text-sm text-gray-500"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="flex-shrink-0 mr-1.5 h-5 w-5 text-red-400"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              clip-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                              fill-rule="evenodd"
+                            />
+                          </svg>
+                          <span
+                            class="truncate font-semibold"
+                          >
+                            Closed
+                          </span>
+                          <span
+                            class="mx-2"
+                          >
+                            -
+                          </span>
+                          <span
+                            class="mr-1"
+                          >
+                            Closes at 7:00pm
+                          </span>
+                        </p>
+                      </div>
+                      <div
+                        class="hidden md:block"
+                      >
+                        <div>
+                          <p
+                            class="text-sm text-gray-900"
+                          >
+                            50 McPherson Road, Tallangatta, Victoria, Australia
+                          </p>
+                          <p
+                            class="mt-2 flex items-center text-sm text-gray-500"
+                          >
+                            Accountant
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <svg
+                      aria-hidden="true"
+                      class="h-5 w-5 text-gray-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a
+                class="block hover:bg-gray-50"
+                href="/"
+              >
+                <div
+                  class="flex items-center px-4 py-4 sm:px-6"
+                >
+                  <div
+                    class="min-w-0 flex-1 flex items-center"
+                  >
+                    <div
+                      class="flex-shrink-0"
+                    >
+                      <img
+                        alt=""
+                        class="h-12 w-12 rounded-full"
+                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      />
+                    </div>
+                    <div
+                      class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4"
+                    >
+                      <div>
+                        <p
+                          class="text-sm font-medium text-teal-600 truncate"
+                        >
+                          Ricardo Cooper
+                        </p>
+                        <p
+                          class="mt-2 flex items-center text-sm text-gray-500"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="flex-shrink-0 mr-1.5 h-5 w-5 text-teal-400"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              clip-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                              fill-rule="evenodd"
+                            />
+                          </svg>
+                          <span
+                            class="truncate font-semibold"
+                          >
+                            Open
+                          </span>
+                          <span
+                            class="mx-2"
+                          >
+                            -
+                          </span>
+                          <span
+                            class="mr-1"
+                          >
+                            Opens at 8:00am
+                          </span>
+                        </p>
+                      </div>
+                      <div
+                        class="hidden md:block"
+                      >
+                        <div>
+                          <p
+                            class="text-sm text-gray-900"
+                          >
+                            96 Bass Street, Bungabbee, New South Wales, Australia
+                          </p>
+                          <p
+                            class="mt-2 flex items-center text-sm text-gray-500"
+                          >
+                            Hairdresser
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <svg
+                      aria-hidden="true"
+                      class="h-5 w-5 text-gray-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a
+                class="block hover:bg-gray-50"
+                href="/"
+              >
+                <div
+                  class="flex items-center px-4 py-4 sm:px-6"
+                >
+                  <div
+                    class="min-w-0 flex-1 flex items-center"
+                  >
+                    <div
+                      class="flex-shrink-0"
+                    >
+                      <img
+                        alt=""
+                        class="h-12 w-12 rounded-full"
+                        src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      />
+                    </div>
+                    <div
+                      class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4"
+                    >
+                      <div>
+                        <p
+                          class="text-sm font-medium text-teal-600 truncate"
+                        >
+                          Kristen Ramos
+                        </p>
+                        <p
+                          class="mt-2 flex items-center text-sm text-gray-500"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="flex-shrink-0 mr-1.5 h-5 w-5 text-teal-400"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              clip-rule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                              fill-rule="evenodd"
+                            />
+                          </svg>
+                          <span
+                            class="truncate font-semibold"
+                          >
+                            Open
+                          </span>
+                          <span
+                            class="mx-2"
+                          >
+                            -
+                          </span>
+                          <span
+                            class="mr-1"
+                          >
+                            Opens at 9:00am
+                          </span>
+                        </p>
+                      </div>
+                      <div
+                        class="hidden md:block"
+                      >
+                        <div>
+                          <p
+                            class="text-sm text-gray-900"
+                          >
+                            56 Larissa Court, Neds Corner, Victoria, Australia
+                          </p>
+                          <p
+                            class="mt-2 flex items-center text-sm text-gray-500"
+                          >
+                            Holiday Park
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <svg
+                      aria-hidden="true"
+                      class="h-5 w-5 text-gray-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </a>
+            </li>
+            
+          </ul>
+        </div>
+      </section>
+    </div>
+  </body>,
+  "container": <div>
+    <section
+      class="default-container"
+    >
+      <p
+        class="text-lg md:text-xl text-gray-800 my-3"
+      >
+        Locations
+      </p>
+      <div
+        class="bg-white shadow overflow-hidden sm:rounded-md"
+      >
+        <ul
+          class="divide-y divide-gray-200"
+          role="list"
+        >
+          
+          <li>
+            <a
+              class="block hover:bg-gray-50"
+              href="/"
+            >
+              <div
+                class="flex items-center px-4 py-4 sm:px-6"
+              >
+                <div
+                  class="min-w-0 flex-1 flex items-center"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <img
+                      alt=""
+                      class="h-12 w-12 rounded-full"
+                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    />
+                  </div>
+                  <div
+                    class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4"
+                  >
+                    <div>
+                      <p
+                        class="text-sm font-medium text-teal-600 truncate"
+                      >
+                        Ricardo Cooper
+                      </p>
+                      <p
+                        class="mt-2 flex items-center text-sm text-gray-500"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="flex-shrink-0 mr-1.5 h-5 w-5 text-teal-400"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                        <span
+                          class="truncate font-semibold"
+                        >
+                          Open
+                        </span>
+                        <span
+                          class="mx-2"
+                        >
+                          -
+                        </span>
+                        <span
+                          class="mr-1"
+                        >
+                          Opens at 8:00am
+                        </span>
+                      </p>
+                    </div>
+                    <div
+                      class="hidden md:block"
+                    >
+                      <div>
+                        <p
+                          class="text-sm text-gray-900"
+                        >
+                          96 Bass Street, Bungabbee, New South Wales, Australia
+                        </p>
+                        <p
+                          class="mt-2 flex items-center text-sm text-gray-500"
+                        >
+                          Hairdresser
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <svg
+                    aria-hidden="true"
+                    class="h-5 w-5 text-gray-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clip-rule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a
+              class="block hover:bg-gray-50"
+              href="/"
+            >
+              <div
+                class="flex items-center px-4 py-4 sm:px-6"
+              >
+                <div
+                  class="min-w-0 flex-1 flex items-center"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <img
+                      alt=""
+                      class="h-12 w-12 rounded-full"
+                      src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    />
+                  </div>
+                  <div
+                    class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4"
+                  >
+                    <div>
+                      <p
+                        class="text-sm font-medium text-teal-600 truncate"
+                      >
+                        Kristen Ramos
+                      </p>
+                      <p
+                        class="mt-2 flex items-center text-sm text-gray-500"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="flex-shrink-0 mr-1.5 h-5 w-5 text-teal-400"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                        <span
+                          class="truncate font-semibold"
+                        >
+                          Open
+                        </span>
+                        <span
+                          class="mx-2"
+                        >
+                          -
+                        </span>
+                        <span
+                          class="mr-1"
+                        >
+                          Opens at 9:00am
+                        </span>
+                      </p>
+                    </div>
+                    <div
+                      class="hidden md:block"
+                    >
+                      <div>
+                        <p
+                          class="text-sm text-gray-900"
+                        >
+                          56 Larissa Court, Neds Corner, Victoria, Australia
+                        </p>
+                        <p
+                          class="mt-2 flex items-center text-sm text-gray-500"
+                        >
+                          Holiday Park
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <svg
+                    aria-hidden="true"
+                    class="h-5 w-5 text-gray-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clip-rule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a
+              class="block hover:bg-gray-50"
+              href="/"
+            >
+              <div
+                class="flex items-center px-4 py-4 sm:px-6"
+              >
+                <div
+                  class="min-w-0 flex-1 flex items-center"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <img
+                      alt=""
+                      class="h-12 w-12 rounded-full"
+                      src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    />
+                  </div>
+                  <div
+                    class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4"
+                  >
+                    <div>
+                      <p
+                        class="text-sm font-medium text-teal-600 truncate"
+                      >
+                        Ted Fox
+                      </p>
+                      <p
+                        class="mt-2 flex items-center text-sm text-gray-500"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="flex-shrink-0 mr-1.5 h-5 w-5 text-red-400"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                        <span
+                          class="truncate font-semibold"
+                        >
+                          Closed
+                        </span>
+                        <span
+                          class="mx-2"
+                        >
+                          -
+                        </span>
+                        <span
+                          class="mr-1"
+                        >
+                          Closes at 7:00pm
+                        </span>
+                      </p>
+                    </div>
+                    <div
+                      class="hidden md:block"
+                    >
+                      <div>
+                        <p
+                          class="text-sm text-gray-900"
+                        >
+                          50 McPherson Road, Tallangatta, Victoria, Australia
+                        </p>
+                        <p
+                          class="mt-2 flex items-center text-sm text-gray-500"
+                        >
+                          Accountant
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <svg
+                    aria-hidden="true"
+                    class="h-5 w-5 text-gray-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clip-rule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a
+              class="block hover:bg-gray-50"
+              href="/"
+            >
+              <div
+                class="flex items-center px-4 py-4 sm:px-6"
+              >
+                <div
+                  class="min-w-0 flex-1 flex items-center"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <img
+                      alt=""
+                      class="h-12 w-12 rounded-full"
+                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    />
+                  </div>
+                  <div
+                    class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4"
+                  >
+                    <div>
+                      <p
+                        class="text-sm font-medium text-teal-600 truncate"
+                      >
+                        Ricardo Cooper
+                      </p>
+                      <p
+                        class="mt-2 flex items-center text-sm text-gray-500"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="flex-shrink-0 mr-1.5 h-5 w-5 text-teal-400"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                        <span
+                          class="truncate font-semibold"
+                        >
+                          Open
+                        </span>
+                        <span
+                          class="mx-2"
+                        >
+                          -
+                        </span>
+                        <span
+                          class="mr-1"
+                        >
+                          Opens at 8:00am
+                        </span>
+                      </p>
+                    </div>
+                    <div
+                      class="hidden md:block"
+                    >
+                      <div>
+                        <p
+                          class="text-sm text-gray-900"
+                        >
+                          96 Bass Street, Bungabbee, New South Wales, Australia
+                        </p>
+                        <p
+                          class="mt-2 flex items-center text-sm text-gray-500"
+                        >
+                          Hairdresser
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <svg
+                    aria-hidden="true"
+                    class="h-5 w-5 text-gray-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clip-rule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a
+              class="block hover:bg-gray-50"
+              href="/"
+            >
+              <div
+                class="flex items-center px-4 py-4 sm:px-6"
+              >
+                <div
+                  class="min-w-0 flex-1 flex items-center"
+                >
+                  <div
+                    class="flex-shrink-0"
+                  >
+                    <img
+                      alt=""
+                      class="h-12 w-12 rounded-full"
+                      src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    />
+                  </div>
+                  <div
+                    class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4"
+                  >
+                    <div>
+                      <p
+                        class="text-sm font-medium text-teal-600 truncate"
+                      >
+                        Kristen Ramos
+                      </p>
+                      <p
+                        class="mt-2 flex items-center text-sm text-gray-500"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="flex-shrink-0 mr-1.5 h-5 w-5 text-teal-400"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            clip-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            fill-rule="evenodd"
+                          />
+                        </svg>
+                        <span
+                          class="truncate font-semibold"
+                        >
+                          Open
+                        </span>
+                        <span
+                          class="mx-2"
+                        >
+                          -
+                        </span>
+                        <span
+                          class="mr-1"
+                        >
+                          Opens at 9:00am
+                        </span>
+                      </p>
+                    </div>
+                    <div
+                      class="hidden md:block"
+                    >
+                      <div>
+                        <p
+                          class="text-sm text-gray-900"
+                        >
+                          56 Larissa Court, Neds Corner, Victoria, Australia
+                        </p>
+                        <p
+                          class="mt-2 flex items-center text-sm text-gray-500"
+                        >
+                          Holiday Park
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <svg
+                    aria-hidden="true"
+                    class="h-5 w-5 text-gray-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clip-rule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      fill-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </section>
+  </div>,
+  "debug": [Function],
+  "emitted": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "html": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
