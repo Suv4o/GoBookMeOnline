@@ -268,6 +268,7 @@ function clearInputs() {
               </div>
             </div>
             <a
+              :class="`${isProcessing ? 'pointer-events-none' : ''}`"
               class="block w-full py-3 px-5 text-center bg-white border border-transparent rounded-md shadow-md text-base font-medium text-teal-700 hover:bg-gray-50 sm:inline-block sm:w-auto"
               href="javascript:;"
               @click="sendVerificationCode"
