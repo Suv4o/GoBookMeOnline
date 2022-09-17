@@ -13,12 +13,13 @@
     "format": "prettier .  --write",
     "test:unit:watch": "cross-env NODE_ENV=test npm run database:firebase:drop && vitest --environment jsdom",
     "test:unit:coverage": "cross-env NODE_ENV=test npm run database:firebase:drop && vitest --coverage --environment jsdom",
-    "test:unit": "cross-env NODE_ENV=test npm run database:firebase:drop && vitest run --environment jsdom",
+    "test:unit": "cross-env NODE_ENV=test npm run database:firebase:drop && npm run vitest:setup && vitest run --environment jsdom",
     "version--patch": "npm version patch && tsc versioning.ts && node versioning.js",
     "version--minor": "npm version minor && tsc versioning.ts && node versioning.js",
     "version--major": "npm version major && tsc versioning.ts && node versioning.js",
-    "database:table:delete": "cross-env NODE_ENV=test ts-node src/config/database/database.utils.ts delete",
-    "firebase:drop": "cross-env NODE_ENV=test ts-node src/config/database/firebase.ts drop",
+    "database:table:delete": "cross-env NODE_ENV=test ts-node src/config/cli/database.utils.ts delete",
+    "firebase:drop": "cross-env NODE_ENV=test ts-node src/config/cli/firebase.ts drop",
+    "vitest:setup": "cross-env NODE_ENV=test ts-node src/config/cli/vitest.setup.ts setup",
     "database:firebase:drop": "npm run database:table:delete && npm run firebase:drop"
   },
   "dependencies": {

@@ -2,23 +2,18 @@ import { render, cleanup, fireEvent } from '@testing-library/vue'
 import { shallowMount } from '@vue/test-utils'
 import { describe, it, expect, vi, beforeAll } from 'vitest'
 import { pinia } from '../../main'
-import { createUserWithEmail, signInWithToken } from '../../config/vitest.utils'
+import { useAuthStore } from '../../store/auth'
 import EmailVerificationPage from './HeroSection.vue'
-
-let idToken = ''
-
-async function getIdToken() {
-  const createdUser = await createUserWithEmail()
-  const signedInUser = await signInWithToken(createdUser.customToken)
-  return await signedInUser.user?.getIdToken()
-}
 
 describe('EmailVerificationPage', async () => {
   beforeAll(async () => {
-    idToken = await getIdToken()
+    console.log('idToken')
   })
 
   it('render component correctly and send verification email link', async () => {
+    // const useStoreAuth = useAuthStore(pinia)
+    // useStoreAuth.accessToken = idToken
+
     const wrapper = render(EmailVerificationPage, {
       global: {
         plugins: [pinia],
@@ -31,6 +26,9 @@ describe('EmailVerificationPage', async () => {
   })
 
   it('call sendVerificationEmailLink() function', async () => {
+    // const useStoreAuth = useAuthStore(pinia)
+    // useStoreAuth.accessToken = idToken
+
     const wrapper = shallowMount(EmailVerificationPage, {
       global: {
         plugins: [pinia],
