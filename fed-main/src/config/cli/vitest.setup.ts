@@ -28,7 +28,7 @@ yargs.command(
       accessToken = await getIdToken()
       const vitestStoreJson = await readVitestStore()
       const vitestStore = JSON.parse(vitestStoreJson)
-      vitestStore.accessToken = accessToken
+      vitestStore.EmailVerificationPage.accessToken = accessToken
       await writeVitestStore(JSON.stringify(vitestStore))
     } catch (error) {
       console.log('Error vitest store setup:', error)

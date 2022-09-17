@@ -4,16 +4,15 @@ import { describe, it, expect, vi, beforeAll } from 'vitest'
 import { pinia } from '../../main'
 import { useAuthStore } from '../../store/auth'
 import EmailVerificationPage from './HeroSection.vue'
+import vitestStore from '../../config/vitest.store.json'
 
 describe('EmailVerificationPage', async () => {
   beforeAll(async () => {
-    console.log('idToken')
+    const useStoreAuth = useAuthStore(pinia)
+    useStoreAuth.accessToken = vitestStore.EmailVerificationPage.accessToken
   })
 
   it('render component correctly and send verification email link', async () => {
-    // const useStoreAuth = useAuthStore(pinia)
-    // useStoreAuth.accessToken = idToken
-
     const wrapper = render(EmailVerificationPage, {
       global: {
         plugins: [pinia],
@@ -26,9 +25,6 @@ describe('EmailVerificationPage', async () => {
   })
 
   it('call sendVerificationEmailLink() function', async () => {
-    // const useStoreAuth = useAuthStore(pinia)
-    // useStoreAuth.accessToken = idToken
-
     const wrapper = shallowMount(EmailVerificationPage, {
       global: {
         plugins: [pinia],
@@ -39,7 +35,6 @@ describe('EmailVerificationPage', async () => {
     wrapper.vm.sendVerificationEmailLink()
     expect(spySendVerificationEmailLink).toHaveBeenCalled()
     spySendVerificationEmailLink.mockReset()
-
     cleanup()
   })
 
