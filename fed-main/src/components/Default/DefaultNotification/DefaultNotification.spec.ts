@@ -4,7 +4,7 @@ import DefaultNotification from './DefaultNotification.vue'
 import { pinia } from '../../../main'
 import { NotificationTypes, useNotificationStore } from '../../../store/notification'
 
-describe('DefaultNotification', () => {
+describe('DefaultNotification', async () => {
   it('render component correctly', async () => {
     const useStoreNotification = useNotificationStore(pinia)
 

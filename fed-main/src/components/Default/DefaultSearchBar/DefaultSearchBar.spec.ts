@@ -2,7 +2,7 @@ import { render, cleanup } from '@testing-library/vue'
 import { describe, it, expect } from 'vitest'
 import DefaultSearchBar from './DefaultSearchBar.vue'
 
-describe('DefaultSearchBar', () => {
+describe('DefaultSearchBar', async () => {
   it('render component correctly', async () => {
     render(DefaultSearchBar)
     cleanup()

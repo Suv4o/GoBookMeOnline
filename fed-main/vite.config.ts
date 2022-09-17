@@ -6,4 +6,11 @@ import eslintPlugin from 'vite-plugin-eslint'
 export default defineConfig({
   plugins: [vue(), eslintPlugin()],
   envDir: './env',
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  test: {
+    globals: true,
+    setupFiles: 'src/config/vitest.config.ts',
+    includeSource: ['src/**/*.{js,ts,vue}'],
+  },
 })

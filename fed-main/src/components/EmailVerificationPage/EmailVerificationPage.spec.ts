@@ -2,13 +2,20 @@ import { render, cleanup, fireEvent } from '@testing-library/vue'
 import { shallowMount } from '@vue/test-utils'
 import { describe, it, expect, vi, beforeAll } from 'vitest'
 import { pinia } from '../../main'
-import { createUserWithNotVerifiedEmail } from '../../config/vitest.utils'
+import { createUserWithEmail, signInWithToken } from '../../config/vitest.utils'
 import EmailVerificationPage from './HeroSection.vue'
-import * as child from 'child_process'
 
-describe('EmailVerificationPage', () => {
+let idToken = ''
+
+async function getIdToken() {
+  const createdUser = await createUserWithEmail()
+  const signedInUser = await signInWithToken(createdUser.customToken)
+  return await signedInUser.user?.getIdToken()
+}
+
+describe('EmailVerificationPage', async () => {
   beforeAll(async () => {
-    console.log('beforeAll')
+    idToken = await getIdToken()
   })
 
   it('render component correctly and send verification email link', async () => {
@@ -23,7 +30,7 @@ describe('EmailVerificationPage', () => {
     cleanup()
   })
 
-  it('call sendVerificationEmailLink() function ', async () => {
+  it('call sendVerificationEmailLink() function', async () => {
     const wrapper = shallowMount(EmailVerificationPage, {
       global: {
         plugins: [pinia],

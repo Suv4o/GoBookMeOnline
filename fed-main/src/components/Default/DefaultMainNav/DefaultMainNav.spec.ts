@@ -12,46 +12,52 @@ dotenv.config({ path: `./env/env.${process.env.NODE_ENV}` })
 let router: Router
 let auth: Auth
 
-beforeAll(() => {
-  router = createRouter({
-    history: createWebHistory(),
-    routes: [
-      {
-        path: '/',
-        name: 'home',
-        components: {
-          default: () => import('../../views/HomePage.vue'),
-          DefaultMainNav: () => import('../../components/Default/DefaultMainNav/DefaultMainNav.vue'),
-          DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
-          DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
-        },
-      },
-      {
-        path: '/signin',
-        name: 'signin',
-        components: {
-          default: () => import('../../views/SigninPage.vue'),
-          DefaultMainNav: () => import('../../components/Default/DefaultMainNav/DefaultMainNav.vue'),
-          DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
-          DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
-        },
-      },
-      {
-        path: '/signup',
-        name: 'signup',
-        components: {
-          default: () => import('../../views/SignupPage.vue'),
-          DefaultMainNav: () => import('../../components/Default/DefaultMainNav/DefaultMainNav.vue'),
-          DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
-          DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
-        },
-      },
-    ],
-  })
-  auth = getAuth(initializeFirebaseApp(process.env as ImportMetaEnv))
-})
-
 describe('DefaultMainNav', async () => {
+  beforeAll(() => {
+    router = createRouter({
+      scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+          return savedPosition
+        } else {
+          return { top: 0 }
+        }
+      },
+      history: createWebHistory(),
+      routes: [
+        {
+          path: '/',
+          name: 'home',
+          components: {
+            default: () => import('../../views/HomePage.vue'),
+            DefaultMainNav: () => import('../../components/Default/DefaultMainNav/DefaultMainNav.vue'),
+            DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
+            DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
+          },
+        },
+        {
+          path: '/signin',
+          name: 'signin',
+          components: {
+            default: () => import('../../views/SigninPage.vue'),
+            DefaultMainNav: () => import('../../components/Default/DefaultMainNav/DefaultMainNav.vue'),
+            DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
+            DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
+          },
+        },
+        {
+          path: '/signup',
+          name: 'signup',
+          components: {
+            default: () => import('../../views/SignupPage.vue'),
+            DefaultMainNav: () => import('../../components/Default/DefaultMainNav/DefaultMainNav.vue'),
+            DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
+            DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
+          },
+        },
+      ],
+    })
+    auth = getAuth(initializeFirebaseApp(process.env as ImportMetaEnv))
+  })
   it('render component correctly', async () => {
     const wrapper = render(DefaultMainNav, {
       global: {

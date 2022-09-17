@@ -5,20 +5,26 @@ import DefaultSearchList from './DefaultSearchList.vue'
 
 let router: Router
 
-beforeAll(() => {
-  router = createRouter({
-    history: createWebHistory(),
-    routes: [
-      {
-        path: '/',
-        name: 'home',
-        components: {},
+describe('DefaultSearchList', async () => {
+  beforeAll(() => {
+    router = createRouter({
+      scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+          return savedPosition
+        } else {
+          return { top: 0 }
+        }
       },
-    ],
+      history: createWebHistory(),
+      routes: [
+        {
+          path: '/',
+          name: 'home',
+          components: {},
+        },
+      ],
+    })
   })
-})
-
-describe('DefaultSearchList', () => {
   it('render component correctly', async () => {
     render(DefaultSearchList, {
       props: {
