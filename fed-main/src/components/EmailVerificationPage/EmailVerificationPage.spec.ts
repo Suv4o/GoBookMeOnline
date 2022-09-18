@@ -3,7 +3,9 @@ import { shallowMount } from '@vue/test-utils'
 import { describe, it, expect, vi, beforeAll } from 'vitest'
 import { pinia } from '../../main'
 import { useAuthStore } from '../../store/auth'
+import { useNotification } from '../../utils/composables/notiofication'
 import EmailVerificationPage from './HeroSection.vue'
+import { NotificationTypes, useNotificationStore } from '../../store/notification'
 import vitestStore from '../../config/vitest.store.json'
 
 describe('EmailVerificationPage', async () => {
@@ -13,6 +15,8 @@ describe('EmailVerificationPage', async () => {
   })
 
   it('render component correctly and send verification email link', async () => {
+    const useStoreNotification = useNotificationStore(pinia)
+
     const wrapper = render(EmailVerificationPage, {
       global: {
         plugins: [pinia],
@@ -21,6 +25,18 @@ describe('EmailVerificationPage', async () => {
 
     const buttonSendVerificationEmailLink = wrapper.getByTestId('Send Verification Email Link')
     await fireEvent.click(buttonSendVerificationEmailLink)
+
+    useNotification({
+      type: NotificationTypes.Success,
+      title: 'Verification Email Sent',
+      message: 'A new verification email has been sent to your email address.',
+    })
+
+    expect(useStoreNotification.isOpen).toBe(true)
+    expect(useStoreNotification.type).toBe(NotificationTypes.Success)
+    expect(useStoreNotification.title).toBe('Verification Email Sent')
+    expect(useStoreNotification.message).toBe('A new verification email has been sent to your email address.')
+
     cleanup()
   })
 
@@ -32,8 +48,9 @@ describe('EmailVerificationPage', async () => {
     })
 
     const spySendVerificationEmailLink = vi.spyOn(wrapper.vm, 'sendVerificationEmailLink')
-    wrapper.vm.sendVerificationEmailLink()
+    const functionResult = await wrapper.vm.sendVerificationEmailLink()
     expect(spySendVerificationEmailLink).toHaveBeenCalled()
+    expect(functionResult).toBe(undefined)
     spySendVerificationEmailLink.mockReset()
     cleanup()
   })

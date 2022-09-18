@@ -28,8 +28,8 @@ async function sendVerificationEmailLink() {
 
     useNotification({
       type: NotificationTypes.Success,
-      title: 'Send',
-      message: 'A verification code has been sent to your email.',
+      title: 'Verification Email Sent',
+      message: 'A new verification email has been sent to your email address.',
     })
     isProcessing.value = false
   } catch (error) {
