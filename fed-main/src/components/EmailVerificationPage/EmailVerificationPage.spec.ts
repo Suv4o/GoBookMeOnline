@@ -1,5 +1,5 @@
 import { render, cleanup, fireEvent } from '@testing-library/vue'
-import { flushPromises, shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import { describe, it, expect, vi, beforeAll } from 'vitest'
 import { pinia } from '../../main'
 import { useAuthStore } from '../../store/auth'
