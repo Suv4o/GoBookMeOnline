@@ -8,7 +8,7 @@ export default {
 import { Assertions } from '../../types/guards'
 import { useFetch } from '../../utils/composables/fetch'
 import { parseErrorMessage } from '../../utils/helpers'
-import { useNotification } from '../../utils/composables/notiofication'
+import { useNotification } from '../../utils/composables/notification'
 import { NotificationTypes } from '../../store/notification'
 import { ref } from 'vue'
 

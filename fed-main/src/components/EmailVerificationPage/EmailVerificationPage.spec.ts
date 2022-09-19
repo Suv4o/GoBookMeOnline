@@ -1,9 +1,9 @@
 import { render, cleanup, fireEvent } from '@testing-library/vue'
-import { shallowMount } from '@vue/test-utils'
+import { flushPromises, shallowMount } from '@vue/test-utils'
 import { describe, it, expect, vi, beforeAll } from 'vitest'
 import { pinia } from '../../main'
 import { useAuthStore } from '../../store/auth'
-import { useNotification } from '../../utils/composables/notiofication'
+import { useNotification } from '../../utils/composables/notification'
 import EmailVerificationPage from './HeroSection.vue'
 import { NotificationTypes, useNotificationStore } from '../../store/notification'
 import vitestStore from '../../config/vitest.store.json'
@@ -48,9 +48,9 @@ describe('EmailVerificationPage', async () => {
     })
 
     const spySendVerificationEmailLink = vi.spyOn(wrapper.vm, 'sendVerificationEmailLink')
-    const functionResult = await wrapper.vm.sendVerificationEmailLink()
+    await wrapper.vm.sendVerificationEmailLink()
     expect(spySendVerificationEmailLink).toHaveBeenCalled()
-    expect(functionResult).toBe(undefined)
+    expect(spySendVerificationEmailLink).toReturnWith(undefined)
     spySendVerificationEmailLink.mockReset()
     cleanup()
   })

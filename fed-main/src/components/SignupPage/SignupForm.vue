@@ -14,7 +14,7 @@ import { useFetch } from '../../utils/composables/fetch'
 import { ResponseValidator, useValidator } from '../../utils/composables/validator'
 import { parseErrorMessage, parseFirebaseError, splitFullName } from '../../utils/helpers'
 import router from '../../router'
-import { useNotification } from '../../utils/composables/notiofication'
+import { useNotification } from '../../utils/composables/notification'
 import { NotificationTypes } from '../../store/notification'
 import useState from '../PhoneVerificationPage/useState'
 

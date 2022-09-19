@@ -11,7 +11,7 @@ import { useAuthStore } from '../../../store/auth'
 import useState from './useState'
 import { inject } from 'vue'
 import { Assertions } from '../../../types/guards'
-import { useNotification } from '../../../utils/composables/notiofication'
+import { useNotification } from '../../../utils/composables/notification'
 import { NotificationTypes } from '../../../store/notification'
 import { parseFirebaseError } from '../../../utils/helpers'
 
