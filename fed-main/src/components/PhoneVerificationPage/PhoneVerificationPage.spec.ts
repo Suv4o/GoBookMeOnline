@@ -20,7 +20,7 @@ let auth: Auth
 // Set Mocked Function
 const sendPhoneVerificationCodeFunction = () => {
   const confirmationResult: ConfirmationResult = {
-    confirm(verificationCode: string): Promise<UserCredential> {
+    confirm(): Promise<UserCredential> {
       return Promise.resolve({} as UserCredential)
     },
     verificationId: 'string',
