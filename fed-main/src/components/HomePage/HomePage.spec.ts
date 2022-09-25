@@ -7,18 +7,11 @@ const container = document.createElement('div')
 
 describe('HomePage', async () => {
   beforeAll(() => {
+    // Adding div with id="search-bar" and input inside so will mimic the real input
     const input = document.createElement('input')
     container.setAttribute('id', 'search-bar')
     input.setAttribute('type', 'text')
     container.appendChild(input)
-  })
-
-  // Needs to be placed first in the test suite to work.
-  // If we place last it will fail because the input is not in the DOM.
-  it('snap shot matches', async () => {
-    const wrapper = render(HomePage)
-    expect(wrapper).toMatchSnapshot()
-    cleanup()
   })
 
   it('render component correctly and click on the main button to focus', async () => {
@@ -42,5 +35,11 @@ describe('HomePage', async () => {
     expect(spyFocusSearchInput).toHaveBeenCalled()
     expect(spyFocusSearchInput).toReturnWith(void 0)
     spyFocusSearchInput.mockReset()
+  })
+
+  it('snap shot matches', async () => {
+    const wrapper = render(HomePage)
+    expect(wrapper).toMatchSnapshot()
+    cleanup()
   })
 })

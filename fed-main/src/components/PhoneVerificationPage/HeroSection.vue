@@ -30,19 +30,7 @@ const confirmation = {
 }
 
 onMounted(async () => {
-  try {
-    confirmation.result = await sendVerificationCode()
-  } catch (error) {
-    isProcessing.value = false
-    useAuthState.isUserAuthCompleted = true
-    Assertions.isError(error)
-    const readableError = parseFirebaseError(error.message)
-    if (readableError) {
-      useNotification({ type: NotificationTypes.Error, title: 'Error', message: readableError })
-    } else {
-      useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
-    }
-  }
+  await setVerificationCode()
 })
 
 const isVerificationCodeEntered = computed(() => {
@@ -58,6 +46,22 @@ watch(
     }
   }
 )
+
+async function setVerificationCode() {
+  try {
+    confirmation.result = await sendVerificationCode()
+  } catch (error) {
+    isProcessing.value = false
+    useAuthState.isUserAuthCompleted = true
+    Assertions.isError(error)
+    const readableError = parseFirebaseError(error.message)
+    if (readableError) {
+      useNotification({ type: NotificationTypes.Error, title: 'Error', message: readableError })
+    } else {
+      useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
+    }
+  }
+}
 
 async function sendVerificationCode() {
   try {
@@ -271,6 +275,7 @@ function clearInputs() {
               :class="`${isProcessing ? 'pointer-events-none' : ''}`"
               class="block w-full py-3 px-5 text-center bg-white border border-transparent rounded-md shadow-md text-base font-medium text-teal-700 hover:bg-gray-50 sm:inline-block sm:w-auto"
               href="javascript:;"
+              data-testid="Send Phone Verification Code"
               @click="sendVerificationCode"
               >Resend a Verification Code</a
             >

@@ -3,6 +3,13 @@
 exports[`HomePage > snap shot matches 1`] = `
 {
   "baseElement": <body>
+    <div
+      id="search-bar"
+    >
+      <input
+        type="text"
+      />
+    </div>
     <div>
       <div
         class="relative bg-gray-50 overflow-hidden"

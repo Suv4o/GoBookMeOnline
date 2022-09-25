@@ -38,4 +38,13 @@ yargs
     (argv) => {
       console.log(argv);
     },
-  ).argv;
+  )
+
+  .command('delete:table:user', 'delete user table', () => {
+    pool.query('TRUNCATE TABLE "user" CASCADE', (err) => {
+      if (err) throw err;
+      console.log('DATABASE TABLE USER - DELETED ');
+      pool.end();
+      process.exit(0);
+    });
+  }).argv;

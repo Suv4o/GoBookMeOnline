@@ -30,6 +30,8 @@
     "schema:create:test": "cross-env NODE_ENV=test ts-node fixtures/database.ts create",
     "schema:drop": "cross-env NODE_ENV=dev ts-node fixtures/database.ts drop",
     "schema:drop:test": "cross-env NODE_ENV=test ts-node fixtures/database.ts drop",
+    "delete:table:user": "cross-env NODE_ENV=dev ts-node fixtures/database.ts delete:table:user",
+    "delete:table:user:test": "cross-env NODE_ENV=test ts-node fixtures/database.ts delete:table:user",
     "firebase:drop": "cross-env NODE_ENV=dev ts-node fixtures/firebase.ts drop",
     "firebase:drop:test": "cross-env NODE_ENV=test ts-node fixtures/firebase.ts drop"
   },

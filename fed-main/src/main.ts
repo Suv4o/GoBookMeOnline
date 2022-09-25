@@ -24,7 +24,7 @@ onAuthStateChanged(auth, user => {
 
   if (!appConfig.isAppMounted) {
     appConfig.isAppMounted = true
-    router.isReady().then(() => {
+    router?.isReady().then(() => {
       app.mount('#app')
     })
   }

@@ -1,19 +1,13 @@
 import { render, cleanup, fireEvent } from '@testing-library/vue'
 import { shallowMount } from '@vue/test-utils'
-import { describe, it, expect, vi, beforeAll } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { pinia } from '../../main'
-import { useAuthStore } from '../../store/auth'
 import { useNotification } from '../../utils/composables/notification'
 import EmailVerificationPage from './HeroSection.vue'
 import { NotificationTypes, useNotificationStore } from '../../store/notification'
-import vitestStore from '../../config/vitest.store.json'
+import { TestUtils } from '../../utils/helpers'
 
 describe('EmailVerificationPage', async () => {
-  beforeAll(async () => {
-    const useStoreAuth = useAuthStore(pinia)
-    useStoreAuth.accessToken = vitestStore.EmailVerificationPage.accessToken
-  })
-
   it('render component correctly and send verification email link', async () => {
     const useStoreNotification = useNotificationStore(pinia)
 
@@ -24,7 +18,13 @@ describe('EmailVerificationPage', async () => {
     })
 
     const buttonSendVerificationEmailLink = wrapper.getByTestId('Send Verification Email Link')
+
+    // Mock sendVerificationEmailLink() function
+    TestUtils.Vitest.mockImplementationClick(buttonSendVerificationEmailLink, () => undefined)
     await fireEvent.click(buttonSendVerificationEmailLink)
+
+    expect(buttonSendVerificationEmailLink).toBeTruthy()
+    expect(buttonSendVerificationEmailLink).respondTo('click')
 
     useNotification({
       type: NotificationTypes.Success,
@@ -48,6 +48,7 @@ describe('EmailVerificationPage', async () => {
     })
 
     const spySendVerificationEmailLink = vi.spyOn(wrapper.vm, 'sendVerificationEmailLink')
+    spySendVerificationEmailLink.mockImplementation(() => undefined)
     await wrapper.vm.sendVerificationEmailLink()
     expect(spySendVerificationEmailLink).toHaveBeenCalled()
     expect(spySendVerificationEmailLink).toReturnWith(undefined)
