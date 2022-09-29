@@ -237,6 +237,7 @@ async function createUser(event: Event) {
             <a
               href="javascript:;"
               class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              data-testid="Sign up with Google"
               @click="signUpWithGoogle"
             >
               <span class="sr-only">Sign in with Google</span>
@@ -262,12 +263,13 @@ async function createUser(event: Event) {
       </div>
 
       <div class="mt-6">
-        <form class="space-y-6" @submit="createUser">
+        <form class="space-y-6" data-testid="Create a user" @submit="createUser">
           <div>
             <label for="name" class="sr-only">Full Name</label>
             <input
               id="name"
               v-model="fullName"
+              data-testid="Full Name"
               :disabled="isProcessing"
               type="text"
               name="name"
@@ -287,6 +289,7 @@ async function createUser(event: Event) {
             <input
               id="mobile-or-email"
               v-model="phoneOrEmail"
+              data-testid="Phone or Email"
               :disabled="isProcessing"
               type="text"
               name="mobile-or-email"

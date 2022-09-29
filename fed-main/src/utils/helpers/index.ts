@@ -341,5 +341,11 @@ export namespace TestUtils {
       // @ts-ignore
       element._vei.onClick.value = implementation
     }
+
+    export function mockImplementationSubmit<E, F>(element: E, implementation: F) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      element._vei.onSubmit.value = implementation
+    }
   }
 }
