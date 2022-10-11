@@ -4,7 +4,9 @@ exports[`DefaultMainNav > snap shot matches 1`] = `
 {
   "baseElement": <body>
     <div>
-      <div>
+      <div
+        data-headlessui-state=""
+      >
         <div
           class="max-w-7xl mx-auto px-4 sm:px-6"
         >
@@ -49,6 +51,7 @@ exports[`DefaultMainNav > snap shot matches 1`] = `
                   <button
                     aria-expanded="false"
                     class="bg-gray-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500"
+                    data-headlessui-state=""
                     data-testid="Open menu"
                     id="headlessui-popover-button-20"
                     type="button"
@@ -84,12 +87,14 @@ exports[`DefaultMainNav > snap shot matches 1`] = `
             >
               <div
                 class="ml-3 relative"
+                data-headlessui-state=""
               >
                 <div>
                   <button
                     aria-expanded="false"
                     aria-haspopup="true"
                     class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                    data-headlessui-state=""
                     id="headlessui-menu-button-23"
                     type="button"
                   >
@@ -124,7 +129,9 @@ exports[`DefaultMainNav > snap shot matches 1`] = `
     </div>
   </body>,
   "container": <div>
-    <div>
+    <div
+      data-headlessui-state=""
+    >
       <div
         class="max-w-7xl mx-auto px-4 sm:px-6"
       >
@@ -169,6 +176,7 @@ exports[`DefaultMainNav > snap shot matches 1`] = `
                 <button
                   aria-expanded="false"
                   class="bg-gray-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500"
+                  data-headlessui-state=""
                   data-testid="Open menu"
                   id="headlessui-popover-button-20"
                   type="button"
@@ -204,12 +212,14 @@ exports[`DefaultMainNav > snap shot matches 1`] = `
           >
             <div
               class="ml-3 relative"
+              data-headlessui-state=""
             >
               <div>
                 <button
                   aria-expanded="false"
                   aria-haspopup="true"
                   class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                  data-headlessui-state=""
                   id="headlessui-menu-button-23"
                   type="button"
                 >

@@ -6,8 +6,8 @@ export default {
 
 <script setup lang="ts">
 import { NotificationTypes } from '../../../store/notification'
-import { CheckCircleIcon, XCircleIcon, ExclamationIcon, InformationCircleIcon } from '@heroicons/vue/outline'
-import { XIcon } from '@heroicons/vue/solid'
+import { CheckCircleIcon, XCircleIcon, ExclamationTriangleIcon, InformationCircleIcon } from '@heroicons/vue/24/outline'
+import { XMarkIcon } from '@heroicons/vue/24/solid'
 import { useNotificationStore } from '../../../store/notification'
 
 const notificationStore = useNotificationStore()
@@ -48,7 +48,7 @@ function close() {
                   class="h-6 w-6 text-red-400"
                   aria-hidden="true"
                 />
-                <ExclamationIcon
+                <ExclamationTriangleIcon
                   v-if="notificationStore.type === NotificationTypes.Warning"
                   class="h-6 w-6 text-yellow-400"
                   aria-hidden="true"
@@ -74,7 +74,7 @@ function close() {
                   @click="close"
                 >
                   <span class="sr-only">Close</span>
-                  <XIcon class="h-5 w-5" aria-hidden="true" />
+                  <XMarkIcon class="h-5 w-5" aria-hidden="true" />
                 </button>
               </div>
             </div>

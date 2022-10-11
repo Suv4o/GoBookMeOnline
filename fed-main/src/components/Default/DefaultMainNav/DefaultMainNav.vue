@@ -6,7 +6,7 @@ export default {
 <script setup lang="ts">
 import { Auth, signOut } from 'firebase/auth'
 import { Popover, PopoverButton, PopoverPanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { MenuIcon, XIcon } from '@heroicons/vue/outline'
+import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { useAuthStore } from '../../../store/auth'
 import useState from './useState'
 import { inject } from 'vue'
@@ -52,7 +52,7 @@ async function signUserOut() {
                 class="bg-gray-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500"
               >
                 <span class="sr-only">Open main menu</span>
-                <MenuIcon class="h-6 w-6" aria-hidden="true" />
+                <Bars3Icon class="h-6 w-6" aria-hidden="true" />
               </PopoverButton>
             </div>
           </div>
@@ -149,7 +149,7 @@ async function signUserOut() {
                 class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500"
               >
                 <span class="sr-only">Close menu</span>
-                <XIcon class="h-6 w-6" aria-hidden="true" />
+                <XMarkIcon class="h-6 w-6" aria-hidden="true" />
               </PopoverButton>
             </div>
           </div>
