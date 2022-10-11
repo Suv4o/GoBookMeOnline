@@ -250,6 +250,7 @@ async function signInUser(event: Event) {
               <input
                 id="mobile-or-email"
                 v-model="phoneOrEmail"
+                data-testid="Phone or Email"
                 :disabled="isProcessing"
                 name="mobile-or-email"
                 type="text"

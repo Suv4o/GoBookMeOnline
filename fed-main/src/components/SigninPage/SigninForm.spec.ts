@@ -14,6 +14,19 @@ import { useAuthStore } from '../../store/auth'
 let router: Router
 let auth: Auth
 
+// Set the return of a function when we sign in user with phone
+const signInUserWithPhoneMockData = {
+  uid: 'ZU4jn14tbWfspKuWorshlqQ1s2E3',
+  firstName: 'Foo',
+  lastName: 'Bar',
+  role: 'USER_DEFAULT',
+  email: null,
+  phoneNumber: null,
+  displayName: 'Foo Bar',
+  photoURL: null,
+  emailVerified: false,
+}
+
 describe('SigninForm', async () => {
   beforeAll(() => {
     router = createRouter({
@@ -95,8 +108,6 @@ describe('SigninForm', async () => {
     expect(spyOnSignInUser).toHaveBeenCalled()
 
     // Test useValidator() function
-    const fullName = 'Foo Bar'
-    const incorrectFullName = 'Foo Bar 123'
     const email = 'test@test.com'
     const incorrectEmail = 'test'
     const phone = '+61411111111'
@@ -137,5 +148,109 @@ describe('SigninForm', async () => {
     expect(testWithIncorrectEmail.validProps.phoneOrEmail.message).toBe(
       'Please enter a valid Mobile Number or Email. The phone number must start with a + and must be between 7 and 16 digits.'
     )
+
+    // Mock and test signInWithEmail() and test function
+    const spyOnSignInWithEmail = vi.spyOn(wrapper.vm, 'signInWithEmail')
+    spyOnSignInWithEmail.mockImplementation(() => undefined)
+    await wrapper.vm.signInWithEmail()
+
+    expect(spyOnSignInWithEmail).toHaveBeenCalled()
+
+    // Test clearInputs() function
+    const spyOnClearInputs = vi.spyOn(wrapper.vm, 'clearInputs')
+
+    await wrapper.find('[data-testid="Phone or Email"]').setValue('+61411111111')
+
+    expect(wrapper.vm.phoneOrEmail).toBe('+61411111111')
+
+    await wrapper.vm.clearInputs()
+
+    expect(wrapper.vm.phoneOrEmail).toBe('')
+    expect(spyOnClearInputs).toHaveBeenCalled()
+
+    // Mock and test signInWithPhone() and test function
+    const spyOnSignInWithPhone = vi.spyOn(wrapper.vm, 'signInWithPhone')
+    spyOnSignInWithPhone.mockImplementation(() => signInUserWithPhoneMockData)
+    await wrapper.vm.signInWithPhone()
+
+    expect(spyOnSignInWithPhone).toHaveBeenCalled()
+    expect(spyOnSignInWithPhone).toReturnWith(signInUserWithPhoneMockData)
+
+    // Test setting phone verification useStore()
+    await wrapper.find('[data-testid="Phone or Email"]').setValue('+61411111111')
+
+    const { fullName: name, phoneNumber, setFullName, setPhoneNumber } = useStatePhoneVerification()
+    setFullName(signInUserWithPhoneMockData.displayName)
+    setPhoneNumber(wrapper.vm.phoneOrEmail)
+
+    expect(name.value).toBe('Foo Bar')
+    expect(phoneNumber.value).toBe('+61411111111')
+
+    spyOnSignInUser.mockReset()
+    spyOnSignInWithEmail.mockReset()
+    spyOnSignInWithPhone.mockReset()
+    spyOnClearInputs.mockReset()
+  })
+
+  it('call signUpWithGoogle() function', async () => {
+    const wrapper = shallowMount(SigninForm, {
+      global: {
+        plugins: [pinia, router],
+        provide: {
+          $auth: auth,
+        },
+      },
+    })
+
+    // Mock and test signUpWithGoogle() and test function
+    const spyOnSignUpWithGoogle = vi.spyOn(wrapper.vm, 'signUpWithGoogle')
+    spyOnSignUpWithGoogle.mockImplementation(() => undefined)
+    await wrapper.vm.signUpWithGoogle()
+
+    expect(spyOnSignUpWithGoogle).toHaveBeenCalled()
+
+    // Mock and test storeUserToDatabase() and test function
+    const spyOnStoreUserToDatabase = vi.spyOn(wrapper.vm, 'storeUserToDatabase')
+    // Set the auth store with pinia
+    const useStoreAuth = useAuthStore(pinia)
+    spyOnStoreUserToDatabase.mockImplementation(() => {
+      useStoreAuth.user = {
+        uid: 'ZU4jn14tbWfspKuWorshlqQ1s2E3',
+        firstName: 'Foo',
+        lastName: 'Bar',
+        role: 'USER_DEFAULT',
+        email: 'test@test.com',
+        phoneNumber: null,
+        displayName: 'Foo Bar',
+        photoURL: null,
+        emailVerified: true,
+      }
+    })
+    await wrapper.vm.storeUserToDatabase()
+
+    expect(spyOnStoreUserToDatabase).toHaveBeenCalled()
+    expect(useStoreAuth.user).toEqual({
+      uid: 'ZU4jn14tbWfspKuWorshlqQ1s2E3',
+      firstName: 'Foo',
+      lastName: 'Bar',
+      role: 'USER_DEFAULT',
+      email: 'test@test.com',
+      phoneNumber: null,
+      displayName: 'Foo Bar',
+      photoURL: null,
+      emailVerified: true,
+    })
+  })
+
+  it('snap shot matches', async () => {
+    const wrapper = render(SigninForm, {
+      global: {
+        plugins: [pinia, router],
+        provide: {
+          $auth: auth,
+        },
+      },
+    })
+    expect(wrapper).toMatchSnapshot()
   })
 })
