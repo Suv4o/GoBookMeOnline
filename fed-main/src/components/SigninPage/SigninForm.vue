@@ -213,6 +213,7 @@ async function signInUser(event: Event) {
             <div>
               <a
                 href="javascript:;"
+                data-testid="Sign in with Google"
                 class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                 @click="signUpWithGoogle"
               >
@@ -240,7 +241,7 @@ async function signInUser(event: Event) {
       </div>
 
       <div class="mt-6">
-        <form class="space-y-6" @submit="signInUser">
+        <form class="space-y-6" data-testid="Sign in a user" @submit="signInUser">
           <div>
             <label for="mobile-or-email" class="block text-sm font-medium text-gray-700">
               Mobile Number or Email

@@ -1,4 +1,3 @@
-import * as dotenv from 'dotenv'
 import { render, cleanup, fireEvent } from '@testing-library/vue'
 import { describe, it, expect, beforeAll, vi } from 'vitest'
 import { createRouter, createWebHistory, Router } from 'vue-router'
@@ -11,7 +10,6 @@ import { TestUtils } from '../../utils/helpers'
 import { useValidator } from '../../utils/composables/validator'
 import { default as useStatePhoneVerification } from '../PhoneVerificationPage/useState'
 import { useAuthStore } from '../../store/auth'
-dotenv.config({ path: `./env/env.${process.env.NODE_ENV}` })
 
 let router: Router
 let auth: Auth
@@ -61,10 +59,10 @@ describe('SignupForm', async () => {
     const buttonCreateAUser = wrapper.getByTestId('Create a user')
     const buttonSignupWithGoogle = wrapper.getByTestId('Sign up with Google')
 
-    // Mock createUser() function
+    // Mock signUpWithGoogle() function
     TestUtils.Vitest.mockImplementationClick(buttonSignupWithGoogle, () => undefined)
 
-    // Mock signUpWithGoogle() function
+    // Mock createUser() function
     TestUtils.Vitest.mockImplementationSubmit(buttonCreateAUser, () => undefined)
 
     await fireEvent.submit(buttonCreateAUser)
@@ -128,8 +126,8 @@ describe('SignupForm', async () => {
     expect(testWithFullNameAndPhone.validProps.fullName.message).toBe('')
     expect(testWithFullNameAndPhone.validProps.mobilePhone.valid).toBe(true)
     expect(testWithFullNameAndPhone.validProps.mobilePhone.message).toBe('')
-    expect(testWithFullNameAndEmail.validProps.phoneOrEmail.valid).toBe(true)
-    expect(testWithFullNameAndEmail.validProps.phoneOrEmail.message).toBe('')
+    expect(testWithFullNameAndPhone.validProps.phoneOrEmail.valid).toBe(true)
+    expect(testWithFullNameAndPhone.validProps.phoneOrEmail.message).toBe('')
 
     const testWithIncorrectFullNameAndIncorrectEmail = useValidator({
       fullName: incorrectFullName,
