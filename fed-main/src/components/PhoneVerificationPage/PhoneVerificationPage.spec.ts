@@ -12,6 +12,7 @@ import { NotificationTypes, useNotificationStore } from '../../store/notificatio
 import { TestUtils } from '../../utils/helpers'
 import { pinia } from '../../main'
 import { ConfirmationResult, UserCredential } from '@firebase/auth'
+import { ComponentPublicInstance } from 'vue'
 dotenv.config({ path: `./env/env.${process.env.NODE_ENV}` })
 
 let router: Router
@@ -95,20 +96,27 @@ describe('PhoneVerificationPage', async () => {
       },
     })
 
+    const wrapperVm = wrapper.vm as ComponentPublicInstance & {
+      verificationCode: string
+      setVerificationCode: () => Promise<void>
+      sendVerificationCode: () => ConfirmationResult
+      submitVerificationCode: () => Promise<void>
+    }
+
     // Set user Full Name and Phone Number
     const { setFullName, setPhoneNumber } = useStatePhoneVerification()
     setFullName('Foo Bar')
     setPhoneNumber('+61411111111')
-    wrapper.vm.verificationCode = '221288'
+    wrapperVm.verificationCode = '221288'
 
-    const spyOnMounted = vi.spyOn(wrapper.vm, 'setVerificationCode')
-    const spyOnSendVerificationCode = vi.spyOn(wrapper.vm, 'sendVerificationCode')
+    const spyOnMounted = vi.spyOn(wrapperVm, 'setVerificationCode')
+    const spyOnSendVerificationCode = vi.spyOn(wrapperVm, 'sendVerificationCode')
     spyOnSendVerificationCode.mockImplementation(sendPhoneVerificationCodeFunction)
-    const spyOnSubmitVerificationCode = vi.spyOn(wrapper.vm, 'submitVerificationCode')
+    const spyOnSubmitVerificationCode = vi.spyOn(wrapperVm, 'submitVerificationCode')
 
-    await wrapper.vm.setVerificationCode()
-    await wrapper.vm.sendVerificationCode()
-    await wrapper.vm.submitVerificationCode()
+    await wrapperVm.setVerificationCode()
+    await wrapperVm.sendVerificationCode()
+    await wrapperVm.submitVerificationCode()
 
     expect(spyOnMounted).toHaveBeenCalled()
     expect(spyOnSendVerificationCode).toHaveBeenCalled()

@@ -2,6 +2,7 @@ import { render, cleanup, fireEvent } from '@testing-library/vue'
 import { describe, it, expect, vi, beforeAll } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import HomePage from './HeroSection.vue'
+import { ComponentPublicInstance } from 'vue'
 
 const container = document.createElement('div')
 
@@ -30,8 +31,12 @@ describe('HomePage', async () => {
       container: document.body.appendChild(container),
     })
 
-    const spyFocusSearchInput = vi.spyOn(wrapper.vm, 'focusSearchInput')
-    await wrapper.vm.focusSearchInput()
+    const wrapperVm = wrapper.vm as ComponentPublicInstance & {
+      focusSearchInput: () => void
+    }
+
+    const spyFocusSearchInput = vi.spyOn(wrapperVm, 'focusSearchInput')
+    await wrapperVm.focusSearchInput()
     expect(spyFocusSearchInput).toHaveBeenCalled()
     expect(spyFocusSearchInput).toReturnWith(void 0)
     spyFocusSearchInput.mockReset()

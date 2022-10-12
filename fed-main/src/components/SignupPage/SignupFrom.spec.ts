@@ -10,6 +10,7 @@ import { TestUtils } from '../../utils/helpers'
 import { useValidator } from '../../utils/composables/validator'
 import { default as useStatePhoneVerification } from '../PhoneVerificationPage/useState'
 import { useAuthStore } from '../../store/auth'
+import { ComponentPublicInstance } from 'vue'
 
 let router: Router
 let auth: Auth
@@ -87,10 +88,19 @@ describe('SignupForm', async () => {
       },
     })
 
+    const wrapperVm = wrapper.vm as ComponentPublicInstance & {
+      createUser: () => void
+      signInWithToken: () => void
+      sendVerificationEmailLink: () => void
+      clearInputs: () => void
+      fullName: string
+      phoneOrEmail: string
+    }
+
     // Mock and test createUser() and test function
-    const spyOnCreateUser = vi.spyOn(wrapper.vm, 'createUser')
+    const spyOnCreateUser = vi.spyOn(wrapperVm, 'createUser')
     spyOnCreateUser.mockImplementation(() => undefined)
-    await wrapper.vm.createUser()
+    await wrapperVm.createUser()
 
     expect(spyOnCreateUser).toHaveBeenCalled()
 
@@ -150,32 +160,32 @@ describe('SignupForm', async () => {
     )
 
     // Mock and test signInWithToken() and test function
-    const spyOnSignInWithToken = vi.spyOn(wrapper.vm, 'signInWithToken')
+    const spyOnSignInWithToken = vi.spyOn(wrapperVm, 'signInWithToken')
     spyOnSignInWithToken.mockImplementation(() => undefined)
-    await wrapper.vm.signInWithToken()
+    await wrapperVm.signInWithToken()
 
     expect(spyOnSignInWithToken).toHaveBeenCalled()
 
     // Mock and test sendVerificationEmailLink() and test function
-    const spyOnSendVerificationEmailLink = vi.spyOn(wrapper.vm, 'sendVerificationEmailLink')
+    const spyOnSendVerificationEmailLink = vi.spyOn(wrapperVm, 'sendVerificationEmailLink')
     spyOnSendVerificationEmailLink.mockImplementation(() => undefined)
-    await wrapper.vm.sendVerificationEmailLink()
+    await wrapperVm.sendVerificationEmailLink()
 
     expect(spyOnSendVerificationEmailLink).toHaveBeenCalled()
 
     // Test clearInputs() function
-    const spyOnClearInputs = vi.spyOn(wrapper.vm, 'clearInputs')
+    const spyOnClearInputs = vi.spyOn(wrapperVm, 'clearInputs')
 
     await wrapper.find('[data-testid="Full Name"]').setValue('Foo Bar')
     await wrapper.find('[data-testid="Phone or Email"]').setValue('+61411111111')
 
-    expect(wrapper.vm.fullName).toBe('Foo Bar')
-    expect(wrapper.vm.phoneOrEmail).toBe('+61411111111')
+    expect(wrapperVm.fullName).toBe('Foo Bar')
+    expect(wrapperVm.phoneOrEmail).toBe('+61411111111')
 
-    await wrapper.vm.clearInputs()
+    await wrapperVm.clearInputs()
 
-    expect(wrapper.vm.fullName).toBe('')
-    expect(wrapper.vm.phoneOrEmail).toBe('')
+    expect(wrapperVm.fullName).toBe('')
+    expect(wrapperVm.phoneOrEmail).toBe('')
     expect(spyOnClearInputs).toHaveBeenCalled()
 
     // Test setting phone verification useStore()
@@ -183,8 +193,8 @@ describe('SignupForm', async () => {
     await wrapper.find('[data-testid="Phone or Email"]').setValue('+61411111111')
 
     const { fullName: name, phoneNumber, setFullName, setPhoneNumber } = useStatePhoneVerification()
-    setFullName(wrapper.vm.fullName)
-    setPhoneNumber(wrapper.vm.phoneOrEmail)
+    setFullName(wrapperVm.fullName)
+    setPhoneNumber(wrapperVm.phoneOrEmail)
 
     expect(name.value).toBe('Foo Bar')
     expect(phoneNumber.value).toBe('+61411111111')
@@ -205,15 +215,20 @@ describe('SignupForm', async () => {
       },
     })
 
+    const wrapperVm = wrapper.vm as ComponentPublicInstance & {
+      signUpWithGoogle: () => void
+      storeUserToDatabase: () => void
+    }
+
     // Mock and test signUpWithGoogle() and test function
-    const spyOnSignUpWithGoogle = vi.spyOn(wrapper.vm, 'signUpWithGoogle')
+    const spyOnSignUpWithGoogle = vi.spyOn(wrapperVm, 'signUpWithGoogle')
     spyOnSignUpWithGoogle.mockImplementation(() => undefined)
-    await wrapper.vm.signUpWithGoogle()
+    await wrapperVm.signUpWithGoogle()
 
     expect(spyOnSignUpWithGoogle).toHaveBeenCalled()
 
     // Mock and test storeUserToDatabase() and test function
-    const spyOnStoreUserToDatabase = vi.spyOn(wrapper.vm, 'storeUserToDatabase')
+    const spyOnStoreUserToDatabase = vi.spyOn(wrapperVm, 'storeUserToDatabase')
     // Set the auth store with pinia
     const useStoreAuth = useAuthStore(pinia)
     spyOnStoreUserToDatabase.mockImplementation(() => {
@@ -229,7 +244,7 @@ describe('SignupForm', async () => {
         emailVerified: true,
       }
     })
-    await wrapper.vm.storeUserToDatabase()
+    await wrapperVm.storeUserToDatabase()
 
     expect(spyOnStoreUserToDatabase).toHaveBeenCalled()
     expect(useStoreAuth.user).toEqual({

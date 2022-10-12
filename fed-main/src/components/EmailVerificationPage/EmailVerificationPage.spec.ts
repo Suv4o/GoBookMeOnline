@@ -6,6 +6,7 @@ import { useNotification } from '../../utils/composables/notification'
 import EmailVerificationPage from './HeroSection.vue'
 import { NotificationTypes, useNotificationStore } from '../../store/notification'
 import { TestUtils } from '../../utils/helpers'
+import { ComponentPublicInstance } from 'vue'
 
 describe('EmailVerificationPage', async () => {
   it('render component correctly and send verification email link', async () => {
@@ -47,9 +48,13 @@ describe('EmailVerificationPage', async () => {
       },
     })
 
-    const spySendVerificationEmailLink = vi.spyOn(wrapper.vm, 'sendVerificationEmailLink')
+    const wrapperVm = wrapper.vm as ComponentPublicInstance & {
+      sendVerificationEmailLink: () => void
+    }
+
+    const spySendVerificationEmailLink = vi.spyOn(wrapperVm, 'sendVerificationEmailLink')
     spySendVerificationEmailLink.mockImplementation(() => undefined)
-    await wrapper.vm.sendVerificationEmailLink()
+    await wrapperVm.sendVerificationEmailLink()
     expect(spySendVerificationEmailLink).toHaveBeenCalled()
     expect(spySendVerificationEmailLink).toReturnWith(undefined)
     spySendVerificationEmailLink.mockReset()
