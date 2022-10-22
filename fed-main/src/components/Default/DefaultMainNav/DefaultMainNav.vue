@@ -61,7 +61,11 @@ async function signUserOut() {
           v-if="useAuthStore().isUserReady"
           class="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0"
         >
-          <Menu v-if="isSignInButtonShown && useAuthStore().user" as="div" class="ml-3 relative">
+          <Menu
+            v-if="isSignInButtonShown && useAuthStore().user && useAuthStore().userInitials"
+            as="div"
+            class="ml-3 relative"
+          >
             <div>
               <MenuButton
                 class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
@@ -154,7 +158,7 @@ async function signUserOut() {
             </div>
           </div>
           <div v-if="useAuthStore().isUserReady" class="px-5">
-            <div v-if="isSignInButtonShown && useAuthStore().user" class="pb-4">
+            <div v-if="isSignInButtonShown && useAuthStore().user && useAuthStore().userInitials" class="pb-4">
               <span class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-teal-600 ml-3">
                 <span data-testid="User Initials Mobile" class="text-lg font-medium leading-none text-white">{{
                   useAuthStore().userInitials
