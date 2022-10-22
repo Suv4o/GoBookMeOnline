@@ -17,9 +17,12 @@
     "version--patch": "npm version patch && tsc versioning.ts && node versioning.js",
     "version--minor": "npm version minor && tsc versioning.ts && node versioning.js",
     "version--major": "npm version major && tsc versioning.ts && node versioning.js",
-    "database:table:delete": "cross-env NODE_ENV=test ts-node src/config/cli/database.utils.ts delete",
-    "firebase:drop": "cross-env NODE_ENV=test ts-node src/config/cli/firebase.ts drop",
-    "database:firebase:drop": "npm run database:table:delete && npm run firebase:drop"
+    "database:table:delete": "cross-env NODE_ENV=development ts-node src/config/cli/database.utils.ts delete",
+    "database:table:delete:test": "cross-env NODE_ENV=test ts-node src/config/cli/database.utils.ts delete",
+    "firebase:drop": "cross-env NODE_ENV=development ts-node src/config/cli/firebase.ts drop",
+    "firebase:drop:test": "cross-env NODE_ENV=test ts-node src/config/cli/firebase.ts drop",
+    "database:firebase:drop": "cross-env NODE_ENV=development npm run database:table:delete && npm run firebase:drop",
+    "database:firebase:drop:test": "cross-env NODE_ENV=test npm run database:table:delete:test && npm run firebase:drop:test"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.3",
@@ -41,7 +44,7 @@
     "@pinia/testing": "^0.0.14",
     "@testing-library/vue": "^6.6.1",
     "@types/jsdom": "^20.0.0",
-    "@types/node": "18.8.0",
+    "@types/node": "^18.11.3",
     "@types/pg": "^8.6.5",
     "@types/yargs": "^17.0.13",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
