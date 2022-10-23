@@ -101,6 +101,7 @@ async function signUserOut() {
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
                   <a
+                    data-testid="Sign out"
                     href="javascript:;"
                     :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
                     @click="signUserOut"

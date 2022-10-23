@@ -247,6 +247,7 @@ function clearInputs() {
                   v-model="verificationCode"
                   :disabled="isProcessing"
                   type="text"
+                  data-testid="Verification Code"
                   maxlength="6"
                   name="verificationCode"
                   autocomplete="verificationCode"

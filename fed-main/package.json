@@ -6,7 +6,8 @@
     "node": ">=v18.0.0"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 3000",
+    "dev:test": "cross-env NODE_ENV=test vite --mode test --port 3003",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
@@ -14,6 +15,8 @@
     "test:unit:watch": "cross-env NODE_ENV=test vitest --environment jsdom",
     "test:unit:coverage": "cross-env NODE_ENV=test vitest --coverage --environment jsdom",
     "test:unit": "cross-env NODE_ENV=test vitest run --environment jsdom",
+    "cypress:open": "cross-env NODE_ENV=test cypress open",
+    "cypress:run": "cross-env NODE_ENV=test cypress run",
     "version--patch": "npm version patch && tsc versioning.ts && node versioning.js",
     "version--minor": "npm version minor && tsc versioning.ts && node versioning.js",
     "version--major": "npm version major && tsc versioning.ts && node versioning.js",
@@ -55,6 +58,7 @@
     "autoprefixer": "^10.4.12",
     "c8": "^7.12.0",
     "cross-env": "^7.0.3",
+    "cypress": "^10.10.0",
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-vue": "^9.6.0",

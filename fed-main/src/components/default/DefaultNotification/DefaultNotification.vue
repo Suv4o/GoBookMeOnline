@@ -33,6 +33,7 @@ function close() {
       >
         <div
           v-if="notificationStore.isOpen"
+          data-testid="Default Notification"
           class="max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden"
         >
           <div class="p-4">
