@@ -8,7 +8,7 @@ export default {
 import HeroSection from '../components/HomePage/HeroSection.vue'
 import DefaultSearchBar from '../components/Default/DefaultSearchBar/DefaultSearchBar.vue'
 import SearchList from '../components/HomePage/SearchList.vue'
-import { useNotification } from '../utils/composables/notiofication'
+import { useNotification } from '../utils/composables/notification'
 import { NotificationTypes } from '../store/notification'
 import { inject, onBeforeMount } from 'vue'
 import { useValidator } from '../utils/composables/validator'

@@ -5,7 +5,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { CheckCircleIcon, XCircleIcon, ChevronRightIcon } from '@heroicons/vue/solid'
+import { CheckCircleIcon, XCircleIcon, ChevronRightIcon } from '@heroicons/vue/24/solid'
 
 interface Props {
   title: string

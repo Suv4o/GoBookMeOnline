@@ -8,8 +8,8 @@ export default {
 import { VueRefTargetElement } from '../../../types/interfaces'
 import { computed, ref, reactive, onMounted, onUnmounted, watch } from 'vue'
 import { onClickOutside } from '@vueuse/core'
-import { SearchIcon } from '@heroicons/vue/solid'
-import { ChevronRightIcon, UsersIcon } from '@heroicons/vue/outline'
+import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
+import { ChevronRightIcon, UsersIcon } from '@heroicons/vue/24/outline'
 import { Combobox, ComboboxInput, ComboboxOptions, ComboboxOption } from '@headlessui/vue'
 import { Assertions } from '../../../types/guards'
 
@@ -180,7 +180,7 @@ watch(
     @update:model-value="onSelect"
   >
     <div class="relative">
-      <SearchIcon
+      <MagnifyingGlassIcon
         class="pointer-events-none absolute top-3.5 left-3 md:left-4 h-5 w-5 md:h-7 md:w-6 text-gray-400"
         aria-hidden="true"
       />
