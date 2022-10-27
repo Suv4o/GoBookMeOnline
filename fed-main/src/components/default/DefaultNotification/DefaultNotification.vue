@@ -70,6 +70,7 @@ function close() {
               </div>
               <div class="ml-4 flex-shrink-0 flex">
                 <button
+                  data-testid="Close Notification"
                   type="button"
                   class="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
                   @click="close"
