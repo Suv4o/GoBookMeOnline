@@ -1,0 +1,349 @@
+// Vitest Snapshot v1
+
+exports[`DefaultMainNav > snap shot matches 1`] = `
+{
+  "baseElement": <body>
+    <div>
+      <div
+        data-headlessui-state=""
+      >
+        <div
+          class="max-w-7xl mx-auto px-4 sm:px-6"
+        >
+          <nav
+            aria-label="Global"
+            class="relative flex items-center justify-between sm:h-10 md:justify-center"
+          >
+            <div
+              class="flex items-center flex-1 md:absolute md:inset-y-0 md:left-0"
+            >
+              <div
+                class="flex items-center justify-between w-full md:w-auto"
+              >
+                <a
+                  class="text-gray-500 hover:text-gray-600"
+                  href="/"
+                >
+                  <span
+                    class="sr-only"
+                  >
+                    Go Book Me Online
+                  </span>
+                  <div
+                    class="flex items-center"
+                  >
+                    <img
+                      alt=""
+                      class="h-8 w-auto sm:h-10"
+                      src="/src/assets/images/logo.svg"
+                    />
+                    <p
+                      class="sm:ml-4 ml-2 sm:text-lg font-semibold"
+                    >
+                      GoBookMe.Today
+                    </p>
+                  </div>
+                </a>
+                <div
+                  class="-mr-2 flex items-center md:hidden"
+                >
+                  
+                  <button
+                    aria-expanded="false"
+                    class="bg-gray-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500"
+                    data-headlessui-state=""
+                    data-testid="Open menu"
+                    id="headlessui-popover-button-20"
+                    type="button"
+                  >
+                    <span
+                      class="sr-only"
+                    >
+                      Open main menu
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="h-6 w-6"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <!---->
+                  
+                </div>
+              </div>
+            </div>
+            <div
+              class="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0"
+            >
+              <div
+                class="ml-3 relative"
+                data-headlessui-state=""
+              >
+                <div>
+                  <button
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                    data-headlessui-state=""
+                    id="headlessui-menu-button-23"
+                    type="button"
+                  >
+                    <span
+                      class="sr-only"
+                    >
+                      Open user menu
+                    </span>
+                    <span
+                      class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-teal-600"
+                    >
+                      <span
+                        class="text-lg font-medium leading-none text-white"
+                        data-testid="User Initials Desktop"
+                      >
+                        FB
+                      </span>
+                    </span>
+                  </button>
+                </div>
+                <transition-stub
+                  appear="false"
+                  css="true"
+                  enteractiveclass="transition ease-out duration-200"
+                  enterfromclass="transform opacity-0 scale-95"
+                  entertoclass="transform opacity-100 scale-100"
+                  leaveactiveclass="transition ease-in duration-75"
+                  leavefromclass="transform opacity-100 scale-100"
+                  leavetoclass="transform opacity-0 scale-95"
+                  persisted="false"
+                >
+                  <!---->
+                </transition-stub>
+              </div>
+            </div>
+          </nav>
+        </div>
+        <transition-stub
+          appear="false"
+          css="true"
+          enteractiveclass="duration-150 ease-out"
+          enterfromclass="opacity-0 scale-95"
+          entertoclass="opacity-100 scale-100"
+          leaveactiveclass="duration-100 ease-in"
+          leavefromclass="opacity-100 scale-100"
+          leavetoclass="opacity-0 scale-95"
+          persisted="false"
+        >
+          <!---->
+        </transition-stub>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      data-headlessui-state=""
+    >
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6"
+      >
+        <nav
+          aria-label="Global"
+          class="relative flex items-center justify-between sm:h-10 md:justify-center"
+        >
+          <div
+            class="flex items-center flex-1 md:absolute md:inset-y-0 md:left-0"
+          >
+            <div
+              class="flex items-center justify-between w-full md:w-auto"
+            >
+              <a
+                class="text-gray-500 hover:text-gray-600"
+                href="/"
+              >
+                <span
+                  class="sr-only"
+                >
+                  Go Book Me Online
+                </span>
+                <div
+                  class="flex items-center"
+                >
+                  <img
+                    alt=""
+                    class="h-8 w-auto sm:h-10"
+                    src="/src/assets/images/logo.svg"
+                  />
+                  <p
+                    class="sm:ml-4 ml-2 sm:text-lg font-semibold"
+                  >
+                    GoBookMe.Today
+                  </p>
+                </div>
+              </a>
+              <div
+                class="-mr-2 flex items-center md:hidden"
+              >
+                
+                <button
+                  aria-expanded="false"
+                  class="bg-gray-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500"
+                  data-headlessui-state=""
+                  data-testid="Open menu"
+                  id="headlessui-popover-button-20"
+                  type="button"
+                >
+                  <span
+                    class="sr-only"
+                  >
+                    Open main menu
+                  </span>
+                  <svg
+                    aria-hidden="true"
+                    class="h-6 w-6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+                <!---->
+                
+              </div>
+            </div>
+          </div>
+          <div
+            class="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0"
+          >
+            <div
+              class="ml-3 relative"
+              data-headlessui-state=""
+            >
+              <div>
+                <button
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                  data-headlessui-state=""
+                  id="headlessui-menu-button-23"
+                  type="button"
+                >
+                  <span
+                    class="sr-only"
+                  >
+                    Open user menu
+                  </span>
+                  <span
+                    class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-teal-600"
+                  >
+                    <span
+                      class="text-lg font-medium leading-none text-white"
+                      data-testid="User Initials Desktop"
+                    >
+                      FB
+                    </span>
+                  </span>
+                </button>
+              </div>
+              <transition-stub
+                appear="false"
+                css="true"
+                enteractiveclass="transition ease-out duration-200"
+                enterfromclass="transform opacity-0 scale-95"
+                entertoclass="transform opacity-100 scale-100"
+                leaveactiveclass="transition ease-in duration-75"
+                leavefromclass="transform opacity-100 scale-100"
+                leavetoclass="transform opacity-0 scale-95"
+                persisted="false"
+              >
+                <!---->
+              </transition-stub>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <transition-stub
+        appear="false"
+        css="true"
+        enteractiveclass="duration-150 ease-out"
+        enterfromclass="opacity-0 scale-95"
+        entertoclass="opacity-100 scale-100"
+        leaveactiveclass="duration-100 ease-in"
+        leavefromclass="opacity-100 scale-100"
+        leavetoclass="opacity-0 scale-95"
+        persisted="false"
+      >
+        <!---->
+      </transition-stub>
+    </div>
+  </div>,
+  "debug": [Function],
+  "emitted": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "html": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

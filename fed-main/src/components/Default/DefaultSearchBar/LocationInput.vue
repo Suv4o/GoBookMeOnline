@@ -6,7 +6,7 @@ export default {
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { LocationMarkerIcon } from '@heroicons/vue/solid'
+import { MapPinIcon } from '@heroicons/vue/24/solid'
 import { Combobox, ComboboxInput, ComboboxOptions, ComboboxOption } from '@headlessui/vue'
 import { Assertions } from '../../../types/guards'
 
@@ -55,7 +55,7 @@ function scrollTo() {
     @update:model-value="onSelect"
   >
     <div class="relative">
-      <LocationMarkerIcon
+      <MapPinIcon
         class="pointer-events-none absolute top-3.5 left-3 md:left-4 h-5 w-5 md:h-7 md:w-6 text-gray-400"
         aria-hidden="true"
       />

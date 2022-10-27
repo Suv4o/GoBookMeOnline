@@ -1,0 +1,321 @@
+// Vitest Snapshot v1
+
+exports[`DefaultNewsletter > snap shot matches 1`] = `
+{
+  "baseElement": <body>
+    <div>
+      <div
+        class="py-16 sm:py-24"
+      >
+        <div
+          class="relative sm:py-16"
+        >
+          <div
+            aria-hidden="true"
+            class="hidden sm:block"
+          >
+            <div
+              class="absolute inset-y-0 left-0 w-1/2 bg-white rounded-r-3xl"
+            />
+            <svg
+              class="absolute top-8 left-1/2 -ml-3"
+              fill="none"
+              height="392"
+              viewBox="0 0 404 392"
+              width="404"
+            >
+              <defs>
+                <pattern
+                  height="20"
+                  id="8228f071-bcee-4ec8-905a-2a059a2cc4fb"
+                  patternUnits="userSpaceOnUse"
+                  width="20"
+                  x="0"
+                  y="0"
+                >
+                  <rect
+                    class="text-gray-200"
+                    fill="currentColor"
+                    height="4"
+                    width="4"
+                    x="0"
+                    y="0"
+                  />
+                </pattern>
+              </defs>
+              <rect
+                fill="url(#8228f071-bcee-4ec8-905a-2a059a2cc4fb)"
+                height="392"
+                width="404"
+              />
+            </svg>
+          </div>
+          <div
+            class="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8"
+          >
+            <div
+              class="relative rounded-2xl px-6 py-10 bg-teal-600 overflow-hidden shadow-xl sm:px-12 sm:py-20"
+            >
+              <div
+                aria-hidden="true"
+                class="absolute inset-0 -mt-72 sm:-mt-32 md:mt-0"
+              >
+                <svg
+                  class="absolute inset-0 h-full w-full"
+                  fill="none"
+                  preserveAspectRatio="xMidYMid slice"
+                  viewBox="0 0 1463 360"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    class="text-teal-500 text-opacity-40"
+                    d="M-82.673 72l1761.849 472.086-134.327 501.315-1761.85-472.086z"
+                    fill="currentColor"
+                  />
+                  <path
+                    class="text-teal-700 text-opacity-40"
+                    d="M-217.088 544.086L1544.761 72l134.327 501.316-1761.849 472.086z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </div>
+              <div
+                class="relative"
+              >
+                <div
+                  class="sm:text-center"
+                >
+                  <h2
+                    class="text-3xl font-extrabold text-white tracking-tight sm:text-4xl"
+                  >
+                     Want product news and updates? 
+                  </h2>
+                  <p
+                    class="mt-6 mx-auto max-w-2xl text-lg text-teal-200"
+                  >
+                    Sign up for our newsletter to stay up to date.
+                  </p>
+                </div>
+                <form
+                  action="#"
+                  class="mt-12 sm:mx-auto sm:max-w-lg sm:flex"
+                >
+                  <div
+                    class="min-w-0 flex-1"
+                  >
+                    <label
+                      class="sr-only"
+                      for="cta-email"
+                    >
+                      Email address
+                    </label>
+                    <input
+                      class="block w-full border border-transparent rounded-md px-5 py-3 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-teal-600"
+                      id="cta-email"
+                      placeholder="Enter your email"
+                      type="email"
+                    />
+                  </div>
+                  <div
+                    class="mt-4 sm:mt-0 sm:ml-3"
+                  >
+                    <button
+                      class="block w-full rounded-md border border-transparent px-5 py-3 bg-teal-500 text-base font-medium text-white shadow hover:bg-teal-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-teal-600 sm:px-10"
+                      type="submit"
+                    >
+                       Notify me 
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="py-16 sm:py-24"
+    >
+      <div
+        class="relative sm:py-16"
+      >
+        <div
+          aria-hidden="true"
+          class="hidden sm:block"
+        >
+          <div
+            class="absolute inset-y-0 left-0 w-1/2 bg-white rounded-r-3xl"
+          />
+          <svg
+            class="absolute top-8 left-1/2 -ml-3"
+            fill="none"
+            height="392"
+            viewBox="0 0 404 392"
+            width="404"
+          >
+            <defs>
+              <pattern
+                height="20"
+                id="8228f071-bcee-4ec8-905a-2a059a2cc4fb"
+                patternUnits="userSpaceOnUse"
+                width="20"
+                x="0"
+                y="0"
+              >
+                <rect
+                  class="text-gray-200"
+                  fill="currentColor"
+                  height="4"
+                  width="4"
+                  x="0"
+                  y="0"
+                />
+              </pattern>
+            </defs>
+            <rect
+              fill="url(#8228f071-bcee-4ec8-905a-2a059a2cc4fb)"
+              height="392"
+              width="404"
+            />
+          </svg>
+        </div>
+        <div
+          class="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8"
+        >
+          <div
+            class="relative rounded-2xl px-6 py-10 bg-teal-600 overflow-hidden shadow-xl sm:px-12 sm:py-20"
+          >
+            <div
+              aria-hidden="true"
+              class="absolute inset-0 -mt-72 sm:-mt-32 md:mt-0"
+            >
+              <svg
+                class="absolute inset-0 h-full w-full"
+                fill="none"
+                preserveAspectRatio="xMidYMid slice"
+                viewBox="0 0 1463 360"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  class="text-teal-500 text-opacity-40"
+                  d="M-82.673 72l1761.849 472.086-134.327 501.315-1761.85-472.086z"
+                  fill="currentColor"
+                />
+                <path
+                  class="text-teal-700 text-opacity-40"
+                  d="M-217.088 544.086L1544.761 72l134.327 501.316-1761.849 472.086z"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <div
+              class="relative"
+            >
+              <div
+                class="sm:text-center"
+              >
+                <h2
+                  class="text-3xl font-extrabold text-white tracking-tight sm:text-4xl"
+                >
+                   Want product news and updates? 
+                </h2>
+                <p
+                  class="mt-6 mx-auto max-w-2xl text-lg text-teal-200"
+                >
+                  Sign up for our newsletter to stay up to date.
+                </p>
+              </div>
+              <form
+                action="#"
+                class="mt-12 sm:mx-auto sm:max-w-lg sm:flex"
+              >
+                <div
+                  class="min-w-0 flex-1"
+                >
+                  <label
+                    class="sr-only"
+                    for="cta-email"
+                  >
+                    Email address
+                  </label>
+                  <input
+                    class="block w-full border border-transparent rounded-md px-5 py-3 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-teal-600"
+                    id="cta-email"
+                    placeholder="Enter your email"
+                    type="email"
+                  />
+                </div>
+                <div
+                  class="mt-4 sm:mt-0 sm:ml-3"
+                >
+                  <button
+                    class="block w-full rounded-md border border-transparent px-5 py-3 bg-teal-500 text-base font-medium text-white shadow hover:bg-teal-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-teal-600 sm:px-10"
+                    type="submit"
+                  >
+                     Notify me 
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "emitted": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "html": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
