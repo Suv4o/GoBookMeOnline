@@ -2,21 +2,21 @@
 import * as dotenv from 'dotenv';
 import * as yargs from 'yargs';
 import { Pool } from 'pg';
-dotenv.config({ path: `../env/${process.env.NODE_ENV}.env` });
+const env = dotenv.config({ path: `./env/${process.env.NODE_ENV}.env` });
 
 const pool = new Pool({
-  user: 'username',
-  host: 'localhost',
-  database: 'default_database',
-  password: 'password',
-  port: 5432,
+  user: env.parsed.DB_USER,
+  host: env.parsed.DB_HOST,
+  database: env.parsed.DB_NAME,
+  password: env.parsed.DB_PASSWORD,
+  port: Number(env.parsed.DB_PORT),
 });
 
 pool.connect();
 
 yargs
   .command('create', 'create schema', () => {
-    pool.query('CREATE SCHEMA public ', (err) => {
+    pool.query('CREATE SCHEMA IF NOT EXISTS public ', (err) => {
       if (err) throw err;
       console.log('DATABASE SCHEMA - CREATED ');
       pool.end();
@@ -28,7 +28,7 @@ yargs
     'drop',
     'drop schema',
     () => {
-      pool.query('DROP SCHEMA public CASCADE', (err) => {
+      pool.query('DROP SCHEMA IF EXISTS public CASCADE', (err) => {
         if (err) throw err;
         console.log('DATABASE SCHEMA - DROPPED ');
         pool.end();
@@ -39,8 +39,12 @@ yargs
       console.log(argv);
     },
   )
-  .option('env', {
-    alias: 'e',
-    type: 'string',
-    description: 'Set env',
+
+  .command('delete:table:user', 'delete user table', () => {
+    pool.query('TRUNCATE TABLE "user" CASCADE', (err) => {
+      if (err) throw err;
+      console.log('DATABASE TABLE USER - DELETED ');
+      pool.end();
+      process.exit(0);
+    });
   }).argv;

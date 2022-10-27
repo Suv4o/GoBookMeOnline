@@ -10,7 +10,6 @@ const routes = [
       DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
       DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
     },
-    meta: { accessLevel: AccessLevel.NotAuthenticated },
   },
   {
     path: '/signin',
@@ -21,7 +20,7 @@ const routes = [
       DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
       DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
     },
-    meta: { accessLevel: AccessLevel.Authenticated },
+    meta: { accessLevel: AccessLevel.NotAuthenticated },
   },
   {
     path: '/signup',
@@ -32,7 +31,7 @@ const routes = [
       DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
       DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
     },
-    meta: { accessLevel: AccessLevel.Authenticated },
+    meta: { accessLevel: AccessLevel.NotAuthenticated },
   },
   {
     path: '/email-verification',

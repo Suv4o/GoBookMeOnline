@@ -13,7 +13,7 @@ import { useAuthStore } from '../../store/auth'
 import { NotificationTypes } from '../../store/notification'
 import { Assertions } from '../../types/guards'
 import { useFetch } from '../../utils/composables/fetch'
-import { useNotification } from '../../utils/composables/notiofication'
+import { useNotification } from '../../utils/composables/notification'
 import { ResponseValidator, useValidator } from '../../utils/composables/validator'
 import { parseErrorMessage, parseFirebaseError } from '../../utils/helpers'
 import useState from '../PhoneVerificationPage/useState'
@@ -82,7 +82,7 @@ async function signUpWithGoogle() {
   try {
     await signInWithPopup($auth, googleProvider)
     await storeUserToDatabase()
-    router.push({ name: 'home', query: { 'successfully-created': 'true' } })
+    router.push({ name: 'home', query: { 'successfully-signed': 'true' } })
   } catch (error) {
     Assertions.isError(error)
     clearInputs()
@@ -150,6 +150,7 @@ async function signInUser(event: Event) {
     if (!validProps.phoneOrEmail.isMobile) {
       try {
         isProcessing.value = true
+        useAuthState.isUserAuthCompleted = false
         await signInWithEmail()
         clearInputs()
         useNotification({
@@ -158,8 +159,10 @@ async function signInUser(event: Event) {
           message: 'Please check your email and click the link to sign in.',
         })
         isProcessing.value = false
+        useAuthState.isUserAuthCompleted = true
       } catch (error) {
         isProcessing.value = false
+        useAuthState.isUserAuthCompleted = true
         Assertions.isError(error)
         const readableError = parseFirebaseError(error.message)
         if (readableError) {
@@ -171,6 +174,7 @@ async function signInUser(event: Event) {
     } else {
       try {
         isProcessing.value = true
+        useAuthState.isUserAuthCompleted = false
         const { displayName, phoneNumber } = await signInWithPhone()
         const { setFullName, setPhoneNumber } = useState()
         setFullName(displayName)
@@ -178,8 +182,10 @@ async function signInUser(event: Event) {
         clearInputs()
         router.push({ name: 'phone-verification' })
         isProcessing.value = false
+        useAuthState.isUserAuthCompleted = true
       } catch (error) {
         isProcessing.value = false
+        useAuthState.isUserAuthCompleted = true
         Assertions.isError(error)
         clearInputs()
         const readableError = parseFirebaseError(error.message)
@@ -207,6 +213,7 @@ async function signInUser(event: Event) {
             <div>
               <a
                 href="javascript:;"
+                data-testid="Sign in with Google"
                 class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                 @click="signUpWithGoogle"
               >
@@ -234,7 +241,7 @@ async function signInUser(event: Event) {
       </div>
 
       <div class="mt-6">
-        <form class="space-y-6" @submit="signInUser">
+        <form class="space-y-6" data-testid="Sign in a user" @submit="signInUser">
           <div>
             <label for="mobile-or-email" class="block text-sm font-medium text-gray-700">
               Mobile Number or Email
@@ -243,6 +250,7 @@ async function signInUser(event: Event) {
               <input
                 id="mobile-or-email"
                 v-model="phoneOrEmail"
+                data-testid="Phone or Email"
                 :disabled="isProcessing"
                 name="mobile-or-email"
                 type="text"

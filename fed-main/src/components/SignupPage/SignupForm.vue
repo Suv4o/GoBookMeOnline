@@ -14,7 +14,7 @@ import { useFetch } from '../../utils/composables/fetch'
 import { ResponseValidator, useValidator } from '../../utils/composables/validator'
 import { parseErrorMessage, parseFirebaseError, splitFullName } from '../../utils/helpers'
 import router from '../../router'
-import { useNotification } from '../../utils/composables/notiofication'
+import { useNotification } from '../../utils/composables/notification'
 import { NotificationTypes } from '../../store/notification'
 import useState from '../PhoneVerificationPage/useState'
 
@@ -84,7 +84,7 @@ async function signUpWithGoogle() {
   try {
     await signInWithPopup($auth, googleProvider)
     await storeUserToDatabase()
-    router.push({ name: 'home', query: { 'successfully-created': 'true' } })
+    router.push({ name: 'home', query: { 'successfully-signed': 'true' } })
   } catch (error) {
     Assertions.isError(error)
     clearInputs()
@@ -179,14 +179,17 @@ async function createUser(event: Event) {
     if (!validProps.phoneOrEmail.isMobile) {
       try {
         isProcessing.value = true
+        useAuthState.isUserAuthCompleted = false
         const { customToken } = await signUpWithEmail()
         await signInWithToken(customToken)
         await sendVerificationEmailLink()
         clearInputs()
         router.push({ name: 'email-verification' })
         isProcessing.value = false
+        useAuthState.isUserAuthCompleted = true
       } catch (error) {
         isProcessing.value = false
+        useAuthState.isUserAuthCompleted = true
         Assertions.isError(error)
         clearInputs()
         const readableError = parseFirebaseError(error.message)
@@ -199,14 +202,17 @@ async function createUser(event: Event) {
     } else {
       try {
         isProcessing.value = true
+        useAuthState.isUserAuthCompleted = false
         const { setFullName, setPhoneNumber } = useState()
         setFullName(fullName.value)
         setPhoneNumber(phoneOrEmail.value)
         clearInputs()
         router.push({ name: 'phone-verification' })
         isProcessing.value = false
+        useAuthState.isUserAuthCompleted = true
       } catch (error) {
         isProcessing.value = false
+        useAuthState.isUserAuthCompleted = true
         Assertions.isError(error)
         clearInputs()
         const readableError = parseFirebaseError(error.message)
@@ -231,6 +237,7 @@ async function createUser(event: Event) {
             <a
               href="javascript:;"
               class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              data-testid="Sign up with Google"
               @click="signUpWithGoogle"
             >
               <span class="sr-only">Sign in with Google</span>
@@ -256,12 +263,13 @@ async function createUser(event: Event) {
       </div>
 
       <div class="mt-6">
-        <form class="space-y-6" @submit="createUser">
+        <form class="space-y-6" data-testid="Create a user" @submit="createUser">
           <div>
             <label for="name" class="sr-only">Full Name</label>
             <input
               id="name"
               v-model="fullName"
+              data-testid="Full Name"
               :disabled="isProcessing"
               type="text"
               name="name"
@@ -281,6 +289,7 @@ async function createUser(event: Event) {
             <input
               id="mobile-or-email"
               v-model="phoneOrEmail"
+              data-testid="Phone or Email"
               :disabled="isProcessing"
               type="text"
               name="mobile-or-email"

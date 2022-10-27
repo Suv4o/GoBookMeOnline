@@ -6,6 +6,7 @@ export interface AuthState {
   accessTokenExpirationTime: number
   user: AuthStateUser | null
   isUserReady: boolean
+  isUserAuthCompleted: boolean
 }
 
 export const useAuthStore = defineStore('authStore', {
@@ -15,11 +16,12 @@ export const useAuthStore = defineStore('authStore', {
       accessTokenExpirationTime: 0,
       user: null,
       isUserReady: false,
+      isUserAuthCompleted: true,
     }
   },
   getters: {
     userInitials(state) {
-      if (state.user) {
+      if (state.user && state.user.firstName && state.user.lastName) {
         return state.user.firstName[0].toUpperCase() + state.user.lastName[0].toUpperCase()
       }
       return ''

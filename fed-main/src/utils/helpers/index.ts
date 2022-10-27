@@ -331,3 +331,21 @@ export function parseFirebaseError(error: string) {
     }
   }
 }
+
+// Test Utils
+
+export namespace TestUtils {
+  export namespace Vitest {
+    export function mockImplementationClick<E, F>(element: E, implementation: F) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      element._vei.onClick.value = implementation
+    }
+
+    export function mockImplementationSubmit<E, F>(element: E, implementation: F) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      element._vei.onSubmit.value = implementation
+    }
+  }
+}

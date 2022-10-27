@@ -1,0 +1,289 @@
+// Vitest Snapshot v1
+
+exports[`SigninForm > snap shot matches 1`] = `
+{
+  "baseElement": <body>
+    <div>
+      <div
+        class="mx-auto w-full max-w-sm lg:w-96"
+      >
+        <h2
+          class="mt-6 text-3xl font-extrabold text-gray-900"
+        >
+          Sign in to your account
+        </h2>
+        <div
+          class="mt-8"
+        >
+          <div>
+            <div>
+              <p
+                class="text-sm font-medium text-gray-700"
+              >
+                Sign in with Google
+              </p>
+              <div
+                class="mt-1 grid grid-cols-1 gap-3"
+              >
+                <div>
+                  <a
+                    class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                    data-testid="Sign in with Google"
+                    href="javascript:;"
+                  >
+                    <span
+                      class="sr-only"
+                    >
+                      Sign in with Google
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 210 210"
+                    >
+                      <path
+                        d="M0,105C0,47.103,47.103,0,105,0c23.383,0,45.515,7.523,64.004,21.756l-24.4,31.696C133.172,44.652,119.477,40,105,40
+	c-35.841,0-65,29.159-65,65s29.159,65,65,65c28.867,0,53.398-18.913,61.852-45H105V85h105v20c0,57.897-47.103,105-105,105
+	S0,162.897,0,105z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div
+              class="mt-6 relative"
+            >
+              <div
+                aria-hidden="true"
+                class="absolute inset-0 flex items-center"
+              >
+                <div
+                  class="w-full border-t border-gray-300"
+                />
+              </div>
+              <div
+                class="relative flex justify-center text-sm"
+              >
+                <span
+                  class="px-2 bg-gray-50 text-gray-500"
+                >
+                   Or continue with 
+                </span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mt-6"
+          >
+            <form
+              class="space-y-6"
+              data-testid="Sign in a user"
+            >
+              <div>
+                <label
+                  class="block text-sm font-medium text-gray-700"
+                  for="mobile-or-email"
+                >
+                   Mobile Number or Email 
+                </label>
+                <div
+                  class="mt-1"
+                >
+                  <input
+                    autocomplete="email|tel"
+                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none sm:text-sm focus:ring-teal-500 focus:border-teal-500"
+                    data-testid="Phone or Email"
+                    id="mobile-or-email"
+                    name="mobile-or-email"
+                    required=""
+                    type="text"
+                  />
+                  <!--v-if-->
+                </div>
+              </div>
+              <div>
+                <button
+                  class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                  type="submit"
+                >
+                  <!--v-if-->
+                   Sign in
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="mx-auto w-full max-w-sm lg:w-96"
+    >
+      <h2
+        class="mt-6 text-3xl font-extrabold text-gray-900"
+      >
+        Sign in to your account
+      </h2>
+      <div
+        class="mt-8"
+      >
+        <div>
+          <div>
+            <p
+              class="text-sm font-medium text-gray-700"
+            >
+              Sign in with Google
+            </p>
+            <div
+              class="mt-1 grid grid-cols-1 gap-3"
+            >
+              <div>
+                <a
+                  class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                  data-testid="Sign in with Google"
+                  href="javascript:;"
+                >
+                  <span
+                    class="sr-only"
+                  >
+                    Sign in with Google
+                  </span>
+                  <svg
+                    aria-hidden="true"
+                    class="w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 210 210"
+                  >
+                    <path
+                      d="M0,105C0,47.103,47.103,0,105,0c23.383,0,45.515,7.523,64.004,21.756l-24.4,31.696C133.172,44.652,119.477,40,105,40
+	c-35.841,0-65,29.159-65,65s29.159,65,65,65c28.867,0,53.398-18.913,61.852-45H105V85h105v20c0,57.897-47.103,105-105,105
+	S0,162.897,0,105z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mt-6 relative"
+          >
+            <div
+              aria-hidden="true"
+              class="absolute inset-0 flex items-center"
+            >
+              <div
+                class="w-full border-t border-gray-300"
+              />
+            </div>
+            <div
+              class="relative flex justify-center text-sm"
+            >
+              <span
+                class="px-2 bg-gray-50 text-gray-500"
+              >
+                 Or continue with 
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mt-6"
+        >
+          <form
+            class="space-y-6"
+            data-testid="Sign in a user"
+          >
+            <div>
+              <label
+                class="block text-sm font-medium text-gray-700"
+                for="mobile-or-email"
+              >
+                 Mobile Number or Email 
+              </label>
+              <div
+                class="mt-1"
+              >
+                <input
+                  autocomplete="email|tel"
+                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none sm:text-sm focus:ring-teal-500 focus:border-teal-500"
+                  data-testid="Phone or Email"
+                  id="mobile-or-email"
+                  name="mobile-or-email"
+                  required=""
+                  type="text"
+                />
+                <!--v-if-->
+              </div>
+            </div>
+            <div>
+              <button
+                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                type="submit"
+              >
+                <!--v-if-->
+                 Sign in
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "emitted": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "html": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

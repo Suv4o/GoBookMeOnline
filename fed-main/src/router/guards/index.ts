@@ -36,14 +36,14 @@ function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, r
     setSignUpButtonShown(true)
   }
 
-  if (to.meta.accessLevel === AccessLevel.Authenticated) {
-    const user = useAuthStore(pinia).user
+  if (to.meta.accessLevel === AccessLevel.NotAuthenticated) {
+    const { user, isUserAuthCompleted } = useAuthStore(pinia)
 
-    if (user) {
+    if (user && isUserAuthCompleted) {
       router.push(from.path)
-      return true
+      return false
     }
-    return false
+    return true
   }
 
   if (to.meta.accessLevel === AccessLevel.AuthenticatedWithoutEmailVerified) {

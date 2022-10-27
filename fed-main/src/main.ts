@@ -9,6 +9,9 @@ import { useAuthStore } from './store/auth'
 export const pinia = createPinia()
 const appConfig = { isAppMounted: false }
 
+// Recaptcha will be disable in testing mode
+auth.settings.appVerificationDisabledForTesting = import.meta.env.MODE === 'test' ? true : false
+
 const app = createApp(App)
 app.provide('$auth', auth)
 app.use(pinia)
@@ -24,7 +27,7 @@ onAuthStateChanged(auth, user => {
 
   if (!appConfig.isAppMounted) {
     appConfig.isAppMounted = true
-    router.isReady().then(() => {
+    router?.isReady().then(() => {
       app.mount('#app')
     })
   }

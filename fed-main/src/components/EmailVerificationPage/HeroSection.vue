@@ -8,9 +8,15 @@ export default {
 import { Assertions } from '../../types/guards'
 import { useFetch } from '../../utils/composables/fetch'
 import { parseErrorMessage } from '../../utils/helpers'
+import { useNotification } from '../../utils/composables/notification'
+import { NotificationTypes } from '../../store/notification'
+import { ref } from 'vue'
+
+const isProcessing = ref(false)
 
 async function sendVerificationEmailLink() {
   try {
+    isProcessing.value = true
     const { data, error } = await useFetch({
       url: '/user/email-verification',
       method: 'GET',
@@ -19,9 +25,17 @@ async function sendVerificationEmailLink() {
     if (error.value) {
       throw new Error(parseErrorMessage(error.value.message))
     }
+
+    useNotification({
+      type: NotificationTypes.Success,
+      title: 'Verification Email Sent',
+      message: 'A new verification email has been sent to your email address.',
+    })
+    isProcessing.value = false
   } catch (error) {
+    isProcessing.value = false
     Assertions.isError(error)
-    throw new Error(error.message)
+    useNotification({ type: NotificationTypes.Error, title: 'Error', message: error.message })
   }
 }
 </script>
@@ -98,8 +112,10 @@ async function sendVerificationEmailLink() {
             <h2 id="join-heading" class="text-4xl font-extrabold text-white">Email Verification</h2>
             <p class="text-xl text-white">A verification email has been sent to you. Please check your inbox!</p>
             <a
+              :class="`${isProcessing ? 'pointer-events-none' : ''}`"
               class="block w-full py-3 px-5 text-center bg-white border border-transparent rounded-md shadow-md text-base font-medium text-teal-700 hover:bg-gray-50 sm:inline-block sm:w-auto"
               href="javascript:;"
+              data-testid="Send Verification Email Link"
               @click="sendVerificationEmailLink"
               >Resend a Verification Email</a
             >

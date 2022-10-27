@@ -1,6 +1,6 @@
 version: '3'
 services:
-  database:
+  database_dev:
     image: 'postgres:latest'
     restart: always
     ports:
@@ -8,7 +8,16 @@ services:
     env_file:
       - ./env/prod.env
     volumes:
-      - ./db-data/:/var/lib/postgresql/data/
+      - ./db-dev/:/var/lib/postgresql/data/
+  database_test:
+    image: 'postgres:latest'
+    restart: always
+    ports:
+      - 5433:5432
+    env_file:
+      - ./env/test.env
+    volumes:
+      - ./db-test/:/var/lib/postgresql/data/
   mailhog:
     image: mailhog/mailhog:latest
     restart: always

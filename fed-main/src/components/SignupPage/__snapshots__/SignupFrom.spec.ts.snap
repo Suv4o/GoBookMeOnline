@@ -1,0 +1,367 @@
+// Vitest Snapshot v1
+
+exports[`SignupForm > snap shot matches 1`] = `
+{
+  "baseElement": <body>
+    <div>
+      <div
+        class="bg-white sm:max-w-md sm:w-full sm:mx-auto sm:rounded-lg sm:overflow-hidden"
+      >
+        <div
+          class="px-4 py-8 sm:px-10"
+        >
+          <div>
+            <p
+              class="text-sm font-medium text-gray-700"
+            >
+              Sign up with Google
+            </p>
+            <div
+              class="mt-1 grid grid-cols-1 gap-3"
+            >
+              <div>
+                <a
+                  class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                  data-testid="Sign up with Google"
+                  href="javascript:;"
+                >
+                  <span
+                    class="sr-only"
+                  >
+                    Sign in with Google
+                  </span>
+                  <svg
+                    aria-hidden="true"
+                    class="w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 210 210"
+                  >
+                    <path
+                      d="M0,105C0,47.103,47.103,0,105,0c23.383,0,45.515,7.523,64.004,21.756l-24.4,31.696C133.172,44.652,119.477,40,105,40
+	c-35.841,0-65,29.159-65,65s29.159,65,65,65c28.867,0,53.398-18.913,61.852-45H105V85h105v20c0,57.897-47.103,105-105,105
+	S0,162.897,0,105z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mt-6 relative"
+          >
+            <div
+              aria-hidden="true"
+              class="absolute inset-0 flex items-center"
+            >
+              <div
+                class="w-full border-t border-gray-300"
+              />
+            </div>
+            <div
+              class="relative flex justify-center text-sm"
+            >
+              <span
+                class="px-2 bg-white text-gray-500"
+              >
+                 Or 
+              </span>
+            </div>
+          </div>
+          <div
+            class="mt-6"
+          >
+            <form
+              class="space-y-6"
+              data-testid="Create a user"
+            >
+              <div>
+                <label
+                  class="sr-only"
+                  for="name"
+                >
+                  Full Name
+                </label>
+                <input
+                  autocomplete="name"
+                  class="block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
+                  data-testid="Full Name"
+                  id="name"
+                  name="name"
+                  placeholder="Full Name"
+                  required=""
+                  type="text"
+                />
+                <!--v-if-->
+              </div>
+              <div>
+                <label
+                  class="sr-only"
+                  for="mobile-or-email"
+                >
+                  Mobile Number or Email
+                </label>
+                <input
+                  autocomplete="email|tel"
+                  class="block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
+                  data-testid="Phone or Email"
+                  id="mobile-or-email"
+                  name="mobile-or-email"
+                  placeholder="Mobile Number or Email"
+                  required=""
+                  type="text"
+                />
+                <!--v-if-->
+              </div>
+              <div>
+                <button
+                  class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                  type="submit"
+                >
+                  <!--v-if-->
+                   Create your account
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div
+          class="px-4 py-6 bg-white border-t-2 border-gray-200 sm:px-10"
+        >
+          <p
+            class="text-xs leading-5 text-gray-500"
+          >
+             By signing up, you agree to our 
+            <a
+              class="font-medium text-gray-900 hover:underline"
+              href="#"
+            >
+              Terms
+            </a>
+            , 
+            <a
+              class="font-medium text-gray-900 hover:underline"
+              href="#"
+            >
+              Data Policy
+            </a>
+             and 
+            <a
+              class="font-medium text-gray-900 hover:underline"
+              href="#"
+            >
+              Cookies Policy
+            </a>
+            . 
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="bg-white sm:max-w-md sm:w-full sm:mx-auto sm:rounded-lg sm:overflow-hidden"
+    >
+      <div
+        class="px-4 py-8 sm:px-10"
+      >
+        <div>
+          <p
+            class="text-sm font-medium text-gray-700"
+          >
+            Sign up with Google
+          </p>
+          <div
+            class="mt-1 grid grid-cols-1 gap-3"
+          >
+            <div>
+              <a
+                class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                data-testid="Sign up with Google"
+                href="javascript:;"
+              >
+                <span
+                  class="sr-only"
+                >
+                  Sign in with Google
+                </span>
+                <svg
+                  aria-hidden="true"
+                  class="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 210 210"
+                >
+                  <path
+                    d="M0,105C0,47.103,47.103,0,105,0c23.383,0,45.515,7.523,64.004,21.756l-24.4,31.696C133.172,44.652,119.477,40,105,40
+	c-35.841,0-65,29.159-65,65s29.159,65,65,65c28.867,0,53.398-18.913,61.852-45H105V85h105v20c0,57.897-47.103,105-105,105
+	S0,162.897,0,105z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mt-6 relative"
+        >
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 flex items-center"
+          >
+            <div
+              class="w-full border-t border-gray-300"
+            />
+          </div>
+          <div
+            class="relative flex justify-center text-sm"
+          >
+            <span
+              class="px-2 bg-white text-gray-500"
+            >
+               Or 
+            </span>
+          </div>
+        </div>
+        <div
+          class="mt-6"
+        >
+          <form
+            class="space-y-6"
+            data-testid="Create a user"
+          >
+            <div>
+              <label
+                class="sr-only"
+                for="name"
+              >
+                Full Name
+              </label>
+              <input
+                autocomplete="name"
+                class="block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
+                data-testid="Full Name"
+                id="name"
+                name="name"
+                placeholder="Full Name"
+                required=""
+                type="text"
+              />
+              <!--v-if-->
+            </div>
+            <div>
+              <label
+                class="sr-only"
+                for="mobile-or-email"
+              >
+                Mobile Number or Email
+              </label>
+              <input
+                autocomplete="email|tel"
+                class="block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
+                data-testid="Phone or Email"
+                id="mobile-or-email"
+                name="mobile-or-email"
+                placeholder="Mobile Number or Email"
+                required=""
+                type="text"
+              />
+              <!--v-if-->
+            </div>
+            <div>
+              <button
+                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                type="submit"
+              >
+                <!--v-if-->
+                 Create your account
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div
+        class="px-4 py-6 bg-white border-t-2 border-gray-200 sm:px-10"
+      >
+        <p
+          class="text-xs leading-5 text-gray-500"
+        >
+           By signing up, you agree to our 
+          <a
+            class="font-medium text-gray-900 hover:underline"
+            href="#"
+          >
+            Terms
+          </a>
+          , 
+          <a
+            class="font-medium text-gray-900 hover:underline"
+            href="#"
+          >
+            Data Policy
+          </a>
+           and 
+          <a
+            class="font-medium text-gray-900 hover:underline"
+            href="#"
+          >
+            Cookies Policy
+          </a>
+          . 
+        </p>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "emitted": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "html": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
