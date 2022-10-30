@@ -36,7 +36,7 @@ function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, r
     setSignUpButtonShown(true)
   }
 
-  if (to.meta.accessLevel === AccessLevel.NotAuthenticated) {
+  if (to.meta.accessLevel === AccessLevel.DefaultUserNotAuthenticated) {
     const { user, isUserAuthCompleted } = useAuthStore(pinia)
 
     if (user && isUserAuthCompleted) {
@@ -46,7 +46,7 @@ function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, r
     return true
   }
 
-  if (to.meta.accessLevel === AccessLevel.AuthenticatedWithoutEmailVerified) {
+  if (to.meta.accessLevel === AccessLevel.DefaultUserAuthenticatedWithoutEmailVerified) {
     const user = useAuthStore(pinia).user
 
     if (!user || user?.emailVerified) {
@@ -56,7 +56,7 @@ function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, r
     return true
   }
 
-  if (to.meta.accessLevel === AccessLevel.WaitingForPhoneVerification) {
+  if (to.meta.accessLevel === AccessLevel.DefaultUserWaitingForPhoneVerification) {
     const { fullName, phoneNumber } = useStatePhoneVerification()
 
     if (!fullName.value || !phoneNumber.value) {

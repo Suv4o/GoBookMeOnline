@@ -1,7 +1,7 @@
 export enum AccessLevel {
   Public = 'Public',
-  NotAuthenticated = 'NotAuthenticated',
-  Authenticated = 'Authenticated',
-  AuthenticatedWithoutEmailVerified = 'AuthenticatedWithoutEmailVerified',
-  WaitingForPhoneVerification = 'WaitingForPhoneVerification',
+  DefaultUserNotAuthenticated = 'NotAuthenticated',
+  DefaultUserAuthenticated = 'Authenticated',
+  DefaultUserAuthenticatedWithoutEmailVerified = 'AuthenticatedWithoutEmailVerified',
+  DefaultUserWaitingForPhoneVerification = 'WaitingForPhoneVerification',
 }

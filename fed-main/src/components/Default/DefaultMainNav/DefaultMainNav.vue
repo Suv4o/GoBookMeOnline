@@ -3,6 +3,7 @@ export default {
   name: 'DefaultMainNav',
 }
 </script>
+
 <script setup lang="ts">
 import { Auth, signOut } from 'firebase/auth'
 import { Popover, PopoverButton, PopoverPanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
@@ -14,9 +15,19 @@ import { Assertions } from '../../../types/guards'
 import { useNotification } from '../../../utils/composables/notification'
 import { NotificationTypes } from '../../../store/notification'
 import { parseFirebaseError } from '../../../utils/helpers'
+import SignupDropDownButton from './SignupDropDownButton.vue'
 
 const $auth = inject('$auth') as Auth
 const { isSignInButtonShown, isSignUpButtonShown } = useState()
+
+const signupOptions = [
+  { name: 'Sign up for free', description: 'Find and organise your next booking online.', href: 'signup' },
+  {
+    name: 'Become a provider',
+    description: 'Host your business online and get more bookings.',
+    href: 'signup',
+  },
+]
 
 async function signUserOut() {
   try {
@@ -120,14 +131,7 @@ async function signUserOut() {
             >
               Sign in
             </router-link>
-            <router-link
-              v-if="isSignUpButtonShown"
-              data-testid="Sign up"
-              :to="{ name: 'signup' }"
-              class="inline-flex items-center px-4 py-2 ml-4 border border-transparent text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 shadow"
-            >
-              Sign up
-            </router-link>
+            <SignupDropDownButton :signup-options="signupOptions" />
           </span>
         </div>
       </nav>
@@ -189,11 +193,16 @@ async function signUserOut() {
             </div>
             <template v-else>
               <router-link
-                data-testid="Sign up"
                 :to="{ name: 'signup' }"
                 class="block w-full px-5 py-3 text-center font-medium text-white bg-teal-600 hover:bg-teal-700"
               >
-                Sign up
+                Sign up for free
+              </router-link>
+              <router-link
+                :to="{ name: 'signup' }"
+                class="block w-full px-5 py-3 text-center font-medium text-teal-600 bg-white hover:bg-gray-50 shadow my-2"
+              >
+                Become a provider
               </router-link>
               <p class="my-4 text-center text-base font-medium text-gray-500">
                 Existing customer?

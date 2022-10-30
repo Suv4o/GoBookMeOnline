@@ -20,7 +20,7 @@ const routes = [
       DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
       DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
     },
-    meta: { accessLevel: AccessLevel.NotAuthenticated },
+    meta: { accessLevel: AccessLevel.DefaultUserNotAuthenticated },
   },
   {
     path: '/signup',
@@ -31,7 +31,7 @@ const routes = [
       DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
       DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
     },
-    meta: { accessLevel: AccessLevel.NotAuthenticated },
+    meta: { accessLevel: AccessLevel.DefaultUserNotAuthenticated },
   },
   {
     path: '/email-verification',
@@ -41,7 +41,7 @@ const routes = [
       DefaultMainNav: () => import('../../components/Default/DefaultMainNav/DefaultMainNav.vue'),
       DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
     },
-    meta: { accessLevel: AccessLevel.AuthenticatedWithoutEmailVerified },
+    meta: { accessLevel: AccessLevel.DefaultUserAuthenticatedWithoutEmailVerified },
   },
   {
     path: '/phone-verification',
@@ -51,7 +51,7 @@ const routes = [
       DefaultMainNav: () => import('../../components/Default/DefaultMainNav/DefaultMainNav.vue'),
       DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
     },
-    meta: { accessLevel: AccessLevel.WaitingForPhoneVerification },
+    meta: { accessLevel: AccessLevel.DefaultUserWaitingForPhoneVerification },
   },
   {
     path: '/:pathMatch(.*)*',
