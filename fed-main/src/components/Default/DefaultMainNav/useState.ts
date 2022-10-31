@@ -1,8 +1,10 @@
 import { reactive, toRefs } from 'vue'
+import { Roles } from '../../../types/enums'
 
 const state = reactive({
   isSignInButtonShown: true,
   isSignUpButtonShown: true,
+  roleType: Roles.USER_DEFAULT,
 })
 
 export default () => {
@@ -14,9 +16,14 @@ export default () => {
     state.isSignUpButtonShown = isShown
   }
 
+  function setRoleType(roleType: Roles) {
+    state.roleType = roleType
+  }
+
   return {
     ...toRefs(state),
     setSignInButtonShown,
     setSignUpButtonShown,
+    setRoleType,
   }
 }

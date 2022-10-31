@@ -11,6 +11,7 @@ import { inject, ref, reactive } from 'vue'
 import router from '../../router'
 import { useAuthStore } from '../../store/auth'
 import { NotificationTypes } from '../../store/notification'
+import { Roles } from '../../types/enums'
 import { Assertions } from '../../types/guards'
 import { useFetch } from '../../utils/composables/fetch'
 import { useNotification } from '../../utils/composables/notification'
@@ -100,6 +101,9 @@ async function storeUserToDatabase() {
     const { error, data } = await useFetch({
       url: '/user/signup-with-provider',
       method: 'POST',
+      body: {
+        role: Roles.USER_DEFAULT,
+      },
     })
 
     if (error.value) {
