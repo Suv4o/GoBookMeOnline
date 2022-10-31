@@ -17,8 +17,10 @@ import { CurrentUserDetails } from '../SignupPage/SignupForm.vue'
 import { useAuthStore } from '../../store/auth'
 import useState from './useState'
 import { AuthStateUser } from '../../types/interfaces'
+import useStateSignup from '../Default/DefaultMainNav/useState'
 
 const { fullName, phoneNumber, setFullName, setPhoneNumber } = useState()
+const { roleType } = useStateSignup()
 const $auth = inject('$auth') as Auth
 const useAuthState = useAuthStore()
 
@@ -139,6 +141,7 @@ async function signUpWithPhone() {
       body: {
         firstName,
         lastName,
+        role: roleType.value,
       },
     })
 

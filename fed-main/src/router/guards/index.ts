@@ -24,6 +24,8 @@ interface CurrentUserDetails {
 }
 
 function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, router: Router) {
+  const accessLevel = to.meta.accessLevel as AccessLevel[]
+
   if (to.name === 'email-verification' || to.name === 'phone-verification') {
     const { setSignInButtonShown, setSignUpButtonShown } = useStateDefaultMainNav()
     setSignInButtonShown(false)
@@ -36,7 +38,11 @@ function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, r
     setSignUpButtonShown(true)
   }
 
-  if (to.meta.accessLevel === AccessLevel.DefaultUserNotAuthenticated) {
+  if (
+    accessLevel &&
+    (accessLevel.includes(AccessLevel.DEFAULT_USER_NOT_AUTHENTICATED) ||
+      accessLevel.includes(AccessLevel.DEFAULT_PROVIDER_NOT_AUTHENTICATED))
+  ) {
     const { user, isUserAuthCompleted } = useAuthStore(pinia)
 
     if (user && isUserAuthCompleted) {
@@ -46,7 +52,11 @@ function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, r
     return true
   }
 
-  if (to.meta.accessLevel === AccessLevel.DefaultUserAuthenticatedWithoutEmailVerified) {
+  if (
+    accessLevel &&
+    (accessLevel.includes(AccessLevel.DEFAULT_USER_AUTHENTICATED_WITHOUT_EMAIL_VERIFIED) ||
+      accessLevel.includes(AccessLevel.DEFAULT_PROVIDER_AUTHENTICATED_WITHOUT_EMAIL_VERIFIED))
+  ) {
     const user = useAuthStore(pinia).user
 
     if (!user || user?.emailVerified) {
@@ -56,7 +66,11 @@ function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, r
     return true
   }
 
-  if (to.meta.accessLevel === AccessLevel.DefaultUserWaitingForPhoneVerification) {
+  if (
+    accessLevel &&
+    (accessLevel.includes(AccessLevel.DEFAULT_USER_WAITING_FOR_PHONE_VERIFICATION) ||
+      accessLevel.includes(AccessLevel.DEFAULT_PROVIDER_WAITING_FOR_PHONE_VERIFICATION))
+  ) {
     const { fullName, phoneNumber } = useStatePhoneVerification()
 
     if (!fullName.value || !phoneNumber.value) {
