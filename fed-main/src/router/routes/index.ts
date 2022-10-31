@@ -20,7 +20,7 @@ const routes = [
       DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
       DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
     },
-    meta: { accessLevel: AccessLevel.NotAuthenticated },
+    meta: { accessLevel: [AccessLevel.DEFAULT_USER_NOT_AUTHENTICATED, AccessLevel.DEFAULT_PROVIDER_NOT_AUTHENTICATED] },
   },
   {
     path: '/signup',
@@ -31,7 +31,7 @@ const routes = [
       DefaultNewsletter: () => import('../../components/Default/DefaultNewsletter/DefaultNewsletter.vue'),
       DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
     },
-    meta: { accessLevel: AccessLevel.NotAuthenticated },
+    meta: { accessLevel: [AccessLevel.DEFAULT_USER_NOT_AUTHENTICATED, AccessLevel.DEFAULT_PROVIDER_NOT_AUTHENTICATED] },
   },
   {
     path: '/email-verification',
@@ -41,7 +41,12 @@ const routes = [
       DefaultMainNav: () => import('../../components/Default/DefaultMainNav/DefaultMainNav.vue'),
       DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
     },
-    meta: { accessLevel: AccessLevel.AuthenticatedWithoutEmailVerified },
+    meta: {
+      accessLevel: [
+        AccessLevel.DEFAULT_USER_AUTHENTICATED_WITHOUT_EMAIL_VERIFIED,
+        AccessLevel.DEFAULT_PROVIDER_AUTHENTICATED_WITHOUT_EMAIL_VERIFIED,
+      ],
+    },
   },
   {
     path: '/phone-verification',
@@ -51,7 +56,12 @@ const routes = [
       DefaultMainNav: () => import('../../components/Default/DefaultMainNav/DefaultMainNav.vue'),
       DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
     },
-    meta: { accessLevel: AccessLevel.WaitingForPhoneVerification },
+    meta: {
+      accessLevel: [
+        AccessLevel.DEFAULT_USER_WAITING_FOR_PHONE_VERIFICATION,
+        AccessLevel.DEFAULT_PROVIDER_WAITING_FOR_PHONE_VERIFICATION,
+      ],
+    },
   },
   {
     path: '/:pathMatch(.*)*',

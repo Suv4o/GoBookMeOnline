@@ -2,9 +2,10 @@ import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
 import { Auth } from '../shared/decorators/auth.decorator';
 import { Serialize } from '../shared/interceptors/serialize.interceptor';
 import { CurrentUser } from '../shared/decorators/current-user.decorator';
-import { FirebaseUserRecord } from '../shared/types';
+import { FirebaseUserRecord, Roles } from '../shared/types';
 import { CreateUserWithEmailDto } from './dto/create-user-with-email.dto';
 import { CreateUserWithPhoneDto } from './dto/create-user-with-phone.dto';
+import { CreateUserWithProviderDto } from './dto/create-user-with-provider.dto';
 import { SerializeUserDto } from './dto/serialize.user.dto';
 import { SignInUserWithEmailDto } from './dto/signin-user-with-email.dto';
 import { UserService } from './user.service';
@@ -45,10 +46,15 @@ export class UserController {
   @Serialize(SerializeUserDto)
   @Post('signup-with-provider')
   signUpUserProvider(
+    @Body() createUserRequest: CreateUserWithProviderDto,
     @CurrentUser() currentUser: FirebaseUserRecord,
     @ExistingUser() existingUser: UserEntity,
   ): Promise<FirebaseUserRecord> {
-    return this.userService.createUserWithProvider(currentUser, existingUser);
+    return this.userService.createUserWithProvider(
+      createUserRequest,
+      currentUser,
+      existingUser,
+    );
   }
 
   @Post('signin-email')
@@ -66,7 +72,7 @@ export class UserController {
     return this.userService.signInUserWithPhone(signInUserRequest);
   }
 
-  @Auth('USER_DEFAULT')
+  @Auth(Roles.USER_DEFAULT, Roles.PROVIDER_DEFAULT)
   @Get('email-verification')
   sendEmailVerificationLink(
     @CurrentUser() currentUser: FirebaseUserRecord,
