@@ -17,6 +17,7 @@ import router from '../../router'
 import { useNotification } from '../../utils/composables/notification'
 import { NotificationTypes } from '../../store/notification'
 import useState from '../PhoneVerificationPage/useState'
+import useStateSignup from '../Default/DefaultMainNav/useState'
 
 export interface CurrentUserDetails {
   uid: string
@@ -31,6 +32,7 @@ export interface CurrentUserDetails {
   customToken?: string
 }
 
+const { roleType } = useStateSignup()
 const useAuthState = useAuthStore()
 const googleProvider = new GoogleAuthProvider()
 const $auth = inject('$auth') as Auth
@@ -54,6 +56,7 @@ async function signUpWithEmail() {
         email: phoneOrEmail.value,
         firstName,
         lastName,
+        role: roleType.value,
       },
       credentials: false,
     })
@@ -127,6 +130,9 @@ async function storeUserToDatabase() {
     const { error, data } = await useFetch({
       url: '/user/signup-with-provider',
       method: 'POST',
+      body: {
+        role: roleType.value,
+      },
     })
 
     if (error.value) {

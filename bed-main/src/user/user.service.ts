@@ -13,6 +13,7 @@ import { UserEntity } from './user.entity';
 import { CreateUserWithEmailDto } from './dto/create-user-with-email.dto';
 import { MailService } from '../mail/mail.service';
 import { CreateUserWithPhoneDto } from './dto/create-user-with-phone.dto';
+import { CreateUserWithProviderDto } from './dto/create-user-with-provider.dto';
 import { SignInUserWithEmailDto } from './dto/signin-user-with-email.dto';
 import { SignInUserWithPhoneDto } from './dto/signin-user-with-phone.dto';
 
@@ -31,8 +32,7 @@ export class UserService {
     existingUser: UserEntity,
   ): Promise<FirebaseUserRecord & { customToken: string }> {
     try {
-      const { email, firstName, lastName } = createUserRequest;
-      const role = Roles.USER_DEFAULT;
+      const { email, firstName, lastName, role } = createUserRequest;
       const firebase = this.firebase.setup();
 
       const createdUser = (await firebase.auth().createUser({
@@ -69,7 +69,7 @@ export class UserService {
         customToken: string;
       };
 
-      savedUser.customToken = await this.generateCustomToken(savedUser);
+      savedUser.customToken = await this.generateCustomToken(savedUser, role);
 
       return savedUser;
     } catch (error) {
@@ -85,9 +85,8 @@ export class UserService {
   ): Promise<FirebaseUserRecord> {
     try {
       const { uid, phoneNumber } = currentUser;
-      const { firstName, lastName } = createUserRequest;
+      const { firstName, lastName, role } = createUserRequest;
 
-      const role = Roles.USER_DEFAULT;
       const firebase = this.firebase.setup();
 
       if (existingUser && existingUser.firebaseIds.includes(uid)) {
@@ -137,13 +136,14 @@ export class UserService {
   }
 
   async createUserWithProvider(
+    createUserRequest: CreateUserWithProviderDto,
     currentUser: FirebaseUserRecord,
     existingUser: UserEntity,
   ): Promise<FirebaseUserRecord> {
     try {
+      const { role } = createUserRequest;
       const { uid, email, displayName } = currentUser;
       const [firstName, lastName] = displayName.split(' ');
-      const role = Roles.USER_DEFAULT;
       const firebase = this.firebase.setup();
 
       if (existingUser && existingUser.firebaseIds.includes(uid)) {
@@ -264,11 +264,13 @@ export class UserService {
     }
   }
 
-  private async generateCustomToken(user: FirebaseUserRecord): Promise<string> {
+  private async generateCustomToken(
+    user: FirebaseUserRecord,
+    role,
+  ): Promise<string> {
     try {
       const firebase = this.firebase.setup();
       const { uid } = user;
-      const role = Roles.USER_DEFAULT;
       const customToken = await firebase
         .auth()
         .createCustomToken(uid, { role });
