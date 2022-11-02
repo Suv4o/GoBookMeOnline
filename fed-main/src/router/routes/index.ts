@@ -64,6 +64,15 @@ const routes = [
     },
   },
   {
+    path: '/pricing-provider',
+    name: 'pricing-provider',
+    components: {
+      default: () => import('../../views/PricingPage.vue'),
+      DefaultMainNav: () => import('../../components/Default/DefaultMainNav/DefaultMainNav.vue'),
+      DefaultFooter: () => import('../../components/Default/DefaultFooter/DefaultFooter.vue'),
+    },
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'notFound',
     components: {

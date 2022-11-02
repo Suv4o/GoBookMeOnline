@@ -31,7 +31,7 @@ const signupOptions = [
   {
     name: 'Become a provider',
     description: 'Host your business online and get more bookings.',
-    href: 'signup',
+    href: 'pricing-provider',
     roleType: Roles.PROVIDER_DEFAULT,
   },
 ]

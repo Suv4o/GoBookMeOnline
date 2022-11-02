@@ -6,7 +6,7 @@ export default {
 
 <script setup lang="ts">
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
-import useState from './useState'
+// import useState from './useState'
 import { ref } from 'vue'
 import { Roles } from '../../../types/enums'
 
@@ -25,12 +25,12 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {})
 
-const { setRoleType } = useState()
+// const { setRoleType } = useState()
 
-function handleSignupOptionClick(roleType: Roles) {
-  setRoleType(roleType)
-  button.value?.click()
-}
+// function handleSignupOptionClick(roleType: Roles) {
+//   setRoleType(roleType)
+//   button.value?.click()
+// }
 </script>
 
 <template>
@@ -60,7 +60,7 @@ function handleSignupOptionClick(roleType: Roles) {
               :key="option.name"
               :to="{ name: option.href }"
               class="-m-3 block rounded-md p-3 transition duration-150 ease-in-out hover:bg-gray-50"
-              @click="handleSignupOptionClick(option.roleType)"
+              @click="button?.click()"
             >
               <p class="text-base font-medium text-gray-900">{{ option.name }}</p>
               <p class="mt-1 text-sm text-gray-500">{{ option.description }}</p>
