@@ -73,6 +73,13 @@ const routes = [
     },
   },
   {
+    path: '/dashboard',
+    name: 'dashboard',
+    components: {
+      default: () => import('../../views/Dashboard/DashboardLayout.vue'),
+    },
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'notFound',
     components: {
