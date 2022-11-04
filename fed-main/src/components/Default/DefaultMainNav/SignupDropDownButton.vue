@@ -6,7 +6,6 @@ export default {
 
 <script setup lang="ts">
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
-// import useState from './useState'
 import { ref } from 'vue'
 import { Roles } from '../../../types/enums'
 
@@ -24,13 +23,6 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {})
-
-// const { setRoleType } = useState()
-
-// function handleSignupOptionClick(roleType: Roles) {
-//   setRoleType(roleType)
-//   button.value?.click()
-// }
 </script>
 
 <template>

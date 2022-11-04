@@ -207,9 +207,8 @@ async function signUserOut() {
                 Sign up for free
               </router-link>
               <router-link
-                :to="{ name: 'signup' }"
+                :to="{ name: 'pricing-provider' }"
                 class="block w-full px-5 py-3 text-center font-medium text-teal-600 bg-white hover:bg-gray-50 shadow my-2"
-                @click="setRoleType(Roles.PROVIDER_DEFAULT)"
               >
                 Become a provider
               </router-link>

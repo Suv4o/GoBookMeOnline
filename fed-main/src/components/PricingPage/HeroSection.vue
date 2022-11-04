@@ -6,36 +6,47 @@ export default {
 
 <script setup lang="ts">
 import { CheckIcon } from '@heroicons/vue/24/outline'
+import { Roles } from '../../types/enums'
+import useState from '../Default/DefaultMainNav/useState'
 
 const tiers = [
   {
     name: 'Forever Free',
-    href: '#',
+    href: 'signup',
     priceMonthly: 0,
     description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-    features: ['5 resources', 'Up to 100 bookings', 'Basic analytics', 'Single location'],
+    roleType: Roles.PROVIDER_DEFAULT,
+    features: ['1 resource', 'Up to 100 bookings', 'Basic analytics', 'Personal account only'],
   },
   {
     name: 'Scale',
-    href: '#',
-    priceMonthly: 14,
+    href: 'signup',
+    priceMonthly: 29,
     description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
+    roleType: Roles.PROVIDER_PAYED,
     features: [
       'Unlimited resources',
       'Up to 1000 bookings (additional booking $0.04)',
       'Up to 1000 email for clients communication (additional email $0.005)',
-      'Up to 50 SMS for client communication (additional $10 per 100 SMS)',
+      'Up to 100 SMS for client communication (additional $10 per 100 SMS)',
+      'Add other users as resource',
       'Web Widget',
       'Multiple locations',
       'Tech Support',
     ],
   },
 ]
+
+const { setRoleType } = useState()
+
+function handleSignupOptionClick(roleType: Roles) {
+  setRoleType(roleType)
+}
 </script>
 
 <template>
   <div class="default-container pt-24">
-    <div class="bg-teal-700 rounded-xl">
+    <div class="bg-teal-600 rounded-xl">
       <div class="pt-12 sm:pt-16 lg:pt-24">
         <div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
           <div class="mx-auto max-w-3xl space-y-2 lg:max-w-none">
@@ -51,7 +62,7 @@ const tiers = [
       </div>
       <div class="mt-8 bg-gray-50 pb-12 sm:mt-12 sm:pb-16 lg:mt-16 lg:pb-24">
         <div class="relative">
-          <div class="absolute inset-0 h-3/4 bg-teal-700 rounded-b-xl" />
+          <div class="absolute inset-0 h-3/4 bg-teal-600 rounded-b-xl" />
           <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="mx-auto max-w-md space-y-4 lg:grid lg:max-w-5xl lg:grid-cols-2 lg:gap-5 lg:space-y-0">
               <div v-for="tier in tiers" :key="tier.name" class="flex flex-col overflow-hidden rounded-lg shadow-lg">
@@ -59,7 +70,7 @@ const tiers = [
                   <div>
                     <h3
                       id="tier-standard"
-                      class="inline-flex rounded-full bg-teal-700 px-4 py-1 text-base font-semibold text-white"
+                      class="inline-flex rounded-full bg-teal-600 px-4 py-1 text-base font-semibold text-white"
                     >
                       {{ tier.name }}
                     </h3>
@@ -80,11 +91,12 @@ const tiers = [
                     </li>
                   </ul>
                   <div class="rounded-md shadow">
-                    <a
-                      :href="tier.href"
-                      class="flex items-center justify-center rounded-md border border-transparent bg-teal-800 px-5 py-3 text-base font-medium text-white hover:bg-teal-900"
+                    <router-link
+                      :to="{ name: tier.href }"
+                      class="flex items-center justify-center rounded-md border border-transparent bg-teal-600 px-5 py-3 text-base font-medium text-white hover:bg-teal-700"
                       aria-describedby="tier-standard"
-                      >Get started</a
+                      @click="handleSignupOptionClick(tier.roleType)"
+                      >Get started</router-link
                     >
                   </div>
                 </div>
