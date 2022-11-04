@@ -59,5 +59,5 @@ yarn schema:create
 Drop schema:
 
 ```bash
-yarn schema:create
+yarn schema:drop
 ```

@@ -72,7 +72,7 @@ export class UserController {
     return this.userService.signInUserWithPhone(signInUserRequest);
   }
 
-  @Auth(Roles.USER_DEFAULT, Roles.PROVIDER_DEFAULT)
+  @Auth(Roles.USER_DEFAULT, Roles.PROVIDER_DEFAULT, Roles.PROVIDER_DEFAULT)
   @Get('email-verification')
   sendEmailVerificationLink(
     @CurrentUser() currentUser: FirebaseUserRecord,
