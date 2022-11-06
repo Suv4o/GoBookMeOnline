@@ -7,24 +7,27 @@ export default {
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { useAuthStore } from '../../store/auth'
 import {
   Bars3Icon,
-  CalendarIcon,
+  CalendarDaysIcon,
+  SquaresPlusIcon,
+  MapPinIcon,
   ChartBarIcon,
-  FolderIcon,
-  HomeIcon,
-  InboxIcon,
-  UsersIcon,
+  UserCircleIcon,
+  ListBulletIcon,
   XMarkIcon,
+  Cog8ToothIcon,
 } from '@heroicons/vue/24/outline'
 
 const navigation = [
-  { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-  { name: 'Team', href: '#', icon: UsersIcon, current: false },
-  { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-  { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-  { name: 'Documents', href: '#', icon: InboxIcon, current: false },
+  { name: 'Scheduler', href: '#', icon: CalendarDaysIcon, current: true },
+  { name: 'Resources', href: '#', icon: SquaresPlusIcon, current: false },
+  { name: 'Locations', href: '#', icon: MapPinIcon, current: false },
   { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
+  { name: 'Profile', href: '#', icon: UserCircleIcon, current: false },
+  { name: 'My Bookings', href: '#', icon: ListBulletIcon, current: false },
+  { name: 'Settings', href: '#', icon: Cog8ToothIcon, current: false },
 ]
 
 const sidebarOpen = ref(false)
@@ -80,7 +83,7 @@ const sidebarOpen = ref(false)
               <div class="h-0 flex-1 overflow-y-auto pt-5 pb-4">
                 <router-link :to="{ name: 'home' }" class="flex flex-shrink-0 items-center px-4 cursor-pointer">
                   <img class="h-8 w-auto" src="../../assets/images/logo-white.svg" alt="GoBookMe.today" />
-                  <p class="sm:ml-4 ml-2 sm:text-lg font-semibold text-white">GoBookMe.today</p>
+                  <p class="sm:ml-4 ml-2 sm:text-lg font-semibold text-white">GoBookMe.Today</p>
                 </router-link>
                 <nav class="mt-5 space-y-1 px-2">
                   <a
@@ -101,14 +104,14 @@ const sidebarOpen = ref(false)
                 <a href="#" class="group block flex-shrink-0">
                   <div class="flex items-center">
                     <div>
-                      <img
-                        class="inline-block h-10 w-10 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
+                      <span class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-teal-600 ml-3">
+                        <span data-testid="User Initials Mobile" class="text-lg font-medium leading-none text-white">{{
+                          useAuthStore().userInitials
+                        }}</span>
+                      </span>
                     </div>
                     <div class="ml-3">
-                      <p class="text-base font-medium text-white">Tom Cook</p>
+                      <p class="text-base font-medium text-white">{{ useAuthStore().userFullName }}</p>
                       <p class="text-sm font-medium text-gray-400 group-hover:text-gray-300">View profile</p>
                     </div>
                   </div>
@@ -130,7 +133,7 @@ const sidebarOpen = ref(false)
         <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
           <router-link :to="{ name: 'home' }" class="flex flex-shrink-0 items-center px-4 cursor-pointer">
             <img class="h-8 w-auto" src="../../assets/images/logo-white.svg" alt="GoBookMe.today" />
-            <p class="sm:ml-4 ml-2 sm:text-lg font-semibold text-white">GoBookMe.today</p>
+            <p class="sm:ml-4 ml-2 sm:text-lg font-semibold text-white">GoBookMe.Today</p>
           </router-link>
           <nav class="mt-5 flex-1 space-y-1 px-2">
             <a
@@ -151,14 +154,14 @@ const sidebarOpen = ref(false)
           <a href="#" class="group block w-full flex-shrink-0">
             <div class="flex items-center">
               <div>
-                <img
-                  class="inline-block h-9 w-9 rounded-full"
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt=""
-                />
+                <span class="inline-flex items-center justify-center h-9 w-9 rounded-full bg-teal-600 ml-3">
+                  <span data-testid="User Initials Mobile" class="text-lg font-medium leading-none text-white">
+                    {{ useAuthStore().userInitials }}</span
+                  >
+                </span>
               </div>
               <div class="ml-3">
-                <p class="text-sm font-medium text-white">Tom Cook</p>
+                <p class="text-sm font-medium text-white">{{ useAuthStore().userFullName }}</p>
                 <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">View profile</p>
               </div>
             </div>
