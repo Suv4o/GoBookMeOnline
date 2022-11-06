@@ -5,9 +5,11 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch, onBeforeMount } from 'vue'
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { uniqKey } from '../../utils/helpers'
 import { useAuthStore } from '../../store/auth'
+import { RouteRecordName, useRoute } from 'vue-router'
 import {
   Bars3Icon,
   CalendarDaysIcon,
@@ -21,16 +23,38 @@ import {
 } from '@heroicons/vue/24/outline'
 
 const navigation = [
-  { name: 'Scheduler', href: '#', icon: CalendarDaysIcon, current: true },
-  { name: 'Resources', href: '#', icon: SquaresPlusIcon, current: false },
-  { name: 'Locations', href: '#', icon: MapPinIcon, current: false },
-  { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
-  { name: 'Profile', href: '#', icon: UserCircleIcon, current: false },
-  { name: 'My Bookings', href: '#', icon: ListBulletIcon, current: false },
-  { name: 'Settings', href: '#', icon: Cog8ToothIcon, current: false },
+  { name: 'Scheduler', href: 'scheduler', icon: CalendarDaysIcon, current: false },
+  { name: 'Resources', href: 'resources', icon: SquaresPlusIcon, current: false },
+  { name: 'Locations', href: 'locations', icon: MapPinIcon, current: false },
+  { name: 'Reports', href: 'reports', icon: ChartBarIcon, current: false },
+  { name: 'Profile', href: 'profile', icon: UserCircleIcon, current: false },
+  { name: 'My Bookings', href: 'my-bookings', icon: ListBulletIcon, current: false },
+  { name: 'Settings', href: 'settings', icon: Cog8ToothIcon, current: false },
 ]
 
 const sidebarOpen = ref(false)
+const route = useRoute()
+
+function updateCurrentNavigation(routeName: RouteRecordName) {
+  navigation.map(item => {
+    return (item.current = item.href === routeName)
+  })
+}
+
+onBeforeMount(() => {
+  if (route.name) {
+    updateCurrentNavigation(route.name)
+  }
+})
+
+watch(
+  () => route.name,
+  routerName => {
+    if (routerName) {
+      updateCurrentNavigation(routerName)
+    }
+  }
+)
 </script>
 
 <template>
@@ -86,10 +110,10 @@ const sidebarOpen = ref(false)
                   <p class="sm:ml-4 ml-2 sm:text-lg font-semibold text-white">GoBookMe.Today</p>
                 </router-link>
                 <nav class="mt-5 space-y-1 px-2">
-                  <a
+                  <router-link
                     v-for="item in navigation"
                     :key="item.name"
-                    :href="item.href"
+                    :to="{ name: item.href }"
                     :class="[
                       item.current ? 'bg-teal-700' : 'hover:bg-teal-500',
                       'text-white group flex items-center px-2 py-2 text-base font-medium rounded-md',
@@ -97,7 +121,7 @@ const sidebarOpen = ref(false)
                   >
                     <component :is="item.icon" class="text-white mr-4 flex-shrink-0 h-6 w-6" aria-hidden="true" />
                     {{ item.name }}
-                  </a>
+                  </router-link>
                 </nav>
               </div>
               <div class="flex flex-shrink-0 bg-teal-700 p-4">
@@ -112,23 +136,18 @@ const sidebarOpen = ref(false)
                     </div>
                     <div class="ml-3">
                       <p class="text-base font-medium text-white">{{ useAuthStore().userFullName }}</p>
-                      <p class="text-sm font-medium text-gray-400 group-hover:text-gray-300">View profile</p>
                     </div>
                   </div>
                 </a>
               </div>
             </DialogPanel>
           </TransitionChild>
-          <div class="w-14 flex-shrink-0">
-            <!-- Force sidebar to shrink to fit close icon -->
-          </div>
+          <div class="w-14 flex-shrink-0"></div>
         </div>
       </Dialog>
     </TransitionRoot>
 
-    <!-- Static sidebar for desktop -->
     <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
-      <!-- Sidebar component, swap this element with another sidebar if you like -->
       <div class="flex min-h-0 flex-1 flex-col bg-teal-600">
         <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
           <router-link :to="{ name: 'home' }" class="flex flex-shrink-0 items-center px-4 cursor-pointer">
@@ -136,10 +155,10 @@ const sidebarOpen = ref(false)
             <p class="sm:ml-4 ml-2 sm:text-lg font-semibold text-white">GoBookMe.Today</p>
           </router-link>
           <nav class="mt-5 flex-1 space-y-1 px-2">
-            <a
+            <router-link
               v-for="item in navigation"
               :key="item.name"
-              :href="item.href"
+              :to="{ name: item.href }"
               :class="[
                 item.current ? 'bg-teal-700 ' : 'hover:bg-teal-500',
                 'text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md',
@@ -147,7 +166,7 @@ const sidebarOpen = ref(false)
             >
               <component :is="item.icon" class="text-white mr-3 flex-shrink-0 h-6 w-6" aria-hidden="true" />
               {{ item.name }}
-            </a>
+            </router-link>
           </nav>
         </div>
         <div class="flex flex-shrink-0 bg-teal-700 p-4">
@@ -162,7 +181,6 @@ const sidebarOpen = ref(false)
               </div>
               <div class="ml-3">
                 <p class="text-sm font-medium text-white">{{ useAuthStore().userFullName }}</p>
-                <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">View profile</p>
               </div>
             </div>
           </a>
@@ -180,20 +198,17 @@ const sidebarOpen = ref(false)
           <Bars3Icon class="h-6 w-6" aria-hidden="true" />
         </button>
       </div>
-      <main class="flex-1">
+      <div class="flex-1">
         <div class="py-6">
-          <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
-          </div>
-          <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-            <!-- Replace with your content -->
-            <div class="py-4">
-              <div class="h-96 rounded-lg border-4 border-dashed border-gray-200" />
-            </div>
-            <!-- /End replace -->
-          </div>
+          <router-view v-slot="{ Component }">
+            <transition name="fade" mode="out-in">
+              <div :key="uniqKey()">
+                <component :is="Component" />
+              </div>
+            </transition>
+          </router-view>
         </div>
-      </main>
+      </div>
     </div>
   </div>
 </template>
