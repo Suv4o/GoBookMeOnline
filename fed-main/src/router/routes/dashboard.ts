@@ -1,4 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
+import { AccessLevel } from '../../types/enums'
 
 const dashboardRoutes: Array<RouteRecordRaw> = [
   {
@@ -7,6 +8,7 @@ const dashboardRoutes: Array<RouteRecordRaw> = [
     components: {
       Dashboard: () => import('../../views/Dashboard/DashboardLayout.vue'),
     },
+    meta: { accessLevel: [AccessLevel.DEFAULT_USER_AUTHENTICATED, AccessLevel.DEFAULT_PROVIDER_AUTHENTICATED] },
     children: [
       {
         path: 'scheduler',

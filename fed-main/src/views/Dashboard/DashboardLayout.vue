@@ -5,11 +5,16 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, watch, onBeforeMount } from 'vue'
+import { ref, watch, onBeforeMount, inject } from 'vue'
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { uniqKey } from '../../utils/helpers'
 import { useAuthStore } from '../../store/auth'
 import { RouteRecordName, useRoute } from 'vue-router'
+import { Auth, signOut } from 'firebase/auth'
+import { Assertions } from '../../types/guards'
+import { useNotification } from '../../utils/composables/notification'
+import { parseFirebaseError } from '../../utils/helpers'
+import { NotificationTypes } from '../../store/notification'
 import {
   Bars3Icon,
   CalendarDaysIcon,
@@ -20,6 +25,7 @@ import {
   ListBulletIcon,
   XMarkIcon,
   Cog8ToothIcon,
+  ArrowLeftOnRectangleIcon,
 } from '@heroicons/vue/24/outline'
 
 const navigation = [
@@ -34,12 +40,7 @@ const navigation = [
 
 const sidebarOpen = ref(false)
 const route = useRoute()
-
-function updateCurrentNavigation(routeName: RouteRecordName) {
-  navigation.map(item => {
-    return (item.current = item.href === routeName)
-  })
-}
+const $auth = inject('$auth') as Auth
 
 onBeforeMount(() => {
   if (route.name) {
@@ -55,6 +56,26 @@ watch(
     }
   }
 )
+
+function updateCurrentNavigation(routeName: RouteRecordName) {
+  navigation.map(item => {
+    return (item.current = item.href === routeName)
+  })
+}
+
+async function signUserOut() {
+  try {
+    await signOut($auth)
+  } catch (error) {
+    Assertions.isError(error)
+    const readableError = parseFirebaseError(error.message)
+    if (readableError) {
+      useNotification({ type: NotificationTypes.Error, title: 'Error', message: readableError })
+    } else {
+      useNotification({ type: NotificationTypes.Error, title: error.name, message: error.message })
+    }
+  }
+}
 </script>
 
 <template>
@@ -125,7 +146,7 @@ watch(
                 </nav>
               </div>
               <div class="flex flex-shrink-0 bg-teal-700 p-4">
-                <a href="#" class="group block flex-shrink-0">
+                <div class="group block flex-shrink-0">
                   <div class="flex items-center">
                     <div>
                       <span class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-teal-600 ml-3">
@@ -138,7 +159,7 @@ watch(
                       <p class="text-base font-medium text-white">{{ useAuthStore().userFullName }}</p>
                     </div>
                   </div>
-                </a>
+                </div>
               </div>
             </DialogPanel>
           </TransitionChild>
@@ -156,21 +177,35 @@ watch(
           </router-link>
           <nav class="mt-5 flex-1 space-y-1 px-2">
             <router-link
-              v-for="item in navigation"
+              v-for="(item, index) in navigation"
               :key="item.name"
               :to="{ name: item.href }"
               :class="[
                 item.current ? 'bg-teal-700 ' : 'hover:bg-teal-500',
                 'text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md',
+                index === navigation.length - 1 ? 'pb-6' : '',
               ]"
             >
               <component :is="item.icon" class="text-white mr-3 flex-shrink-0 h-6 w-6" aria-hidden="true" />
               {{ item.name }}
             </router-link>
+            <hr class="border-t border-gray-200" aria-hidden="true" />
+            <a
+              href="javascript:;"
+              class="bg-teal-600 hover:bg-teal-500 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+              @click="signUserOut"
+            >
+              <component
+                :is="ArrowLeftOnRectangleIcon"
+                class="text-white mr-3 flex-shrink-0 h-6 w-6"
+                aria-hidden="true"
+              />
+              Sign out
+            </a>
           </nav>
         </div>
         <div class="flex flex-shrink-0 bg-teal-700 p-4">
-          <a href="#" class="group block w-full flex-shrink-0">
+          <div class="group block w-full flex-shrink-0">
             <div class="flex items-center">
               <div>
                 <span class="inline-flex items-center justify-center h-9 w-9 rounded-full bg-teal-600 ml-3">
@@ -183,7 +218,7 @@ watch(
                 <p class="text-sm font-medium text-white">{{ useAuthStore().userFullName }}</p>
               </div>
             </div>
-          </a>
+          </div>
         </div>
       </div>
     </div>
