@@ -143,6 +143,19 @@ async function signUserOut() {
                     <component :is="item.icon" class="text-white mr-4 flex-shrink-0 h-6 w-6" aria-hidden="true" />
                     {{ item.name }}
                   </router-link>
+                  <hr class="border-t border-gray-300" aria-hidden="true" />
+                  <a
+                    href="javascript:;"
+                    class="bg-teal-600 hover:bg-teal-500 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                    @click="signUserOut"
+                  >
+                    <component
+                      :is="ArrowLeftOnRectangleIcon"
+                      class="text-white mr-3 flex-shrink-0 h-6 w-6"
+                      aria-hidden="true"
+                    />
+                    Sign out
+                  </a>
                 </nav>
               </div>
               <div class="flex flex-shrink-0 bg-teal-700 p-4">
@@ -177,19 +190,18 @@ async function signUserOut() {
           </router-link>
           <nav class="mt-5 flex-1 space-y-1 px-2">
             <router-link
-              v-for="(item, index) in navigation"
+              v-for="item in navigation"
               :key="item.name"
               :to="{ name: item.href }"
               :class="[
                 item.current ? 'bg-teal-700 ' : 'hover:bg-teal-500',
                 'text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md',
-                index === navigation.length - 1 ? 'pb-6' : '',
               ]"
             >
               <component :is="item.icon" class="text-white mr-3 flex-shrink-0 h-6 w-6" aria-hidden="true" />
               {{ item.name }}
             </router-link>
-            <hr class="border-t border-gray-200" aria-hidden="true" />
+            <hr class="border-t border-gray-300" aria-hidden="true" />
             <a
               href="javascript:;"
               class="bg-teal-600 hover:bg-teal-500 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md"

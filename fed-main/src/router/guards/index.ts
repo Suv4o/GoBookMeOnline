@@ -53,6 +53,21 @@ function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, r
 
   if (
     isUserAllowed.call({ accessLevel }, [
+      AccessLevel.DEFAULT_USER_AUTHENTICATED,
+      AccessLevel.DEFAULT_PROVIDER_AUTHENTICATED,
+    ])
+  ) {
+    const { user } = useAuthStore(pinia)
+
+    if (!user) {
+      router.push(from.path)
+      return false
+    }
+    return true
+  }
+
+  if (
+    isUserAllowed.call({ accessLevel }, [
       AccessLevel.DEFAULT_USER_NOT_AUTHENTICATED,
       AccessLevel.DEFAULT_PROVIDER_NOT_AUTHENTICATED,
     ])
