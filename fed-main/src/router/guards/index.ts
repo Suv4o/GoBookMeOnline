@@ -23,6 +23,19 @@ interface CurrentUserDetails {
   emailVerified: AuthStateUser['emailVerified']
 }
 
+function isUserAllowed(this: { accessLevel: AccessLevel[] }, userPermissions: AccessLevel[]) {
+  for (const permission of userPermissions) {
+    if (!this.accessLevel) {
+      return false
+    }
+
+    if (this.accessLevel && !this.accessLevel.includes(AccessLevel[permission])) {
+      return false
+    }
+  }
+  return true
+}
+
 function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, router: Router) {
   const accessLevel = to.meta.accessLevel as AccessLevel[]
 
@@ -39,9 +52,25 @@ function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, r
   }
 
   if (
-    accessLevel &&
-    (accessLevel.includes(AccessLevel.DEFAULT_USER_NOT_AUTHENTICATED) ||
-      accessLevel.includes(AccessLevel.DEFAULT_PROVIDER_NOT_AUTHENTICATED))
+    isUserAllowed.call({ accessLevel }, [
+      AccessLevel.DEFAULT_USER_AUTHENTICATED,
+      AccessLevel.DEFAULT_PROVIDER_AUTHENTICATED,
+    ])
+  ) {
+    const { user } = useAuthStore(pinia)
+
+    if (!user) {
+      router.push(from.path)
+      return false
+    }
+    return true
+  }
+
+  if (
+    isUserAllowed.call({ accessLevel }, [
+      AccessLevel.DEFAULT_USER_NOT_AUTHENTICATED,
+      AccessLevel.DEFAULT_PROVIDER_NOT_AUTHENTICATED,
+    ])
   ) {
     const { user, isUserAuthCompleted } = useAuthStore(pinia)
 
@@ -53,9 +82,10 @@ function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, r
   }
 
   if (
-    accessLevel &&
-    (accessLevel.includes(AccessLevel.DEFAULT_USER_AUTHENTICATED_WITHOUT_EMAIL_VERIFIED) ||
-      accessLevel.includes(AccessLevel.DEFAULT_PROVIDER_AUTHENTICATED_WITHOUT_EMAIL_VERIFIED))
+    isUserAllowed.call({ accessLevel }, [
+      AccessLevel.DEFAULT_USER_AUTHENTICATED_WITHOUT_EMAIL_VERIFIED,
+      AccessLevel.DEFAULT_PROVIDER_AUTHENTICATED_WITHOUT_EMAIL_VERIFIED,
+    ])
   ) {
     const user = useAuthStore(pinia).user
 
@@ -67,9 +97,10 @@ function setGuards(to: RouteLocationNormalized, from: RouteLocationNormalized, r
   }
 
   if (
-    accessLevel &&
-    (accessLevel.includes(AccessLevel.DEFAULT_USER_WAITING_FOR_PHONE_VERIFICATION) ||
-      accessLevel.includes(AccessLevel.DEFAULT_PROVIDER_WAITING_FOR_PHONE_VERIFICATION))
+    isUserAllowed.call({ accessLevel }, [
+      AccessLevel.DEFAULT_USER_WAITING_FOR_PHONE_VERIFICATION,
+      AccessLevel.DEFAULT_PROVIDER_WAITING_FOR_PHONE_VERIFICATION,
+    ])
   ) {
     const { fullName, phoneNumber } = useStatePhoneVerification()
 

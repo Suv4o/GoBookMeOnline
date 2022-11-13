@@ -31,7 +31,7 @@ const signupOptions = [
   {
     name: 'Become a provider',
     description: 'Host your business online and get more bookings.',
-    href: 'signup',
+    href: 'pricing-provider',
     roleType: Roles.PROVIDER_DEFAULT,
   },
 ]
@@ -108,13 +108,17 @@ async function signUserOut() {
                 class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
               >
                 <MenuItem v-slot="{ active }">
-                  <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
-                    >Your Profile</a
+                  <router-link
+                    :to="{ name: 'profile' }"
+                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
+                    >Your Profile</router-link
                   >
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                  <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
-                    >Settings</a
+                  <router-link
+                    :to="{ name: 'settings' }"
+                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
+                    >Settings</router-link
                   >
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
@@ -207,9 +211,8 @@ async function signUserOut() {
                 Sign up for free
               </router-link>
               <router-link
-                :to="{ name: 'signup' }"
+                :to="{ name: 'pricing-provider' }"
                 class="block w-full px-5 py-3 text-center font-medium text-teal-600 bg-white hover:bg-gray-50 shadow my-2"
-                @click="setRoleType(Roles.PROVIDER_DEFAULT)"
               >
                 Become a provider
               </router-link>

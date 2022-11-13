@@ -15,5 +15,5 @@ export enum AccessLevel {
 export enum Roles {
   USER_DEFAULT = 'USER_DEFAULT',
   PROVIDER_DEFAULT = 'PROVIDER_DEFAULT',
-  ADMIN = 'ADMIN',
+  PROVIDER_PAYED = 'PROVIDER_PAYED',
 }

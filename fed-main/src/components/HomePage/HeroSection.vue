@@ -4,16 +4,7 @@ export default {
 }
 </script>
 
-<script setup lang="ts">
-import { Assertions } from '../../types/guards'
-
-function focusSearchInput() {
-  const searchBar: HTMLElement | null = document.querySelector('#search-bar input')
-
-  Assertions.isHTMLElement(searchBar)
-  searchBar.focus()
-}
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="relative bg-gray-50 overflow-hidden">

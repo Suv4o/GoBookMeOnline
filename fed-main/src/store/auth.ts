@@ -26,5 +26,11 @@ export const useAuthStore = defineStore('authStore', {
       }
       return ''
     },
+    userFullName(state) {
+      if (state.user && state.user.firstName && state.user.lastName) {
+        return state.user.firstName + ' ' + state.user.lastName
+      }
+      return ''
+    },
   },
 })
