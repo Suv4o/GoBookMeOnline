@@ -28,6 +28,10 @@
     "database:firebase:drop:test": "cross-env NODE_ENV=test npm run database:table:delete:test && npm run firebase:drop:test"
   },
   "dependencies": {
+    "@fullcalendar/core": "^5.11.3",
+    "@fullcalendar/interaction": "^5.11.3",
+    "@fullcalendar/resource-timegrid": "^5.11.3",
+    "@fullcalendar/vue3": "^5.11.2",
     "@headlessui/vue": "^1.7.3",
     "@heroicons/vue": "^2.0.12",
     "@tailwindcss/aspect-ratio": "^0.4.2",
