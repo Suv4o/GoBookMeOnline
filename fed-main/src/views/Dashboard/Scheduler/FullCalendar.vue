@@ -26,13 +26,18 @@ const calendarOptions = reactive({
   plugins: [resourceTimeGridPlugin, interactionPlugin, scrollGridPlugin],
   initialView: 'resourceTimeGridDay',
   schedulerLicenseKey: import.meta.env.VITE_SCHEDULER_LICENSE_KEY,
+  headerToolbar: {
+    left: 'prevYear,prev,today,next,nextYear',
+    center: 'title',
+    right: 'resourceTimeGridDay,resourceTimeGridWeek',
+  },
   eventColor: '#0d9488',
   resourceAreaWidth: '100%',
   editable: true,
   selectable: true,
   selectMirror: true,
   dayMaxEvents: true,
-  weekends: false,
+  weekends: true,
   nowIndicator: true,
   eventOverlap: false,
   slotEventOverlap: false,
@@ -57,6 +62,7 @@ const calendarOptions = reactive({
       businessHours: {
         start: '10:00:00',
         end: '18:00:00',
+        daysOfWeek: [0, 3, 6], // Sunday, Wednesday, Saturday
       },
     },
     {
@@ -170,3 +176,17 @@ function handleEventRemove(event: EventRemoveArg) {
 <template>
   <FullCalendar :options="calendarOptions" />
 </template>
+
+<style>
+.fc-header-toolbar button {
+  border-color: #4b5563 !important;
+  background-color: #0d9488 !important;
+  color: white !important;
+}
+
+@media screen and (max-width: 999px) {
+  .fc-header-toolbar {
+    flex-direction: column;
+  }
+}
+</style>
